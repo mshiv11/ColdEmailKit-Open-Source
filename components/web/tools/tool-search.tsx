@@ -35,8 +35,8 @@ export const ToolSearch = ({ className, placeholder, ...props }: ToolSearchProps
     { value: "pageviews.desc", label: "Most Popular" },
     { value: "name.asc", label: "Name (A to Z)" },
     { value: "name.desc", label: "Name (Z to A)" },
-    { value: "stars.desc", label: "Most Stars" },
-    { value: "forks.desc", label: "Most Forks" },
+    { value: "totalReviews.desc", label: "Most Reviews" },
+    { value: "trustScore.desc", label: "Highest Trust Score" },
     { value: "lastCommitDate.desc", label: "Last Commit" },
     { value: "firstCommitDate.desc", label: "Repository Age" },
   ]

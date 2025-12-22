@@ -10,56 +10,103 @@ import { notifySubmitterOfToolPublished } from "~/lib/notifications"
 import { notifySubmitterOfToolScheduled } from "~/lib/notifications"
 import { getToolRepositoryData } from "~/lib/repositories"
 import { adminProcedure } from "~/lib/safe-actions"
-import { analyzeRepositoryStack } from "~/lib/stack-analysis"
+import { analyzeRepositoryIntegration } from "~/lib/integration-analysis"
 import { toolSchema } from "~/server/admin/tools/schema"
 import { db } from "~/services/db"
 import { tryCatch } from "~/utils/helpers"
 
+export const fetchToolRepositoryData = adminProcedure
+  .createServerAction()
+  .input(z.object({ id: z.string() }))
+  .handler(async ({ input: { id } }) => {
+    const tool = await db.tool.findUniqueOrThrow({ where: { id } })
+
+    if (!tool.repositoryUrl) {
+      throw new Error("Tool does not have a repository URL")
+    }
+
+    const data = await getToolRepositoryData(tool.repositoryUrl)
+
+    if (!data) {
+      throw new Error("Could not fetch repository data")
+    }
+
+    await db.tool.update({
+      where: { id },
+      data,
+    })
+
+    revalidateTag(`tool-${tool.slug}`)
+    revalidatePath("/admin/tools")
+  })
+
 export const upsertTool = adminProcedure
   .createServerAction()
   .input(toolSchema)
-  .handler(async ({ input: { id, alternatives, categories, notifySubmitter, ...input } }) => {
-    const alternativeIds = alternatives?.map(id => ({ id }))
-    const categoryIds = categories?.map(id => ({ id }))
-    const existingTool = id ? await db.tool.findUnique({ where: { id } }) : null
+  .handler(async ({ input }) => {
+    const { id, alternatives, categories, integrations, notifySubmitter, ...data } = input
 
-    const tool = id
-      ? // If the tool exists, update it
-        await db.tool.update({
-          where: { id },
-          data: {
-            ...input,
-            slug: input.slug || slugify(input.name),
-            alternatives: { set: alternativeIds },
-            categories: { set: categoryIds },
-          },
-        })
-      : // Otherwise, create it
-        await db.tool.create({
-          data: {
-            ...input,
-            slug: input.slug || slugify(input.name),
-            alternatives: { connect: alternativeIds },
-            categories: { connect: categoryIds },
-          },
-        })
+    // Convert empty string to null for unique optional fields
+    if (data.repositoryUrl === "") {
+      data.repositoryUrl = null
+    }
 
-    // Revalidate the tools
-    revalidateTag("tools")
+    if (!data.slug) {
+      data.slug = slugify(data.name)
+    }
+
+    const existingTool = await db.tool.findUnique({
+      where: { slug: data.slug },
+    })
+
+    if (existingTool && existingTool.id !== id) {
+      throw new Error("A tool with this slug already exists")
+    }
+
+    const tool = await db.tool.upsert({
+      where: { id: id ?? "" },
+      create: {
+        ...data,
+        alternatives: {
+          connect: alternatives?.map(id => ({ id })),
+        },
+        categories: {
+          connect: categories?.map(id => ({ id })),
+        },
+        integrations: {
+          connect: integrations?.map(id => ({ id })),
+        },
+      },
+      update: {
+        ...data,
+        alternatives: {
+          set: alternatives?.map(id => ({ id })),
+        },
+        categories: {
+          set: categories?.map(id => ({ id })),
+        },
+        integrations: {
+          set: integrations?.map(id => ({ id })),
+        },
+      },
+    })
+
+    if (notifySubmitter) {
+      if (tool.status === ToolStatus.Published && tool.publishedAt) {
+        after(async () => {
+          await notifySubmitterOfToolPublished(tool)
+        })
+      } else if (tool.status === ToolStatus.Scheduled && tool.publishedAt) {
+        after(async () => {
+          await notifySubmitterOfToolScheduled(tool)
+        })
+      }
+    }
+
+    revalidatePath("/admin/tools")
+    revalidatePath("/tools")
+    revalidatePath(`/tools/${tool.slug}`)
     revalidateTag(`tool-${tool.slug}`)
-
-    if (tool.status === ToolStatus.Scheduled) {
-      // Revalidate the schedule if the tool is scheduled
-      revalidateTag("schedule")
-    }
-
-    if (notifySubmitter && (!existingTool || existingTool.status !== tool.status)) {
-      // Notify the submitter of the tool published
-      after(async () => await notifySubmitterOfToolPublished(tool))
-
-      // Notify the submitter of the tool scheduled for publication
-      after(async () => await notifySubmitterOfToolScheduled(tool))
-    }
 
     return tool
   })
@@ -70,68 +117,36 @@ export const deleteTools = adminProcedure
   .handler(async ({ input: { ids } }) => {
     const tools = await db.tool.findMany({
       where: { id: { in: ids } },
-      select: { slug: true },
+      select: { id: true, slug: true },
     })
 
     await db.tool.deleteMany({
       where: { id: { in: ids } },
     })
 
+    for (const tool of tools) {
+      if (tool.slug) {
+        await removeS3Directories([`tools/${tool.slug}`])
+      }
+    }
+
     revalidatePath("/admin/tools")
-    revalidateTag("tools")
-
-    // Remove the tool images from S3 asynchronously
-    after(async () => {
-      await removeS3Directories(tools.map(tool => `tools/${tool.slug}`))
-    })
-
-    return true
+    revalidatePath("/tools")
   })
 
-export const fetchToolRepositoryData = adminProcedure
-  .createServerAction()
-  .input(z.object({ id: z.string() }))
-  .handler(async ({ input: { id } }) => {
-    const tool = await db.tool.findUniqueOrThrow({ where: { id } })
-    const result = await tryCatch(getToolRepositoryData(tool.repositoryUrl))
-
-    if (result.error) {
-      console.error(`Failed to fetch repository data for ${tool.name}`, {
-        error: result.error,
-        slug: tool.slug,
-      })
-
-      return null
-    }
-
-    if (!result.data) {
-      return null
-    }
-
-    // Update the tool with the new repository data
-    await db.tool.update({
-      where: { id: tool.id },
-      data: result.data,
-    })
-
-    // Revalidate cache
-    revalidateTag("tools")
-    revalidateTag(`tool-${tool.slug}`)
-  })
-
-export const analyzeToolStack = adminProcedure
+export const analyzeToolIntegration = adminProcedure
   .createServerAction()
   .input(z.object({ id: z.string() }))
   .handler(async ({ input: { id } }) => {
     const tool = await db.tool.findUniqueOrThrow({ where: { id } })
 
     // Get analysis and cache it
-    const stack = await analyzeRepositoryStack(tool.repositoryUrl)
+    const integration = await analyzeRepositoryIntegration(tool.repositoryUrl)
 
-    // Update tool with new stack
+    // Update tool with new integration
     await db.tool.update({
       where: { id: tool.id },
-      data: { stacks: { set: stack.map(slug => ({ slug })) } },
+      data: { integrations: { set: integration.map(slug => ({ slug })) } },
     })
 
     // Revalidate the tool

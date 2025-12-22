@@ -31,8 +31,8 @@ const getMetadata = (topic: TopicOne): Metadata => {
   const name = capitalCase(topic.slug)
 
   return {
-    title: `Open Source Projects tagged "${name}"`,
-    description: `A curated collection of the ${topic._count.tools} best open source projects tagged "${name}". Each listing includes a website screenshot along with a detailed review of its features.`,
+    title: `Cold Email Tools tagged "${name}"`,
+    description: `A curated collection of the ${topic._count.tools} best cold email tools tagged "${name}". Each listing includes a website screenshot along with a detailed review of its features.`,
   }
 }
 
@@ -49,6 +49,7 @@ export const generateMetadata = async (props: PageProps): Promise<Metadata> => {
     ...getMetadata(topic),
     alternates: { ...metadataConfig.alternates, canonical: url },
     openGraph: { ...metadataConfig.openGraph, url },
+    robots: { index: false, follow: false }, // Temporarily hidden from search engines
   }
 }
 

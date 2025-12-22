@@ -42,8 +42,8 @@ export default async function RootLayout({ children }: PropsWithChildren) {
       {
         "@type": "Person",
         "@id": `${url}/#/schema/person/1`,
-        name: "Piotr Kulpinski",
-        sameAs: [config.links.author],
+        name: config.site.name,
+        sameAs: [config.links.twitter, config.links.linkedin].filter(Boolean),
       },
       {
         "@type": "WebSite",

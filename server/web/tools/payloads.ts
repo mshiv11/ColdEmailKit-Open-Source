@@ -1,7 +1,7 @@
 import { Prisma } from "@prisma/client"
 import { alternativeManyPayload } from "~/server/web/alternatives/payloads"
 import { categoryManyPayload } from "~/server/web/categories/payloads"
-import { stackManyPayload } from "~/server/web/stacks/payloads"
+import { integrationManyPayload } from "~/server/web/integrations/payloads"
 import { topicManyPayload } from "~/server/web/topics/payloads"
 
 export const toolAlternativesPayload = Prisma.validator<Prisma.Tool$alternativesArgs>()({
@@ -19,8 +19,8 @@ export const toolTopicsPayload = Prisma.validator<Prisma.Tool$topicsArgs>()({
   orderBy: { slug: "asc" },
 })
 
-export const toolStackPayload = Prisma.validator<Prisma.Tool$stacksArgs>()({
-  select: stackManyPayload,
+export const toolIntegrationPayload = Prisma.validator<Prisma.Tool$integrationsArgs>()({
+  select: integrationManyPayload,
   orderBy: [{ tools: { _count: "desc" } }, { slug: "asc" }],
 })
 
@@ -35,6 +35,11 @@ export const toolOnePayload = Prisma.validator<Prisma.ToolSelect>()({
   description: true,
   content: true,
   stars: true,
+  totalReviews: true,
+  trustScore: true,
+  pricingStarting: true,
+  bestFor: true,
+  overallRating: true,
   forks: true,
   faviconUrl: true,
   screenshotUrl: true,
@@ -52,7 +57,7 @@ export const toolOnePayload = Prisma.validator<Prisma.ToolSelect>()({
   alternatives: toolAlternativesPayload,
   categories: toolCategoriesPayload,
   topics: toolTopicsPayload,
-  stacks: toolStackPayload,
+  integrations: toolIntegrationPayload,
 })
 
 export const toolManyPayload = Prisma.validator<Prisma.ToolSelect>()({
@@ -63,6 +68,11 @@ export const toolManyPayload = Prisma.validator<Prisma.ToolSelect>()({
   tagline: true,
   description: true,
   stars: true,
+  totalReviews: true,
+  trustScore: true,
+  pricingStarting: true,
+  bestFor: true,
+  overallRating: true,
   forks: true,
   faviconUrl: true,
   isFeatured: true,
@@ -81,10 +91,14 @@ export const toolManyExtendedPayload = Prisma.validator<Prisma.ToolSelect>()({
   name: true,
   slug: true,
   websiteUrl: true,
+  affiliateUrl: true,
   description: true,
   content: true,
   faviconUrl: true,
   screenshotUrl: true,
+  overallRating: true,
+  totalReviews: true,
+  isFeatured: true,
   discountCode: true,
   discountAmount: true,
   firstCommitDate: true,

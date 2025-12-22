@@ -2,7 +2,6 @@ import { ReportType } from "@prisma/client"
 import { createSearchParamsCache, parseAsArrayOf, parseAsInteger, parseAsString } from "nuqs/server"
 import { z } from "zod"
 import { config } from "~/config"
-import { githubRegex } from "~/lib/github/utils"
 
 export const filterParamsSchema = {
   q: parseAsString.withDefault(""),
@@ -11,28 +10,16 @@ export const filterParamsSchema = {
   perPage: parseAsInteger.withDefault(35),
   alternative: parseAsArrayOf(parseAsString).withDefault([]),
   category: parseAsArrayOf(parseAsString).withDefault([]),
-  stack: parseAsArrayOf(parseAsString).withDefault([]),
+  integration: parseAsArrayOf(parseAsString).withDefault([]),
   license: parseAsArrayOf(parseAsString).withDefault([]),
 }
 
 export const filterParamsCache = createSearchParamsCache(filterParamsSchema)
 export type FilterSchema = Awaited<ReturnType<typeof filterParamsCache.parse>>
 
-const repositoryMessage =
-  "Please enter a valid GitHub repository URL (e.g. https://github.com/owner/name)"
-
-export const repositorySchema = z
-  .string()
-  .min(1, "Repository is required")
-  .url(repositoryMessage)
-  .trim()
-  .toLowerCase()
-  .regex(githubRegex, repositoryMessage)
-
 export const submitToolSchema = z.object({
   name: z.string().min(1, "Name is required"),
   websiteUrl: z.string().min(1, "Website is required").url("Invalid URL").trim(),
-  repositoryUrl: repositorySchema,
   submitterName: z.string().min(1, "Your name is required"),
   submitterEmail: z.string().email("Please enter a valid email address"),
   submitterNote: z.string().max(200),
@@ -60,6 +47,11 @@ export const feedbackSchema = z.object({
   message: z.string().min(1, "Message is required"),
 })
 
+export const reviewSchema = z.object({
+  rating: z.number().min(1).max(5),
+  comment: z.string().optional(),
+})
+
 export const adDetailsSchema = z.object({
   name: z.string().min(1, "Company name is required"),
   description: z.string().min(1, "Description is required").max(160),
@@ -71,4 +63,5 @@ export type SubmitToolSchema = z.infer<typeof submitToolSchema>
 export type NewsletterSchema = z.infer<typeof newsletterSchema>
 export type ReportSchema = z.infer<typeof reportSchema>
 export type FeedbackSchema = z.infer<typeof feedbackSchema>
+export type ReviewSchema = z.infer<typeof reviewSchema>
 export type AdDetailsSchema = z.infer<typeof adDetailsSchema>

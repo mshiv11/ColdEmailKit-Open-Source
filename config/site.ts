@@ -1,15 +1,20 @@
 import { env } from "~/env"
 
 export const siteConfig = {
-  name: "OpenAlternative",
-  slug: "openalternative",
-  tagline: "Open Source Alternatives to Popular Software",
+  name: "ColdEmailKit",
+  slug: "coldemailkit",
+  tagline: "Cold Email Tools",
   description:
-    "A curated collection of the best open source alternatives to everyday SaaS products. Save money with reliable tools hand-picked for you.",
+    "A curated collection of the best cold email tools. Save money with reliable tools hand-picked for you.",
   email: env.NEXT_PUBLIC_SITE_EMAIL,
   url: env.NEXT_PUBLIC_SITE_URL,
 
   alphabet: "abcdefghijklmnopqrstuvwxyz",
 
-  affiliateUrl: "https://go.openalternative.co",
+  // TODO: Replace with your affiliate tracking domain
+  affiliateUrl: "https://go.coldemailkit.com",
+
+  blog: {
+    enabled: true,
+  },
 }

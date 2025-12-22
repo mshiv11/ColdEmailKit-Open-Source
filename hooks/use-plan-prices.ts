@@ -1,21 +1,21 @@
 import { useState } from "react"
-import type Stripe from "stripe"
+import type { Price } from "~/config/subscriptions"
 
 export type ProductInterval = "month" | "year"
 
-const getPriceForInterval = (prices: Stripe.Price[], interval?: ProductInterval) => {
+const getPriceForInterval = (prices: Price[], interval?: ProductInterval) => {
   if (prices.length === 0) {
-    return { unit_amount: 0, id: "" } satisfies Partial<Stripe.Price>
+    return { unit_amount: 0, id: "" } satisfies Partial<Price>
   }
 
-  const selectedPrice = prices.find(p => p.recurring?.interval === interval)
+  const selectedPrice = prices.find(p => p.interval === interval)
   return selectedPrice ?? prices[0]
 }
 
 const calculatePrices = (
-  prices: Stripe.Price[],
+  prices: Price[],
   interval: ProductInterval,
-  coupon?: Stripe.Coupon | null,
+  coupon?: any | null, // TODO: Add Dodo coupon support if needed
 ) => {
   const isSubscription = prices.some(p => p.type === "recurring")
   const currentPrice = getPriceForInterval(prices, isSubscription ? interval : undefined)
@@ -38,10 +38,9 @@ const calculatePrices = (
   return { isSubscription, currentPrice, price, fullPrice, discount }
 }
 
-const calculateCouponDiscount = (initialPrice: number, coupon?: Stripe.Coupon | null) => {
+const calculateCouponDiscount = (initialPrice: number, coupon?: any | null) => {
   if (!coupon) return 0
-  if (coupon.percent_off) return (initialPrice * coupon.percent_off) / 100
-  if (coupon.amount_off) return coupon.amount_off / 100
+  // Placeholder for coupon logic
   return 0
 }
 
@@ -49,7 +48,7 @@ const calculateDiscount = (basePrice: number, price: number) => {
   return basePrice > 0 ? Math.round(((basePrice - price) / basePrice) * 100) : 0
 }
 
-export function usePlanPrices(prices: Stripe.Price[], coupon?: Stripe.Coupon | null) {
+export function usePlanPrices(prices: Price[], coupon?: any | null) {
   const [interval, setInterval] = useState<ProductInterval>("month")
   const calculatedPrices = calculatePrices(prices, interval, coupon)
 
@@ -59,3 +58,4 @@ export function usePlanPrices(prices: Stripe.Price[], coupon?: Stripe.Coupon | n
     setInterval,
   }
 }
+

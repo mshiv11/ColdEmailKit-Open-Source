@@ -4,10 +4,8 @@ import { useRouter } from "next/navigation"
 import { posthog } from "posthog-js"
 import { Slot } from "radix-ui"
 import type { ComponentProps } from "react"
+import { useState } from "react"
 import { toast } from "sonner"
-import type Stripe from "stripe"
-import { useServerAction } from "zsa-react"
-import { createStripeToolCheckout } from "~/actions/stripe"
 import { Button } from "~/components/common/button"
 import { Card, CardBg, type cardVariants } from "~/components/common/card"
 import { H5 } from "~/components/common/heading"
@@ -18,6 +16,7 @@ import { Stack } from "~/components/common/stack"
 import { Tooltip } from "~/components/common/tooltip"
 import { PlanIntervalSwitch } from "~/components/web/plan-interval-switch"
 import { Price } from "~/components/web/price"
+import type { Product, Price as PriceType } from "~/config/subscriptions"
 import { usePlanPrices } from "~/hooks/use-plan-prices"
 import { isToolPublished } from "~/lib/tools"
 import type { ToolOne } from "~/server/web/tools/payloads"
@@ -66,7 +65,7 @@ type PlanProps = ComponentProps<"div"> &
     /**
      * The plan.
      */
-    plan: Stripe.Product
+    plan: Product
 
     /**
      * The features of the plan.
@@ -76,12 +75,12 @@ type PlanProps = ComponentProps<"div"> &
     /**
      * The prices of the plan.
      */
-    prices: Stripe.Price[]
+    prices: PriceType[]
 
     /**
      * The discount coupon.
      */
-    coupon?: Stripe.Coupon
+    coupon?: any
 
     /**
      * The slug of the tool.
@@ -105,32 +104,39 @@ const Plan = ({
   ...props
 }: PlanProps) => {
   const router = useRouter()
+  const [isPending, setIsPending] = useState(false)
   const { isSubscription, currentPrice, price, fullPrice, discount, interval, setInterval } =
     usePlanPrices(prices, coupon)
 
-  const { execute, isPending } = useServerAction(createStripeToolCheckout, {
-    onSuccess: ({ data }) => {
-      posthog.capture("stripe_checkout_tool", {
+  const onSubmit = async () => {
+    setIsPending(true)
+    try {
+      const response = await fetch("/api/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          productId: currentPrice.id,
+          returnUrl: `${window.location.origin}/submit/${tool.slug}/success`,
+        }),
+      })
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to create checkout")
+      }
+
+      posthog.capture("dodo_checkout_tool", {
         tool: tool.slug,
         mode: isSubscription ? "featured" : "expedited",
       })
 
-      router.push(data)
-    },
-
-    onError: ({ err }) => {
+      router.push(data.url)
+    } catch (err: any) {
       toast.error(err.message)
-    },
-  })
-
-  const onSubmit = () => {
-    // Execute the action
-    execute({
-      priceId: currentPrice.id,
-      tool: tool.slug,
-      mode: isSubscription ? "subscription" : "payment",
-      coupon: coupon?.id,
-    })
+    } finally {
+      setIsPending(false)
+    }
   }
 
   return (
@@ -206,7 +212,7 @@ const Plan = ({
           ? "Current Package"
           : isToolPublished(tool)
             ? "Upgrade Listing"
-            : (plan.metadata.label ?? `Choose ${plan.name}`)}
+            : (plan.name)}
       </Button>
     </Card>
   )

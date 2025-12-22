@@ -1,3 +1,5 @@
+"use client"
+
 import { zodResolver } from "@hookform/resolvers/zod"
 import { ReportType } from "@prisma/client"
 import { sentenceCase } from "change-case"

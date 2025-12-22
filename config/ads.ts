@@ -28,7 +28,7 @@ export const adsConfig = {
     websiteUrl: "/advertise",
     name: "Your brand here",
     description:
-      "Reach out to our audience of professional open source/tech enthusiasts, boost your sales and brand awareness.",
+      "Reach out to our audience of professional tech enthusiasts, boost your sales and brand awareness.",
     buttonLabel: `Advertise on ${siteConfig.name}`,
     faviconUrl: null,
   } satisfies AdOne,
@@ -36,11 +36,29 @@ export const adsConfig = {
   testimonials: [
     {
       quote:
-        "OpenAlternative has been a solid traffic source for our website since we partnered up with them. Their homepage spot, in particular, delivered great results, giving us a noticeable **10–20% traffic boost**. Piotr has done an excellent job with OpenAlternative and it’s clear from the platform’s traffic, engagement, and audience quality. Highly recommended!",
+        "I like your platform, it's clean, and informative. As a small company, it's a great opportunity for us to position ourselves against the bigger players.",
       author: {
-        name: "Abdullah Atta",
-        title: "Founder of Notesnook",
-        image: "/authors/abdullahatta.webp",
+        name: "Tom Martin",
+        title: "Sequence-R",
+        image: null,
+      },
+    },
+    {
+      quote:
+        "Nice touch with the reviews and trust score rating. It's intuitive, quite like it.",
+      author: {
+        name: "Reddit User",
+        title: "Reddit Community",
+        image: null,
+      },
+    },
+    {
+      quote:
+        "The Cold Email Kit database is really helpful in finding the right tool for our recruiting business",
+      author: {
+        name: "Flora",
+        title: "VaraHR",
+        image: null,
       },
     },
   ],

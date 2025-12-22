@@ -1,6 +1,8 @@
 import { createEnv } from "@t3-oss/env-nextjs"
 import { z } from "zod"
 
+
+
 export const env = createEnv({
   shared: {
     PORT: z.coerce.number().default(8000),
@@ -35,8 +37,8 @@ export const env = createEnv({
     S3_ACCESS_KEY: z.string().min(1),
     S3_SECRET_ACCESS_KEY: z.string().min(1),
     S3_PUBLIC_URL: z.string().optional(),
-    STRIPE_SECRET_KEY: z.string().min(1),
-    STRIPE_WEBHOOK_SECRET: z.string().min(1),
+    DODO_PAYMENTS_API_KEY: z.string().min(1),
+    DODO_PAYMENTS_WEBHOOK_KEY: z.string().min(1),
     GITHUB_TOKEN: z.string().min(1),
     SCREENSHOTONE_ACCESS_KEY: z.string().min(1),
     PLAUSIBLE_API_KEY: z.string().min(1),
@@ -55,6 +57,8 @@ export const env = createEnv({
     JINA_API_KEY: z.string().optional(),
     STACK_ANALYZER_API_URL: z.string().min(1).url(),
     STACK_ANALYZER_API_KEY: z.string().min(1),
+    PERPLEXITY_API_KEY: z.string().min(1),
+    MISTRAL_API_KEY: z.string().min(1),
   },
 
   /**

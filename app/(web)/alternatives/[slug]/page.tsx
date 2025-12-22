@@ -26,7 +26,7 @@ import { metadataConfig } from "~/config/metadata"
 import type { AlternativeOne } from "~/server/web/alternatives/payloads"
 import { findAlternative, findAlternativeSlugs } from "~/server/web/alternatives/queries"
 import type { CategoryMany } from "~/server/web/categories/payloads"
-import { findToolsWithCategories } from "~/server/web/tools/queries"
+import { findTool, findToolsWithCategories } from "~/server/web/tools/queries"
 
 type PageProps = {
   params: Promise<{ slug: string }>
@@ -58,8 +58,8 @@ const getMetadata = (alternative: AlternativeOne): Metadata => {
   const displayCount = count > 10 ? "10+" : count > 1 ? count : ""
 
   return {
-    title: `${displayCount ? `${displayCount} ` : ""}Best Open Source ${alternative.name} Alternatives in ${year}`,
-    description: `A curated collection of the best open source alternatives to ${alternative.name}. Each listing includes a website screenshot along with a detailed review of its features.`,
+    title: `${displayCount ? `${displayCount} ` : ""}Best ${alternative.name} Alternatives (${year})`,
+    description: `A curated collection of the best alternatives to ${alternative.name}. Each listing includes a website screenshot along with a detailed review of its features, pricing & more.`,
   }
 }
 
@@ -80,8 +80,10 @@ export const generateMetadata = async (props: PageProps): Promise<Metadata> => {
 }
 
 export default async function AlternativePage(props: PageProps) {
-  const [alternative, tools] = await Promise.all([
+
+  const [alternative, mainTool, tools] = await Promise.all([
     getAlternative(props),
+    findTool({ where: { slug: (await props.params).slug } }),
 
     findToolsWithCategories({
       where: { alternatives: { some: { slug: (await props.params).slug } } },
@@ -89,13 +91,45 @@ export default async function AlternativePage(props: PageProps) {
     }),
   ])
 
+  // Build ItemList JSON-LD schema for SEO
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: `Best ${alternative.name} Alternatives`,
+    description: `A curated collection of the best alternatives to ${alternative.name}`,
+    url: `https://coldemailkit.com/alternatives/${alternative.slug}`,
+    numberOfItems: tools.length,
+    itemListElement: tools.slice(0, 10).map((tool, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      item: {
+        "@type": "SoftwareApplication",
+        name: tool.name,
+        description: tool.description,
+        url: `https://coldemailkit.com/tools/${tool.slug}`,
+        ...(tool.screenshotUrl && { image: tool.screenshotUrl }),
+        ...(tool.overallRating && {
+          aggregateRating: {
+            "@type": "AggregateRating",
+            ratingValue: tool.overallRating,
+            ratingCount: tool.totalReviews || 1,
+          },
+        }),
+      },
+    })),
+  }
+
   const medalColors = ["text-amber-500", "text-slate-400", "text-orange-700"]
   const { title } = getMetadata(alternative)
 
   // Sort the categories by count
-  const categories = Object.values(
-    tools.reduce<CategoryCount>((acc, { categories }) => {
+  const sortedCategories = Object.values(
+    tools.reduce<CategoryCount>((acc, tool) => {
+      const categories = tool.categories || []
+
       for (const category of categories) {
+        if (!category?.name) continue
+
         if (!acc[category.name]) {
           acc[category.name] = { count: 0, category }
         }
@@ -105,17 +139,13 @@ export default async function AlternativePage(props: PageProps) {
     }, {}),
   ).sort((a, b) => b.count - a.count)
 
-  // Pick the top 5 tools
-  const bestTools = tools.slice(0, 5).map(tool => (
-    <Link key={tool.slug} href={`/${tool.slug}`}>
-      {tool.name}
-    </Link>
-  ))
+  // Pick top categories
+  const topCategories = sortedCategories.slice(0, 3).map(c => c.category)
 
-  // Pick the top categories
-  const bestCategories = categories.slice(0, 3).map(({ category }) => (
-    <Link key={category.slug} href={`/categories/${category.fullPath}`}>
-      {category.label || category.name}
+  // Pick the top tools
+  const bestTools = tools.slice(0, 5).map(tool => (
+    <Link key={tool.slug} href={`/tools/${tool.slug}`}>
+      {tool.name}
     </Link>
   ))
 
@@ -137,26 +167,26 @@ export default async function AlternativePage(props: PageProps) {
       <Section>
         <Section.Content>
           <Intro>
-            <IntroTitle>Open Source {alternative.name} Alternatives</IntroTitle>
+            <IntroTitle>{alternative.name} Alternatives</IntroTitle>
 
             <IntroDescription className="max-w-4xl">
               {alternative._count.tools
-                ? `A curated collection of the ${alternative._count.tools} best open source alternatives to ${alternative.name}.`
-                : `No open source ${alternative.name} alternatives found yet.`}
+                ? `A curated collection of the ${alternative._count.tools} best alternatives to ${alternative.name}.`
+                : `No ${alternative.name} alternatives found yet.`}
             </IntroDescription>
           </Intro>
 
           {!!tools.length && (
             <Prose>
               <p>
-                The best open source alternative to {alternative.name} is {bestTools.shift()}. If
+                The best alternative to {alternative.name} is {bestTools.shift()}. If
                 that doesn't suit you, we've compiled a{" "}
-                <Link href="/about#how-are-rankings-calculated">ranked list</Link> of other open
-                source {alternative.name} alternatives to help you find a suitable replacement.
+                <Link href="/about#how-are-rankings-calculated">ranked list</Link> of other
+                {alternative.name} alternatives to help you find a suitable replacement.
                 {!!bestTools.length && (
                   <>
                     {" "}
-                    Other interesting open source
+                    Other interesting
                     {bestTools.length === 1
                       ? ` alternative to ${alternative.name} is `
                       : ` alternatives to ${alternative.name} are: `}
@@ -172,15 +202,20 @@ export default async function AlternativePage(props: PageProps) {
                 )}
               </p>
 
-              {!!bestCategories.length && (
+              {!!topCategories.length && (
                 <p>
-                  {alternative.name} alternatives are mainly {bestCategories.shift()}
-                  {!!bestCategories.length && " but may also be "}
-                  {bestCategories.map((category, index) => (
-                    <Fragment key={index}>
-                      {index > 0 && index !== bestCategories.length - 1 && ", "}
-                      {index > 0 && index === bestCategories.length - 1 && " or "}
-                      {category}
+                  {alternative.name} alternatives are mainly{" "}
+                  <Link href={`/categories/${topCategories[0].fullPath}`}>
+                    {topCategories[0].label || topCategories[0].name}
+                  </Link>
+                  {topCategories.length > 1 && " but may also be "}
+                  {topCategories.slice(1).map((category, index, arr) => (
+                    <Fragment key={category.slug}>
+                      {index > 0 && index !== arr.length - 1 && ", "}
+                      {index > 0 && index === arr.length - 1 && " or "}
+                      <Link href={`/categories/${category.fullPath}`}>
+                        {category.label || category.name}
+                      </Link>
                     </Fragment>
                   ))}
                   . Browse these if you want a narrower list of alternatives or looking for a
@@ -207,17 +242,17 @@ export default async function AlternativePage(props: PageProps) {
                   <Card hover={false} className="bg-yellow-500/10" asChild>
                     <Prose>
                       <p>
-                        Looking for open source alternatives to other popular services? Check out
+                        Looking for alternatives to other popular services? Check out
                         other posts in the <Link href="/alternatives">alternatives series</Link> and{" "}
-                        <Link href="/">{getUrlHostname(config.site.url)}</Link>, a directory of open
-                        source software with filters for tags and alternatives for easy browsing and
+                        <Link href="/">{getUrlHostname(config.site.url)}</Link>, a directory of cold email tools
+                        with filters for tags and alternatives for easy browsing and
                         discovery.
                       </p>
                     </Prose>
                   </Card>
                 )}
 
-                <ToolEntry id={tool.slug} tool={tool} />
+                <ToolEntry id={tool.slug} tool={tool} linkToAffiliate={true} />
               </Fragment>
             ))}
 
@@ -259,13 +294,20 @@ export default async function AlternativePage(props: PageProps) {
       {/* Related */}
       <Suspense
         fallback={
-          <Listing title="Similar proprietary alternatives:">
+          <Listing title="Similar alternatives:">
             <AlternativeListSkeleton count={3} />
           </Listing>
         }
       >
         <RelatedAlternatives alternative={alternative} />
       </Suspense>
+
+      {/* JSON-LD for SEO */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
     </>
   )
 }
+

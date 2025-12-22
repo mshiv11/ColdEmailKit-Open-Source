@@ -10,7 +10,7 @@ type PageProps = {
 
 // Image metadata
 export const contentType = "image/png"
-export const alt = "Open Source Alternative OpenGraph image"
+export const alt = "Alternative OpenGraph image"
 export const size = { width: 1200, height: 630 }
 
 export default async function Image({ params }: PageProps) {
@@ -23,7 +23,7 @@ export default async function Image({ params }: PageProps) {
 
   return new ImageResponse(
     <OgBase
-      name={`Open Source ${alternative.name} Alternatives`}
+      name={`${alternative.name} Alternatives`}
       description={alternative.description}
       faviconUrl={alternative.faviconUrl}
     />,

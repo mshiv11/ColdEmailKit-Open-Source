@@ -6,7 +6,7 @@ import { AlternativePreview } from "~/components/web/alternatives/alternative-pr
 import { BuiltWith } from "~/components/web/built-with"
 import { ContributionGraph } from "~/components/web/contribution-graph"
 import { NewsletterForm } from "~/components/web/newsletter-form"
-import { NewsletterProof } from "~/components/web/newsletter-proof"
+
 import { ToolListingSkeleton } from "~/components/web/tools/tool-listing"
 import { ToolQuery } from "~/components/web/tools/tool-query"
 import { Intro, IntroDescription, IntroTitle } from "~/components/web/ui/intro"
@@ -26,10 +26,12 @@ export default function Home(props: PageProps) {
 
         <Intro alignment="center">
           <IntroTitle className="max-w-[16em] sm:text-4xl md:text-5xl lg:text-6xl">
-            Discover {config.site.tagline}
+            Find the Perfect Cold Email Tools for Your Outreach
           </IntroTitle>
 
-          <IntroDescription className="lg:mt-2">{config.site.description}</IntroDescription>
+          <IntroDescription className="lg:mt-2">
+            Compare 50+ cold email tools with verified reviews, detailed features, and transparent pricing from inbox rotation to deliverability audits and stop paying for tools that don't scale.
+          </IntroDescription>
 
           <Suspense fallback={<CountBadgeSkeleton />}>
             <CountBadge />
@@ -39,10 +41,8 @@ export default function Home(props: PageProps) {
         <NewsletterForm
           size="lg"
           className="max-w-sm mx-auto items-center text-center"
-          buttonProps={{ children: "Join our community", size: "md", variant: "fancy" }}
-        >
-          <NewsletterProof />
-        </NewsletterForm>
+          buttonProps={{ children: "Join our community", size: "md", variant: "cta" }}
+        />
 
         <BuiltWith medium="hero" className="absolute bottom-4 left-1/2 -translate-x-1/2 text-xs" />
       </section>

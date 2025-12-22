@@ -14,8 +14,8 @@ type PageProps = {
 }
 
 export const metadata: Metadata = {
-  title: "Open Source alternatives coming soon!",
-  description: `Below is a list of open source tools that are scheduled to be published on ${config.site.name} soon. They are not visible anywhere else on the site.`,
+  title: "Cold email tools coming soon!",
+  description: `Below is a list of tools that are scheduled to be published on ${config.site.name} soon. They are not visible anywhere else on the site.`,
   openGraph: { ...metadataConfig.openGraph, url: "/coming-soon" },
   alternates: { ...metadataConfig.alternates, canonical: "/coming-soon" },
 }

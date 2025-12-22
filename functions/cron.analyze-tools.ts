@@ -1,7 +1,7 @@
 import { ToolStatus } from "@prisma/client"
 import { revalidateTag } from "next/cache"
 import { config } from "~/config"
-import { analyzeRepositoryStack } from "~/lib/stack-analysis"
+import { analyzeRepositoryIntegration } from "~/lib/integration-analysis"
 import { inngest } from "~/services/inngest"
 
 export const analyzeTools = inngest.createFunction(
@@ -18,20 +18,25 @@ export const analyzeTools = inngest.createFunction(
       })
     })
 
-    await step.run("analyze-repository-stacks", async () => {
+    await step.run("analyze-repository-integrations", async () => {
       for (let i = 0; i < tools.length; i += batchSize) {
         const batch = tools.slice(i, i + batchSize)
 
         const promises = batch.map(async (tool, index) => {
+          // Skip tools without a repository URL
+          if (!tool.repositoryUrl) {
+            return null
+          }
+
           logger.info(`Processing batch ${Math.floor(i / batchSize) + 1}, tool ${index + 1}`)
 
           // Get analysis and cache it
-          const stack = await analyzeRepositoryStack(tool.repositoryUrl)
+          const integration = await analyzeRepositoryIntegration(tool.repositoryUrl)
 
-          // Update tool with new stack
+          // Update tool with new integration
           return await db.tool.update({
             where: { id: tool.id },
-            data: { stacks: { set: stack.map(slug => ({ slug })) } },
+            data: { integrations: { set: integration.map(slug => ({ slug })) } },
           })
         })
 

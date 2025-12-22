@@ -3,86 +3,42 @@ import { siteConfig } from "~/config/site"
 export const linksConfig = {
   builtWith: "https://dirstarter.com",
   selfHost: "https://easypanel.io",
-  author: "https://kulpinski.pl",
-  twitter: "https://x.com/ossalternative",
-  bluesky: "https://bsky.app/profile/openalternative.co",
-  mastodon: "https://mastodon.social/@openalternative",
-  linkedin: "https://linkedin.com/company/openalternative",
-  reddit: "https://www.reddit.com/r/openalternative/",
-  analytics: "https://go.openalternative.co/analytics",
+  author: "https://x.com/RiseWins_",
+
+  // Social media placeholders - update with your accounts
+  twitter: "https://x.com/RiseWins_", // Your X/Twitter
+  bluesky: "", // Add your Bluesky handle when available
+  mastodon: "", // Add your Mastodon handle when available
+  linkedin: "", // Add your LinkedIn page when available
+  reddit: "", // Add your subreddit when available
+  analytics: "", // Add your public analytics URL (e.g., Plausible)
+
   feeds: [
-    { title: "Open Source Tools", url: `${siteConfig.url}/rss/tools.xml` },
-    { title: "Proprietary Alternatives", url: `${siteConfig.url}/rss/alternatives.xml` },
+    { title: "Cold Email Tools", url: `${siteConfig.url}/rss/tools.xml` },
+    { title: "Alternatives", url: `${siteConfig.url}/rss/alternatives.xml` },
   ],
+
+  // Other products/resources - customize this section with your preferred links
+  // These appear in the footer under "Other Products"
   family: [
-    {
-      title: "EuroAlternative",
-      href: "https://euroalternative.co",
-      description: "Discover European alternatives to big tech companies",
-    },
-    {
-      title: "DevSuite",
-      href: "https://devsuite.co",
-      description: "Find the perfect developer tools for your next project",
-    },
-    {
-      title: "OpenAds",
-      href: "https://openads.co",
-      description: "Automate ad spot management and increase website revenue",
-    },
+    // TODO: Add your own products or partner sites here
+    // Example:
+    // {
+    //   title: "Your Product",
+    //   href: "https://yourproduct.com",
+    //   description: "Description of your product",
+    // },
+  ],
+
+  // Tools used to build/run ColdEmailKit - optional, can be removed if not needed
+  toolsUsed: [
     {
       title: "Dirstarter",
       href: "https://dirstarter.com",
       description: "Next.js directory website boilerplate",
     },
   ],
-  toolsUsed: [
-    {
-      title: "ScreenshotOne",
-      href: "https://kulp.in/screenshotone",
-      description: "The screenshot API for developers",
-    },
-    {
-      title: "Typefully",
-      href: "https://kulp.in/typefully",
-      description: "Twitter scheduling/analytics",
-    },
-    {
-      title: "Beehiiv",
-      href: "https://kulp.in/beehiiv",
-      description: "Newsletter",
-    },
-    {
-      title: "Airtable",
-      href: "https://kulp.in/airtable",
-      description: "Database",
-    },
-    {
-      title: "Screen Studio",
-      href: "https://kulp.in/screenstudio",
-      description: "Screen recording for marketing videos",
-    },
-  ],
-  featured: [
-    {
-      name: "Hacker News",
-      url: "https://news.ycombinator.com/item?id=39639386",
-      icon: "/hackernews.svg",
-    },
-    {
-      name: "Indie Hackers",
-      url: "https://www.indiehackers.com/post/how-i-grew-a-side-project-to-100k-unique-visitors-in-7-days-with-0-audience-15d48ea192",
-      icon: "/indiehackers.svg",
-    },
-    {
-      name: "Product Hunt",
-      url: "https://www.producthunt.com/posts/openalternative",
-      icon: "/producthunt.svg",
-    },
-    {
-      name: "Twitter",
-      url: "https://twitter.com/steventey/status/1765841867017437599",
-      icon: "/twitter.svg",
-    },
-  ],
+
+  // Featured press mentions - add when you get coverage
+  featured: [],
 }

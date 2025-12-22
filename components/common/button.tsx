@@ -20,6 +20,7 @@ const buttonVariants = cva({
         "border-border! bg-background text-secondary-foreground hover:bg-card hover:border-ring!",
       ghost: "text-secondary-foreground hover:bg-accent hover:text-foreground hover:outline-none",
       destructive: "bg-destructive text-destructive-foreground hover:bg-destructive/90",
+      cta: "bg-[#0ea5e9] text-white hover:bg-[#0ea5e9]/90",
     },
     size: {
       sm: "px-2 py-1 gap-[0.66ch]",

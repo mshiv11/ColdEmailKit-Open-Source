@@ -237,7 +237,7 @@ export const Search = () => {
           name="Tools"
           items={tools?.hits}
           onItemSelect={navigateTo}
-          getHref={({ slug }) => `${isAdminPath ? "/admin/tools" : ""}/${slug}`}
+          getHref={({ slug }) => `${isAdminPath ? "/admin/tools" : "/tools"}/${slug}`}
           renderItemDisplay={({ name, faviconUrl, websiteUrl }) => (
             <>
               {faviconUrl && <img src={faviconUrl} alt="" width={16} height={16} />}

@@ -30,7 +30,7 @@ export const LoginDialog = ({ description, isOpen, setIsOpen }: LoginDialogProps
 
           <DialogDescription>
             <p>
-              {description || "Join the open source community and get access to the dashboard."}
+              {description || "Join the community and get access to the dashboard."}
             </p>
           </DialogDescription>
         </DialogHeader>

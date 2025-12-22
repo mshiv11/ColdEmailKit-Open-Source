@@ -30,7 +30,7 @@ export const Bottom = async ({ className, ...props }: ComponentProps<"div">) => 
       >
         {!!alternatives?.length && (
           <Stack className="gap-x-4 text-sm">
-            <H6 as="strong">Popular Proprietary Tools:</H6>
+            <H6 as="strong">Popular Alternatives:</H6>
 
             <div className="grid grid-cols-2xs gap-x-4 gap-y-2 w-full sm:grid-cols-xs md:grid-cols-sm">
               {alternatives.map(alternative => (

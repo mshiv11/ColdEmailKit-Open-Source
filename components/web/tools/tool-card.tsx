@@ -12,7 +12,9 @@ import { ToolBadges } from "~/components/web/tools/tool-badges"
 import { BrandLink } from "~/components/web/ui/brand-link"
 import { Favicon } from "~/components/web/ui/favicon"
 import { Insights } from "~/components/web/ui/insights"
+import { Tooltip } from "~/components/common/tooltip"
 import { VerifiedBadge } from "~/components/web/verified-badge"
+import { StarRating } from "~/components/web/tools/star-rating"
 import type { ToolMany } from "~/server/web/tools/payloads"
 
 type ToolCardProps = ComponentProps<typeof Card> & {
@@ -31,31 +33,55 @@ const ToolCard = ({ className, tool, isRelated, ...props }: ToolCardProps) => {
 
   const insights = [
     {
-      label: "Stars",
-      value: formatNumber(tool.stars, "standard"),
+      label: "Reviews",
+      value: formatNumber(tool.totalReviews ?? 0, "standard"),
       icon: <Icon name="lucide/star" />,
     },
     {
-      label: "Forks",
-      value: formatNumber(tool.forks, "standard"),
-      icon: <Icon name="lucide/git-fork" />,
+      label: "Trust Score",
+      value: `${tool.trustScore ?? 0}%`,
+      icon: <Icon name="lucide/shield" />,
     },
+    tool.pricingStarting
+      ? {
+        label: "Starting Price",
+        value: tool.pricingStarting,
+        icon: <Icon name="lucide/dollar-sign" />,
+      }
+      : undefined,
     { label: "Last commit", value: lastCommitDate, icon: <Icon name="lucide/timer" /> },
   ]
 
   return (
     <Card asChild {...props}>
-      <Link href={`/${tool.slug}`}>
+      <Link href={`/tools/${tool.slug}`}>
         <CardHeader wrap={false}>
           <Favicon src={tool.faviconUrl} title={tool.name} />
 
-          <H4 as="h3" className="truncate">
-            {tool.name}
-          </H4>
+          <div className="flex flex-col gap-1 min-w-0">
+            <div className="flex items-center gap-2">
+              <H4 as="h3" className="truncate">
+                {tool.name}
+              </H4>
+              {tool.isFeatured && (
+                <Tooltip tooltip="Featured Tool">
+                  <Icon
+                    name="lucide/crown"
+                    className="size-4 text-orange-500 fill-current shrink-0"
+                    aria-label="Featured Tool"
+                  />
+                </Tooltip>
+              )}
+              {tool.ownerId && <VerifiedBadge size="md" />}
+            </div>
 
-          {tool.ownerId && <VerifiedBadge size="md" className="-ml-1.5" />}
+            <StarRating
+              rating={tool.overallRating || 0}
+              className="gap-1.5"
+            />
+          </div>
 
-          <ToolBadges tool={tool} className="ml-auto" />
+          <ToolBadges tool={tool} className="ml-auto self-start" />
         </CardHeader>
 
         <div className="relative size-full flex flex-col">
@@ -73,7 +99,7 @@ const ToolCard = ({ className, tool, isRelated, ...props }: ToolCardProps) => {
               {!!tool.alternatives.length && (
                 <Stack size="sm" className="mt-auto">
                   <span className="text-sm text-muted-foreground whitespace-nowrap">
-                    <span className="sr-only">Open Source </span>Alternative to:
+                    <span className="sr-only">Free </span>Alternative to:
                   </span>
 
                   {tool.alternatives.map(({ slug, name, faviconUrl }) => (
@@ -93,7 +119,10 @@ const ToolCard = ({ className, tool, isRelated, ...props }: ToolCardProps) => {
             )}
           >
             {tool.tagline && <CardDescription>{tool.tagline}</CardDescription>}
-            <Insights insights={insights.filter(i => i.value)} className="mt-auto" />
+            <Insights
+              insights={insights.filter((i): i is NonNullable<typeof i> => !!i && !!i.value)}
+              className="mt-auto"
+            />
           </Stack>
         </div>
       </Link>
@@ -103,11 +132,11 @@ const ToolCard = ({ className, tool, isRelated, ...props }: ToolCardProps) => {
 
 const ToolCardSkeleton = () => {
   const insights = [
-    { label: "Stars", value: <Skeleton className="h-4 w-16" />, icon: <Icon name="lucide/star" /> },
+    { label: "Reviews", value: <Skeleton className="h-4 w-16" />, icon: <Icon name="lucide/star" /> },
     {
-      label: "Forks",
+      label: "Trust Score",
       value: <Skeleton className="h-4 w-14" />,
-      icon: <Icon name="lucide/git-fork" />,
+      icon: <Icon name="lucide/shield" />,
     },
     {
       label: "Last commit",

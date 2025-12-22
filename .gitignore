@@ -31,6 +31,13 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
+debug-*.log
+debug_*.txt
+debug-*.ts
+*.log
+
+# Backup directories
+node_modules_old/
 
 # vercel
 .vercel

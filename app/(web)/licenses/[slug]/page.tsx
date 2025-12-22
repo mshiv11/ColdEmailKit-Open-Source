@@ -28,8 +28,8 @@ const getLicense = cache(async ({ params }: PageProps) => {
 
 const getMetadata = (license: LicenseOne): Metadata => {
   return {
-    title: `${license.name} Licensed Open Source Software`,
-    description: `A curated collection of the ${license._count.tools} best open source software licensed under ${license.name}.`,
+    title: `${license.name} Licensed Tools`,
+    description: `A curated collection of the ${license._count.tools} best tools licensed under ${license.name}.`,
   }
 }
 
@@ -46,6 +46,7 @@ export const generateMetadata = async (props: PageProps): Promise<Metadata> => {
     ...getMetadata(license),
     alternates: { ...metadataConfig.alternates, canonical: url },
     openGraph: { ...metadataConfig.openGraph, url },
+    robots: { index: false, follow: false }, // Temporarily hidden from search engines
   }
 }
 

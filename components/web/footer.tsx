@@ -44,7 +44,7 @@ export const Footer = ({ children, className, hideNewsletter, ...props }: Footer
 
             <p className="-mt-2 px-0.5 text-xs text-muted-foreground first:mt-0">
               Join {formatNumber(config.stats.subscribers + config.stats.stars, "standard")}+ other
-              members and get updates on new open source tools.
+              members and get updates on new tools.
             </p>
 
             <NewsletterForm medium="footer_form" />
@@ -75,35 +75,45 @@ export const Footer = ({ children, className, hideNewsletter, ...props }: Footer
               </ExternalLink>
             </Tooltip>
 
-            <Tooltip tooltip="Follow us on X/Twitter">
-              <ExternalLink href={config.links.twitter} className={navLinkVariants()}>
-                <Icon name="tabler/brand-x" />
-              </ExternalLink>
-            </Tooltip>
+            {config.links.twitter && (
+              <Tooltip tooltip="Follow us on X/Twitter">
+                <ExternalLink href={config.links.twitter} className={navLinkVariants()}>
+                  <Icon name="tabler/brand-x" />
+                </ExternalLink>
+              </Tooltip>
+            )}
 
-            <Tooltip tooltip="Follow us on Bluesky">
-              <ExternalLink href={config.links.bluesky} className={navLinkVariants()}>
-                <Icon name="tabler/brand-bluesky" />
-              </ExternalLink>
-            </Tooltip>
+            {config.links.bluesky && (
+              <Tooltip tooltip="Follow us on Bluesky">
+                <ExternalLink href={config.links.bluesky} className={navLinkVariants()}>
+                  <Icon name="tabler/brand-bluesky" />
+                </ExternalLink>
+              </Tooltip>
+            )}
 
-            <Tooltip tooltip="Follow us on Mastodon">
-              <ExternalLink href={config.links.mastodon} className={navLinkVariants()}>
-                <Icon name="tabler/brand-mastodon" />
-              </ExternalLink>
-            </Tooltip>
+            {config.links.mastodon && (
+              <Tooltip tooltip="Follow us on Mastodon">
+                <ExternalLink href={config.links.mastodon} className={navLinkVariants()}>
+                  <Icon name="tabler/brand-mastodon" />
+                </ExternalLink>
+              </Tooltip>
+            )}
 
-            <Tooltip tooltip="Follow us on LinkedIn">
-              <ExternalLink href={config.links.linkedin} className={navLinkVariants()}>
-                <Icon name="tabler/brand-linkedin" />
-              </ExternalLink>
-            </Tooltip>
+            {config.links.linkedin && (
+              <Tooltip tooltip="Follow us on LinkedIn">
+                <ExternalLink href={config.links.linkedin} className={navLinkVariants()}>
+                  <Icon name="tabler/brand-linkedin" />
+                </ExternalLink>
+              </Tooltip>
+            )}
 
-            <Tooltip tooltip="Join our community on Reddit">
-              <ExternalLink href={config.links.reddit} className={navLinkVariants()}>
-                <Icon name="tabler/brand-reddit" />
-              </ExternalLink>
-            </Tooltip>
+            {config.links.reddit && (
+              <Tooltip tooltip="Join our community on Reddit">
+                <ExternalLink href={config.links.reddit} className={navLinkVariants()}>
+                  <Icon name="tabler/brand-reddit" />
+                </ExternalLink>
+              </Tooltip>
+            )}
           </Stack>
         </Stack>
 
@@ -112,10 +122,12 @@ export const Footer = ({ children, className, hideNewsletter, ...props }: Footer
 
           <NavLink href="/alternatives">Alternatives</NavLink>
           <NavLink href="/categories">Categories</NavLink>
-          <NavLink href="/self-hosted">Self-hosted</NavLink>
-          <NavLink href="/stacks">Tech Stacks</NavLink>
+
+          <NavLink href="/integrations">Integrations</NavLink>
+          {/* Temporarily hidden - Topics and Licenses sections
           <NavLink href="/topics">Topics</NavLink>
           <NavLink href="/licenses">Licenses</NavLink>
+          */}
         </Stack>
 
         <Stack direction="column" className="text-sm md:col-span-3">
@@ -124,35 +136,36 @@ export const Footer = ({ children, className, hideNewsletter, ...props }: Footer
           <NavLink href="/about">About Us</NavLink>
           <NavLink href="/blog">Blog</NavLink>
           <NavLink href="/advertise">Advertise</NavLink>
-          <NavLink href="/submit">Add a Free Listing</NavLink>
+          <NavLink href="/submit">Add a Tool</NavLink>
+          <NavLink href="/contact">Contact</NavLink>
+          <NavLink href="/privacy">Privacy Policy</NavLink>
+          <NavLink href="/terms">Terms of Service</NavLink>
         </Stack>
 
-        <Stack direction="column" className="text-sm md:col-span-3">
-          <H6 as="strong">Other Products:</H6>
+        {config.links.family.length > 0 && (
+          <Stack direction="column" className="text-sm md:col-span-3">
+            <H6 as="strong">Other Products:</H6>
 
-          {config.links.family.map(({ href, title, description }) => (
-            <ExternalLink
-              key={href}
-              href={href}
-              title={description}
-              className={navLinkVariants()}
-              doFollow
-            >
-              {title}
-            </ExternalLink>
-          ))}
-        </Stack>
+            {config.links.family.map(({ href, title, description }) => (
+              <ExternalLink
+                key={href}
+                href={href}
+                title={description}
+                className={navLinkVariants()}
+                doFollow
+              >
+                {title}
+              </ExternalLink>
+            ))}
+          </Stack>
+        )}
       </div>
 
       <div className="flex flex-row flex-wrap items-end justify-between gap-x-4 gap-y-2 w-full text-sm text-muted-foreground **:[&[href]]:font-medium **:[&[href]]:text-foreground **:[&[href]]:hover:text-secondary-foreground">
         <BuiltWith medium="footer" />
 
         <p>
-          Made by{" "}
-          <ExternalLink href={config.links.author} data-link doFollow>
-            Piotr Kulpinski
-          </ExternalLink>
-          . Website may contain affiliate links.
+          © {new Date().getFullYear()} {config.site.name}. All rights reserved.
         </p>
       </div>
 

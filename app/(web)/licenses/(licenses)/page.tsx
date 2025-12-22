@@ -7,11 +7,12 @@ import { Intro, IntroDescription, IntroTitle } from "~/components/web/ui/intro"
 import { metadataConfig } from "~/config/metadata"
 
 export const metadata: Metadata = {
-  title: "Open Source Software Licenses",
+  title: "Software Licenses",
   description:
-    "Discover top open source software licenses and learn about their terms and conditions.",
+    "Discover top software licenses and learn about their terms and conditions.",
   openGraph: { ...metadataConfig.openGraph, url: "/licenses" },
   alternates: { ...metadataConfig.alternates, canonical: "/licenses" },
+  robots: { index: false, follow: false }, // Temporarily hidden from search engines
 }
 
 export default function Licenses() {

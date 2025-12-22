@@ -8,7 +8,7 @@ type EmailProps = EmailWrapperProps & {
 }
 
 const EmailWelcome = ({ name = "there", ...props }: EmailProps) => {
-  const preview = `Welcome to ${config.site.name} – A collection of open source alternatives to popular software!`
+  const preview = `Welcome to ${config.site.name} – Your guide to the best cold email tools for sales outreach!`
 
   return (
     <EmailWrapper preview={preview} signature {...props}>
@@ -18,7 +18,7 @@ const EmailWelcome = ({ name = "there", ...props }: EmailProps) => {
 
       <Text>
         {config.site.name} is more than just a platform – it's a community. Connect with like-minded
-        open source enthusiasts, share your favorite projects, and be part of the movement.
+        software enthusiasts, share your favorite projects, and be part of the movement.
       </Text>
 
       <Text>Here's what you can do in {config.site.name}:</Text>
@@ -27,7 +27,7 @@ const EmailWelcome = ({ name = "there", ...props }: EmailProps) => {
         <li>
           <Text className="m-0">
             <Link href={`${config.site.url}/latest`} className="underline font-medium">
-              Explore Open Source Projects
+              Explore Cold Email Tools
             </Link>{" "}
             – Browse existing projects curated by the community. We publish new projects every week.
           </Text>
@@ -38,7 +38,7 @@ const EmailWelcome = ({ name = "there", ...props }: EmailProps) => {
             <Link href={`${config.site.url}/submit`} className="underline font-medium">
               Share Your Projects
             </Link>{" "}
-            – Get your project in front of thousands of open source enthusiasts. It’s 100% free to
+            – Get your project in front of thousands of software enthusiasts. It’s 100% free to
             submit.
           </Text>
         </li>
@@ -46,7 +46,7 @@ const EmailWelcome = ({ name = "there", ...props }: EmailProps) => {
         <li>
           <Text className="m-0">
             <Link href={`${config.site.url}/advertise`} className="underline font-medium">
-              Advertise on OpenAlternative
+              Advertise on {config.site.name}
             </Link>{" "}
             – Choose one of the available options and promote your business or software on our
             website.

@@ -43,8 +43,8 @@ export const EmailWrapper = ({ to, signature, preview, children }: EmailWrapperP
               <Text>
                 Best,
                 <br />
-                <Link href="https://x.com/piotrkulpinski" className="underline text-black">
-                  Piotr
+                <Link href="https://x.com/RiseWins_" className="underline text-black">
+                  Rise
                 </Link>{" "}
                 from {config.site.name}
               </Text>

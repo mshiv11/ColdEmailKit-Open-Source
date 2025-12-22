@@ -84,11 +84,7 @@ const Header = ({ children, className, session, ...props }: HeaderProps) => {
                     Latest
                   </NavLink>
                 </DropdownMenuItem>
-                <DropdownMenuItem asChild>
-                  <NavLink href="/self-hosted">
-                    <Icon name="lucide/server" className="shrink-0 size-4 opacity-75" /> Self-hosted
-                  </NavLink>
-                </DropdownMenuItem>
+
                 <DropdownMenuItem asChild>
                   <NavLink href="/coming-soon">
                     <Icon name="lucide/clock" className="shrink-0 size-4 opacity-75" /> Coming Soon
@@ -101,10 +97,11 @@ const Header = ({ children, className, session, ...props }: HeaderProps) => {
                   </NavLink>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
-                  <NavLink href="/stacks">
-                    <Icon name="lucide/blocks" className="shrink-0 size-4 opacity-75" /> Tech Stacks
+                  <NavLink href="/integrations">
+                    <Icon name="lucide/blocks" className="shrink-0 size-4 opacity-75" /> Integrations
                   </NavLink>
                 </DropdownMenuItem>
+                {/* Temporarily hidden - Topics and Licenses sections
                 <DropdownMenuItem asChild>
                   <NavLink href="/topics">
                     <Icon name="lucide/tag" className="shrink-0 size-4 opacity-75" /> Topics
@@ -115,11 +112,12 @@ const Header = ({ children, className, session, ...props }: HeaderProps) => {
                     <Icon name="lucide/copyright" className="shrink-0 size-4 opacity-75" /> Licenses
                   </NavLink>
                 </DropdownMenuItem>
+                */}
               </DropdownMenuContent>
             </DropdownMenu>
 
             <NavLink href="/alternatives">Alternatives</NavLink>
-            <NavLink href="/self-hosted">Self-hosted</NavLink>
+
             <NavLink href="/advertise">Advertise</NavLink>
           </nav>
 
@@ -151,9 +149,7 @@ const Header = ({ children, className, session, ...props }: HeaderProps) => {
           <NavLink href="/latest" className="text-base">
             Latest
           </NavLink>
-          <NavLink href="/self-hosted" className="text-base">
-            Self-hosted
-          </NavLink>
+
           <NavLink href="/coming-soon" className="text-base">
             Coming Soon
           </NavLink>
@@ -163,12 +159,14 @@ const Header = ({ children, className, session, ...props }: HeaderProps) => {
           <NavLink href="/categories" className="text-base">
             Categories
           </NavLink>
-          <NavLink href="/stacks" className="text-base">
-            Tech Stacks
+          <NavLink href="/integrations" className="text-base">
+            Integrations
           </NavLink>
+          {/* Temporarily hidden - Topics section
           <NavLink href="/topics" className="text-base">
             Topics
           </NavLink>
+          */}
           <NavLink href="/submit" className="text-base">
             Submit
           </NavLink>

@@ -33,7 +33,7 @@ const CountBadge = async () => {
       <Link href="/latest">
         {newCount
           ? `${formatNumber(newCount)} new ${plur("tool", newCount)} added`
-          : `${formatNumber(count)}+ open source tools`}
+          : `${formatNumber(count)}+ tools`}
       </Link>
     </Badge>
   )

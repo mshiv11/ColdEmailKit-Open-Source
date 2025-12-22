@@ -15,7 +15,7 @@ const AlternativePreview = async () => {
 
   return (
     <Listing
-      title="Discover Open Source alternatives to:"
+      title="Discover Free alternatives to:"
       button={<Link href="/alternatives">View all alternatives</Link>}
       separated
     >
@@ -26,7 +26,7 @@ const AlternativePreview = async () => {
 
 const AlternativePreviewSkeleton = () => {
   return (
-    <Listing title="Discover Open Source alternatives to:">
+    <Listing title="Discover Free alternatives to:">
       <AlternativeListSkeleton />
     </Listing>
   )

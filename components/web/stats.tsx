@@ -9,7 +9,7 @@ export const Stats = ({ className, ...props }: ComponentProps<"div">) => {
     { value: config.stats.pageviews, label: "Monthly Pageviews" },
     { value: config.stats.tools, label: "Listed Projects" },
     { value: config.stats.subscribers, label: "Newsletter Subscribers" },
-    { value: config.stats.stars, label: "GitHub Stars" },
+    { value: config.stats.reviews, label: "Total Reviews" },
   ]
 
   return (

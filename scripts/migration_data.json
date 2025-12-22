@@ -1,0 +1,179 @@
+[
+    {
+        "id": "0e6df619-6315-4dac-bf78-842f66152a3e",
+        "slug": "manyreach",
+        "name": "ManyReach",
+        "description": "ManyReach is an AI-powered cold emailing platform designed for agencies, offering unlimited mailboxes, contacts, and team members with a pay-as-you-go pricing model.",
+        "long_description": "ManyReach is an innovative AI-powered cold emailing platform tailored specifically for agencies and businesses looking to scale their outreach efforts efficiently. The platform stands out with its unique pay-as-you-go pricing model, which ensures that users only pay for what they use, making it a cost-effective solution for businesses of all sizes. This model is particularly beneficial for startups and small businesses that need to manage their budgets carefully while still aiming to maximize their outreach potential. ManyReach allows users to connect unlimited mailboxes, enabling them to send cold emails to an unlimited number of contacts. This feature is crucial for businesses that have extensive contact lists and need to reach out to a large audience without any restrictions. Additionally, the platform supports unlimited team members, making it an ideal choice for agencies that require collaborative efforts and need to manage multiple team members under one account. This ensures that all team members can work seamlessly without any additional costs, fostering better teamwork and productivity. One of the standout features of ManyReach is its advanced deliverability mechanisms. The platform employs various techniques such as auto-rotating mailboxes, IP rotation, and time zone matching to ensure that emails reach the intended recipients' inboxes and do not end up in spam folders. This is essential for maintaining high deliverability rates and ensuring the success of cold email campaigns. Furthermore, ManyReach offers a unified inbox, allowing users to manage all their email communications from a single interface. This simplifies the process of tracking and responding to emails, saving time and effort. The platform also provides detailed analytics and reporting, giving users insights into the performance of their campaigns and helping them make data-driven decisions to improve their outreach strategies. Overall, ManyReach is a comprehensive and flexible solution for cold emailing, offering a range of features designed to meet the needs of modern businesses and agencies.",
+        "logo": "https://img.logo.dev/manyreach.com?token=pk_Q7EiWOmsTIuV9Yy-00JRvQ",
+        "website": "https://manyreach.com/?via=mshiv",
+        "pricing_starter": "$29",
+        "featured": true,
+        "categories": [
+            "outreach"
+        ]
+    },
+    {
+        "id": "7003635f-f9e2-4d39-a436-1291f4fd5203",
+        "slug": "salesloft",
+        "name": "SalesLoft",
+        "description": "Revenue workflow platform that helps teams generate more revenue through better buyer engagement.",
+        "long_description": "SalesLoft is a comprehensive revenue workflow platform that combines sales engagement, conversation intelligence, and revenue analytics to help sales teams engage buyers, generate pipeline, and close more deals with predictable revenue growth.",
+        "logo": "https://img.logo.dev/salesloft.com?token=pk_Q7EiWOmsTIuV9Yy-00JRvQ",
+        "website": "https://salesloft.com/?utm_source=coldemailkit.com&utm_medium=directory&utm_campaign=outreach&utm_content=salesloft",
+        "pricing_starter": "$65",
+        "featured": false,
+        "categories": [
+            "outreach"
+        ]
+    },
+    {
+        "id": "607d3531-1c02-4a45-965c-39b8ddeeb422",
+        "slug": "skysenders",
+        "name": "Skysenders",
+        "description": "SkySenders is a next-gen platform for cold email infrastructure with dedicated server per domain, instant SPF, DKIM, DMARC setup and real-time email deliverability analytics guaranteeing optimal inbox placement and surefire domain reputation for outbound teams.",
+        "long_description": "SkySenders is the all-in-one solution for cold outreach automation at scale. Teams get one-click cold email domain setup with instant email authentication (SPF, DKIM, DMARC), dedicated SMTP server per domain and real-time analytics.\n\nIts unified inbox tracks replies, bounces and detailed email deliverability analytics for every campaign, maximizing sender reputation management. Powerful cold email API integration and customisable email tracking streamline campaign pipelines and boost B2B lead generation.\n\nSkySenders helps you avoid spam filters, improve domain reputation, and consistently achieve high inbox placement. The true technical backbone behind winning cold email performance.",
+        "logo": "https://img.logo.dev/skysenders.ai?token=pk_Q7EiWOmsTIuV9Yy-00JRvQ",
+        "website": "https://skysenders.ai",
+        "pricing_starter": "$59",
+        "featured": false,
+        "categories": [
+            "inboxes"
+        ]
+    },
+    {
+        "id": "b36ab3a2-b82d-4511-9f27-559290585fb4",
+        "slug": "zapmail",
+        "name": "Zapmail",
+        "description": "Best email deliverability with Zapmail. Google Workspace mailboxes for $2.50/month with automated DKIM, SPF, DMARC, and easy integration with cold email tools like Instantly, SmartLead and ReachInbox.",
+        "long_description": "Zapmail is a marketplace specifically designed for the efficient creation and management of mailboxes tailored for cold email outreach. It enables users to effortlessly purchase and set up mailboxes, automate the configuration of essential email protocols, and manage or transfer domains. Furthermore, Zapmail simplifies the process of exporting mailboxes to various tools, optimizing your cold emailing processes.",
+        "logo": "https://img.logo.dev/zapmail.ai?token=pk_Q7EiWOmsTIuV9Yy-00JRvQ",
+        "website": "https://zapmail.ai/?ref=mshiv",
+        "pricing_starter": "$39",
+        "featured": true,
+        "categories": [
+            "inboxes"
+        ]
+    },
+    {
+        "id": "b76ae5a7-3865-484a-afaa-763c02a02fbe",
+        "slug": "listkit",
+        "name": "ListKit",
+        "description": "B2B contact database providing verified email addresses and phone numbers with real-time verification.",
+        "long_description": "ListKit is a B2B data platform that provides triple-verified email addresses and direct dial phone numbers. It focuses on data accuracy and real-time verification to ensure high deliverability rates for cold outreach campaigns.",
+        "logo": "https://img.logo.dev/listkit.io?token=pk_Q7EiWOmsTIuV9Yy-00JRvQ",
+        "website": "https://listkit.io/?utm_source=coldemailkit.com&utm_medium=directory&utm_campaign=leads&utm_content=listkit",
+        "pricing_starter": "$69",
+        "featured": false,
+        "categories": [
+            "leads"
+        ]
+    },
+    {
+        "id": "ffb03f4d-13ac-4d41-92ee-b573cb6bc52b",
+        "slug": "outreach",
+        "name": "Outreach",
+        "description": "Enterprise sales engagement platform for scaling personalized outreach across multiple channels.",
+        "long_description": "Outreach is the leading sales engagement platform trusted by thousands of companies worldwide. It provides comprehensive tools for email outreach, call automation, social selling, and meeting scheduling, all powered by AI and machine learning to optimize engagement and conversion rates.",
+        "logo": "https://img.logo.dev/outreach.io?token=pk_Q7EiWOmsTIuV9Yy-00JRvQ",
+        "website": "https://outreach.io/?utm_source=coldemailkit.com&utm_medium=directory&utm_campaign=leads&utm_content=outreach",
+        "pricing_starter": "$120",
+        "featured": false,
+        "categories": [
+            "outreach"
+        ]
+    },
+    {
+        "id": "8971f1a6-5c22-4e8b-9d41-654321098765",
+        "slug": "instantly",
+        "name": "Instantly",
+        "description": "Cold email outreach tool with unlimited email accounts and warm-up features.",
+        "long_description": "Instantly is a cold email outreach tool that allows users to connect unlimited email accounts and includes automated warm-up features to improve deliverability. It is designed to help businesses scale their outreach campaigns efficiently.",
+        "logo": "https://img.logo.dev/instantly.ai?token=pk_Q7EiWOmsTIuV9Yy-00JRvQ",
+        "website": "https://instantly.ai/?via=mshiv",
+        "pricing_starter": "$37",
+        "featured": true,
+        "categories": [
+            "outreach"
+        ]
+    },
+    {
+        "id": "12345678-1234-1234-1234-123456789012",
+        "slug": "smartlead",
+        "name": "Smartlead",
+        "description": "Scale your cold email outreach with unlimited mailboxes and AI personalization.",
+        "long_description": "Smartlead offers unlimited mailboxes, AI personalization, and a unified master inbox to help you scale your cold email outreach. It focuses on deliverability and automation to maximize your campaign results.",
+        "logo": "https://img.logo.dev/smartlead.ai?token=pk_Q7EiWOmsTIuV9Yy-00JRvQ",
+        "website": "https://smartlead.ai/?via=mshiv",
+        "pricing_starter": "$39",
+        "featured": true,
+        "categories": [
+            "outreach"
+        ]
+    },
+    {
+        "id": "abcdef12-3456-7890-abcd-ef1234567890",
+        "slug": "apollo",
+        "name": "Apollo",
+        "description": "All-in-one sales intelligence platform with tools to help you prospect, engage, and drive more revenue.",
+        "long_description": "Apollo is a leading sales intelligence platform that provides a vast database of contacts, engagement tools, and workflow automation. It helps sales teams find the right prospects, connect with them, and close deals faster.",
+        "logo": "https://img.logo.dev/apollo.io?token=pk_Q7EiWOmsTIuV9Yy-00JRvQ",
+        "website": "https://www.apollo.io/?utm_source=coldemailkit.com&utm_medium=directory&utm_campaign=leads&utm_content=apollo",
+        "pricing_starter": "$49",
+        "featured": true,
+        "categories": [
+            "leads",
+            "enrichment",
+            "outreach"
+        ]
+    },
+    {
+        "id": "818fa0db-3d5f-48f0-b25d-c4b6a80c0c12",
+        "slug": "smartreach",
+        "name": "SmartReach",
+        "description": "SmartReach is an all-in-one cold outreach tool for email, LinkedIn, calling, and more, designed to maximize replies and qualified leads.",
+        "long_description": "SmartReach is a comprehensive sales engagement platform designed to streamline and enhance cold outreach efforts across multiple channels, including email, LinkedIn, phone calls, and WhatsApp. This powerful tool is tailored to help businesses of all sizes automate personalized email campaigns, improve email deliverability, and book more meetings at scale. Whether you're an individual founder, part of an SDR team, an agency, or a recruiter, SmartReach offers a suite of tools to run high-performing outbound campaigns from start to finish.\n\n**Key Features and Capabilities**\n\n**Multichannel Outreach:** SmartReach allows users to reach prospects through various channels such as email, LinkedIn, phone calls, and WhatsApp. These channels can be integrated into one sequence or spaced out in a drip flow to increase response rates. This multichannel approach ensures that your outreach efforts are comprehensive and tailored to the preferences of your prospects.\n\n**Cold Email Campaigns:** With SmartReach, you can send cold emails at scale using multiple inboxes and smart rotation. This feature helps in maintaining a high sender reputation and ensures that your emails land in the inboxes of your prospects rather than their spam folders. The platform supports the integration of unlimited email accounts, allowing for a broad and effective outreach strategy.\n\n**Domain and Email Management:** SmartReach offers the ability to buy fully authenticated domains and email accounts t",
+        "logo": "https://img.logo.dev/smartreach.io?token=pk_Q7EiWOmsTIuV9Yy-00JRvQ",
+        "website": "https://smartreach.io/?utm_source=coldemailkit.com&utm_medium=directory&utm_campaign=outreach&utm_content=smartreach",
+        "pricing_starter": "$29",
+        "featured": false,
+        "categories": [
+            "outreach"
+        ]
+    },
+    {
+        "id": "2a4d0e91-765c-4b3a-9f8d-123456789abc",
+        "slug": "lagrowthmachine",
+        "name": "La Growth Machine",
+        "description": "La Growth Machine is a multi-channel sales automation platform that combines Email, LinkedIn, and Twitter/X to help sales teams generate more conversations.",
+        "long_description": "La Growth Machine (LGM) is a sales automation platform designed to help B2B teams scale their outreach across Email, LinkedIn, and Twitter/X. It allows users to build complex, multi-channel sequences that mimic human behavior, ensuring higher engagement rates. Key features include AI-powered LinkedIn voice messages, lookalike prospecting, intent-based targeting, and a unified inbox for LinkedIn and Email replies. LGM prioritizes account safety with cloud-based automation, dedicated 5G proxies, and GDPR compliance, ensuring users can scale outreach without risking LinkedIn bans. The platform integrates natively with HubSpot, Pipedrive, and 100+ other tools via Zapier, Make, and API, making it adaptable to existing workflows. With tiered pricing (Basic, Pro, Ultimate, and custom Agency plans), LGM caters to solo founders, scaling teams, and agencies, offering features like A/B testing, social warming, and CRM sync. A 14-day free trial is available, with no credit card required.",
+        "website": "http://go.coldemailkit.com/lagrowthmachine",
+        "logo": "https://img.logo.dev/lagrowthmachine.com?token=pk_Q7EiWOmsTIuV9Yy-00JRvQ",
+        "pricing_starter": "€50",
+        "featured": true,
+        "categories": [
+            "leads",
+            "outreach",
+            "warmup",
+            "enrichment",
+            "copywriting"
+        ]
+    },
+    {
+        "id": "8124ea3d-5896-45f5-8e01-b0fe3acc861f",
+        "slug": "instantly",
+        "name": "Instantly",
+        "description": "Instantly turns leads into clients with Automated Outreach, Deliverability Network, Sales Engagement, B2B Lead Database & AI-Powered CRM.",
+        "long_description": "Instantly is a comprehensive sales engagement and lead intelligence platform designed to automate and optimize outreach campaigns. It offers a suite of tools including automated outreach, deliverability network, sales engagement features, a B2B lead database, and an AI-powered CRM. The platform allows users to connect unlimited email addresses, automatically rotate sending across them, and purchase sending domains with all necessary configurations like MX, SPF, DKIM, DMARC, and warmup. Instantly also provides advanced filters for finding warm leads, AI prompts for crafting personalized messages, and AI tools for optimizing email content and managing inboxes. The platform includes features like campaign pipeline analytics, sales accelerator resources, and a unified inbox for managing conversations. Instantly is praised for its ease of use, deliverability optimization, and comprehensive support, making it a favorite among agencies, sellers, freelancers, and teams for scaling their outreach efforts and driving more replies and conversions. You can also buy pre-warmup inboxes from Instantly as an add-on.",
+        "website": "https://instantly.ai/?via=mshiv",
+        "logo": "https://img.logo.dev/instantly.ai?token=pk_Q7EiWOmsTIuV9Yy-00JRvQ",
+        "pricing_starter": "$37",
+        "featured": true,
+        "categories": [
+            "outreach",
+            "warmup",
+            "leads",
+            "inboxes"
+        ]
+    }
+]

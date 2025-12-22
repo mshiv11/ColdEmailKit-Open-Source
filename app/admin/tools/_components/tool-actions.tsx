@@ -18,7 +18,7 @@ import {
 } from "~/components/common/dropdown-menu"
 import { Icon } from "~/components/common/icon"
 import { Link } from "~/components/common/link"
-import { analyzeToolStack, fetchToolRepositoryData } from "~/server/admin/tools/actions"
+import { analyzeToolIntegration } from "~/server/admin/tools/actions"
 import { cx } from "~/utils/cva"
 
 type ToolActionsProps = ComponentProps<typeof Button> & {
@@ -32,12 +32,7 @@ export const ToolActions = ({ className, tool, ...props }: ToolActionsProps) => 
 
   const actions = [
     {
-      action: fetchToolRepositoryData,
-      label: "Fetch Repository Data",
-      successMessage: "Repository data fetched successfully",
-    },
-    {
-      action: analyzeToolStack,
+      action: analyzeToolIntegration,
       label: "Analyze Stack",
       successMessage: "Tool stack analyzed successfully",
     },
@@ -72,7 +67,7 @@ export const ToolActions = ({ className, tool, ...props }: ToolActionsProps) => 
         )}
 
         <DropdownMenuItem asChild>
-          <Link href={`/${tool.slug}`} target="_blank">
+          <Link href={`/tools/${tool.slug}`} target="_blank">
             View
           </Link>
         </DropdownMenuItem>
@@ -93,13 +88,7 @@ export const ToolActions = ({ className, tool, ...props }: ToolActionsProps) => 
           </DropdownMenuItem>
         )}
 
-        {isValidUrl(tool.repositoryUrl) && (
-          <DropdownMenuItem asChild>
-            <Link href={tool.repositoryUrl} target="_blank">
-              Visit repository
-            </Link>
-          </DropdownMenuItem>
-        )}
+
 
         <DropdownMenuSeparator />
 

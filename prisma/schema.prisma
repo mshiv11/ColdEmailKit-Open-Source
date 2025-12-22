@@ -27,7 +27,7 @@ enum ToolStatus {
   Published
 }
 
-enum StackType {
+enum IntegrationType {
   Tool
   SaaS
   Cloud
@@ -61,6 +61,7 @@ model User {
   emailVerified Boolean   @default(false)
   image         String?
   role          String    @default("user")
+  twitterHandle String?
   banned        Boolean?  @default(false)
   banReason     String?
   banExpires    DateTime?
@@ -73,6 +74,7 @@ model User {
   likes    Like[]
   tools    Tool[]
   reports  Report[]
+  reviews  Review[]
 
   // Indexes
   @@index([id])
@@ -153,7 +155,7 @@ model Tool {
   slug            String     @unique
   websiteUrl      String     @unique
   affiliateUrl    String?
-  repositoryUrl   String     @unique
+  repositoryUrl   String?    @unique
   tagline         String?
   description     String?
   content         String?
@@ -172,6 +174,25 @@ model Tool {
   firstCommitDate DateTime?
   lastCommitDate  DateTime?
   pageviews       Int?       @default(0)
+  trustScore      Int?       @default(0)
+  overallRating   Float?     @default(0)
+  totalReviews    Int?       @default(0)
+  pricingStarting String?
+  bestFor         String?
+  hasFreeTrial    Boolean    @default(false)
+  
+  // Platform-specific ratings (0-5 scale) and review counts
+  g2Rating           Float?    @default(0)
+  g2Reviews          Int?      @default(0)
+  trustpilotRating   Float?    @default(0)
+  trustpilotReviews  Int?      @default(0)
+  capterraRating     Float?    @default(0)
+  capterraReviews    Int?      @default(0)
+  trustradiusRating  Float?    @default(0)
+  trustradiusReviews Int?      @default(0)
+  coldEmailKitRating Float?    @default(0)
+  coldEmailKitReviews Int?     @default(0)
+  
   status          ToolStatus @default(Draft)
   publishedAt     DateTime?
   createdAt       DateTime   @default(now())
@@ -181,7 +202,9 @@ model Tool {
   alternatives Alternative[]
   categories   Category[]
   topics       Topic[]
-  stacks       Stack[]
+  integrations Integration[]
+  compliances  Compliance[]
+  reviews      Review[]
   license      License?      @relation(fields: [licenseId], references: [id])
   licenseId    String?
   likes        Like[]
@@ -267,11 +290,11 @@ model License {
   @@index([slug])
 }
 
-model Stack {
+model Integration {
   id          String    @id @default(cuid())
   name        String    @db.Citext
   slug        String    @unique
-  type        StackType @default(Language)
+  type        IntegrationType @default(Language)
   description String?
   website     String?
   faviconUrl  String?
@@ -283,6 +306,39 @@ model Stack {
 
   // Indexes
   @@index([slug])
+}
+
+model Compliance {
+  id          String   @id @default(cuid())
+  name        String   @db.Citext
+  slug        String   @unique
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  tools Tool[]
+
+  // Indexes
+  @@index([slug])
+}
+
+model Review {
+  id        String   @id @default(cuid())
+  rating    Int
+  comment   String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+  tool   Tool   @relation(fields: [toolId], references: [id], onDelete: Cascade)
+  toolId String
+
+  // Indexes
+  @@index([userId])
+  @@index([toolId])
 }
 
 model Report {

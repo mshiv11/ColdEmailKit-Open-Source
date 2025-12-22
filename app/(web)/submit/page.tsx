@@ -8,8 +8,8 @@ import { config } from "~/config"
 import { metadataConfig } from "~/config/metadata"
 
 export const metadata: Metadata = {
-  title: "Submit your Open Source Software",
-  description: `Help us grow the list of open source alternatives to proprietary software. Contribute to ${config.site.name} by submitting a new open source alternative.`,
+  title: "Submit your Cold Email Tool",
+  description: `Help us grow the list of cold email tools. Contribute to ${config.site.name} by submitting a new tool.`,
   openGraph: { ...metadataConfig.openGraph, url: "/submit" },
   alternates: { ...metadataConfig.alternates, canonical: "/submit" },
 }
@@ -35,10 +35,10 @@ export default async function SubmitPage() {
             </p>
 
             <ul className="[&_li]:p-0 list-inside p-0">
-              <li>The project is Open Source</li>
+              <li>The project is a Cold Email Tool</li>
               <li>The project is actively maintained</li>
               <li>
-                It is an <Link href="/alternatives">alternative to proprietary software</Link>
+                It is an <Link href="/alternatives">alternative to other tools</Link>
               </li>
             </ul>
           </Prose>

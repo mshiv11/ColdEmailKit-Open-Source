@@ -22,6 +22,11 @@ export const fetchRepositoryData = adminProcedure.createServerAction().handler(a
 
   await Promise.allSettled(
     tools.map(async tool => {
+      // Skip tools without a repository URL
+      if (!tool.repositoryUrl) {
+        return null
+      }
+
       const result = await tryCatch(getToolRepositoryData(tool.repositoryUrl))
 
       if (result.error) {

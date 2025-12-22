@@ -14,15 +14,14 @@ type JinaResponse = {
 
 /**
  * Scrapes a website and returns the scraped data using Jina.ai's Reader API.
+ * The Reader API expects the URL to be appended to the path: https://r.jina.ai/<url>
  * @param url The URL of the website to scrape.
  * @returns The scraped data.
  */
 export const scrapeWebsiteData = async (url: string) => {
-  let jinaApi = wretch("https://r.jina.ai").headers({
+  // Jina Reader API: append target URL to the path
+  let jinaApi = wretch(`https://r.jina.ai/${url}`).headers({
     Accept: "application/json",
-    "X-Engine": "cf-browser-rendering",
-    "X-Remove-Selector": "img, video, iframe, a",
-    "X-Retain-Images": "none",
     "X-Return-Format": "markdown",
   })
 
@@ -30,11 +29,13 @@ export const scrapeWebsiteData = async (url: string) => {
     jinaApi = jinaApi.auth(`Bearer ${env.JINA_API_KEY}`)
   }
 
-  const { data, error } = await tryCatch(jinaApi.post({ url }).json<JinaResponse>())
+  const { data, error } = await tryCatch(jinaApi.get().json<JinaResponse>())
 
   if (error) {
+    console.error("Jina API error:", error)
     throw new Error(getErrorMessage(error))
   }
 
   return data.data
 }
+

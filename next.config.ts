@@ -4,10 +4,10 @@ import type { NextConfig } from "next"
 const nextConfig: NextConfig = {
   reactStrictMode: false,
   devIndicators: false,
-  allowedDevOrigins: ["openalternative.local"],
+  allowedDevOrigins: ["coldemailkit.local"],
 
   experimental: {
-    ppr: true,
+    ppr: false,
     useCache: true,
 
     optimizePackageImports: [
@@ -22,12 +22,21 @@ const nextConfig: NextConfig = {
   },
 
   images: {
-    loader: "custom",
-    loaderFile: "./lib/image-loader.ts",
+    ...(process.env.NODE_ENV === "production"
+      ? {
+        loader: "custom",
+        loaderFile: "./lib/image-loader.ts",
+      }
+      : {}),
     minimumCacheTTL: 31536000,
     deviceSizes: [640, 768, 1024],
     remotePatterns: [
       { hostname: `${process.env.S3_BUCKET}.s3.${process.env.S3_REGION}.amazonaws.com` },
+      { protocol: "https", hostname: "img.logo.dev" },
+      { protocol: "https", hostname: "lh3.googleusercontent.com" },
+      { protocol: "https", hostname: "avatars.githubusercontent.com" },
+      { protocol: "https", hostname: "pub-8dbded528a58478ebbb7064bc2cad60a.r2.dev" },
+      { protocol: "https", hostname: "phpsekmsbokkrtlkdtli.supabase.co" },
     ],
   },
 

@@ -8,7 +8,7 @@ import {
 } from "~/server/web/alternatives/queries"
 
 export const RelatedAlternatives = async ({ alternative }: { alternative: AlternativeOne }) => {
-  let title = "Similar proprietary alternatives:"
+  let title = "Similar alternatives:"
   let alternatives = await findRelatedAlternatives({ id: alternative.id })
 
   if (!alternatives.length) {

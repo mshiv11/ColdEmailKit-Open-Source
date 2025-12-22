@@ -36,8 +36,11 @@ const prepareEmail = async (email: EmailParams): Promise<CreateEmailOptions> => 
 export const sendEmail = async (email: EmailParams) => {
   const preparedEmail = await prepareEmail(email)
 
-  if (!isProd) {
-    console.log(preparedEmail)
+  if (!isProd && process.env.ENABLE_RESEND_IN_DEV !== "true") {
+    console.log("📧 [DEV] Email not sent. Set ENABLE_RESEND_IN_DEV=true to send.", {
+      to: preparedEmail.to,
+      subject: preparedEmail.subject,
+    })
     return
   }
 

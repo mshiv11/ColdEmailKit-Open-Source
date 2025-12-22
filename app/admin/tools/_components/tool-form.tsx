@@ -2,10 +2,12 @@
 
 import { formatDateTime, getRandomString, isValidUrl, slugify } from "@primoui/utils"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { type Tool, ToolStatus } from "@prisma/client"
+import { z } from "zod"
+import type { ToolOne } from "~/server/web/tools/payloads"
+import { ToolStatus } from "@prisma/client"
 import { useRouter } from "next/navigation"
 import type { ComponentProps } from "react"
-import { use, useState } from "react"
+import { use, useState, useEffect } from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { useServerAction } from "zsa-react"
@@ -15,6 +17,7 @@ import { ToolGenerateContent } from "~/app/admin/tools/_components/tool-generate
 import { ToolPublishActions } from "~/app/admin/tools/_components/tool-publish-actions"
 import { RelationSelector } from "~/components/admin/relation-selector"
 import { Button } from "~/components/common/button"
+import { Checkbox } from "~/components/common/checkbox"
 import {
   Form,
   FormControl,
@@ -38,15 +41,17 @@ import { useComputedField } from "~/hooks/use-computed-field"
 import { isToolPublished } from "~/lib/tools"
 import type { findAlternativeList } from "~/server/admin/alternatives/queries"
 import type { findCategoryList } from "~/server/admin/categories/queries"
+import type { findIntegrationList } from "~/server/admin/integrations/queries"
 import { upsertTool } from "~/server/admin/tools/actions"
 import type { findToolBySlug } from "~/server/admin/tools/queries"
 import { toolSchema } from "~/server/admin/tools/schema"
 import { cx } from "~/utils/cva"
+import { calculateProprietaryRating, formDataToRatingInput } from "~/lib/rating-algorithm"
 
-const ToolStatusChange = ({ tool }: { tool: Tool }) => {
+const ToolStatusChange = ({ tool }: { tool: ToolOne }) => {
   return (
     <>
-      <ExternalLink href={`/${tool.slug}`} className="font-semibold underline inline-block">
+      <ExternalLink href={`/tools/${tool.slug}`} className="font-semibold underline inline-block">
         {tool.name}
       </ExternalLink>{" "}
       is now {tool.status.toLowerCase()}.{" "}
@@ -60,54 +65,143 @@ const ToolStatusChange = ({ tool }: { tool: Tool }) => {
   )
 }
 
-type ToolFormProps = ComponentProps<"form"> & {
-  tool?: NonNullable<Awaited<ReturnType<typeof findToolBySlug>>>
+// Component to calculate and display proprietary rating metrics
+function PlatformRatingsCalculator({ form }: { form: ReturnType<typeof useForm<z.infer<typeof toolSchema>>> }) {
+  const [
+    g2Rating, g2Reviews,
+    trustpilotRating, trustpilotReviews,
+    capterraRating, capterraReviews,
+    trustradiusRating, trustradiusReviews,
+    coldEmailKitRating, coldEmailKitReviews
+  ] = form.watch([
+    'g2Rating', 'g2Reviews',
+    'trustpilotRating', 'trustpilotReviews',
+    'capterraRating', 'capterraReviews',
+    'trustradiusRating', 'trustradiusReviews',
+    'coldEmailKitRating', 'coldEmailKitReviews'
+  ])
+
+  const result = calculateProprietaryRating(
+    formDataToRatingInput({
+      g2Rating: Number(g2Rating) || 0,
+      g2Reviews: Number(g2Reviews) || 0,
+      trustpilotRating: Number(trustpilotRating) || 0,
+      trustpilotReviews: Number(trustpilotReviews) || 0,
+      capterraRating: Number(capterraRating) || 0,
+      capterraReviews: Number(capterraReviews) || 0,
+      trustradiusRating: Number(trustradiusRating) || 0,
+      trustradiusReviews: Number(trustradiusReviews) || 0,
+      coldEmailKitRating: Number(coldEmailKitRating) || 0,
+      coldEmailKitReviews: Number(coldEmailKitReviews) || 0,
+    })
+  )
+
+  // Auto-update the computed fields
+  useEffect(() => {
+    if (result.proprietaryRating !== null) {
+      form.setValue('overallRating', result.proprietaryRating)
+    }
+    form.setValue('totalReviews', result.totalReviews)
+    if (result.trustScore !== null) {
+      form.setValue('trustScore', result.trustScore) // Trust Score is already 0-100 percentage
+    }
+  }, [result.proprietaryRating, result.totalReviews, result.trustScore, form])
+
+  return (
+    <div className="mt-4 pt-4 border-t">
+      <p className="text-sm font-medium mb-2">Calculated Values (Auto-updated)</p>
+      <div className="grid grid-cols-2 @lg:grid-cols-4 gap-4">
+        <div className="p-3 bg-background rounded-md border">
+          <p className="text-xs text-muted-foreground">Proprietary Rating</p>
+          <p className="text-lg font-semibold">
+            {result.proprietaryRating !== null ? result.proprietaryRating.toFixed(2) : 'N/A'}
+          </p>
+        </div>
+        <div className="p-3 bg-background rounded-md border">
+          <p className="text-xs text-muted-foreground">Total Reviews</p>
+          <p className="text-lg font-semibold">{result.totalReviews.toLocaleString()}</p>
+        </div>
+        <div className="p-3 bg-background rounded-md border">
+          <p className="text-xs text-muted-foreground">Confidence</p>
+          <p className="text-lg font-semibold">{result.confidenceScore.toFixed(0)}%</p>
+        </div>
+        <div className="p-3 bg-background rounded-md border">
+          <p className="text-xs text-muted-foreground">Trust Score</p>
+          <p className="text-lg font-semibold">
+            {result.trustScore !== null ? `${result.trustScore}%` : 'N/A'}
+          </p>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+interface ToolFormProps extends ComponentProps<"form"> {
+  tool?: ToolOne
   alternativesPromise: ReturnType<typeof findAlternativeList>
   categoriesPromise: ReturnType<typeof findCategoryList>
+  integrationsPromise: ReturnType<typeof findIntegrationList>
 }
 
 export function ToolForm({
-  children,
-  className,
-  title,
   tool,
   alternativesPromise,
   categoriesPromise,
+  integrationsPromise,
+  className,
   ...props
 }: ToolFormProps) {
   const router = useRouter()
   const alternatives = use(alternativesPromise)
   const categories = use(categoriesPromise)
+  const integrations = use(integrationsPromise)
 
-  const [isPreviewing, setIsPreviewing] = useState(false)
   const [isStatusPending, setIsStatusPending] = useState(false)
-  const [originalStatus, setOriginalStatus] = useState(tool?.status ?? ToolStatus.Draft)
+  const [originalStatus, setOriginalStatus] = useState(tool?.status)
+  const [isPreviewing, setIsPreviewing] = useState(false)
 
-  const form = useForm({
+  const title = tool ? "Edit Tool" : "Create Tool"
+
+  const form = useForm<z.infer<typeof toolSchema>>({
     resolver: zodResolver(toolSchema),
     defaultValues: {
       name: tool?.name ?? "",
       slug: tool?.slug ?? "",
+      websiteUrl: tool?.websiteUrl ?? "",
+      affiliateUrl: tool?.affiliateUrl ?? "",
       tagline: tool?.tagline ?? "",
       description: tool?.description ?? "",
       content: tool?.content ?? "",
-      websiteUrl: tool?.websiteUrl ?? "",
-      affiliateUrl: tool?.affiliateUrl ?? "",
-      repositoryUrl: tool?.repositoryUrl ?? "",
-      faviconUrl: tool?.faviconUrl ?? "",
-      screenshotUrl: tool?.screenshotUrl ?? "",
       isFeatured: tool?.isFeatured ?? false,
       isSelfHosted: tool?.isSelfHosted ?? false,
+      discountCode: tool?.discountCode ?? "",
+      discountAmount: tool?.discountAmount ?? "",
+      totalReviews: tool?.totalReviews ?? 0,
+      trustScore: tool?.trustScore ?? 0,
+      pricingStarting: tool?.pricingStarting ?? "",
+      bestFor: tool?.bestFor ?? "",
+      overallRating: tool?.overallRating ?? 0,
       submitterName: tool?.submitterName ?? "",
       submitterEmail: tool?.submitterEmail ?? "",
       submitterNote: tool?.submitterNote ?? "",
-      discountCode: tool?.discountCode ?? "",
-      discountAmount: tool?.discountAmount ?? "",
+      faviconUrl: tool?.faviconUrl ?? "",
+      screenshotUrl: tool?.screenshotUrl ?? "",
+      alternatives: tool?.alternatives.map((a: { id: string }) => a.id) ?? [],
+      categories: tool?.categories.map((c: { id: string }) => c.id) ?? [],
+      integrations: tool?.integrations.map((i: { id: string }) => i.id) ?? [],
       status: tool?.status ?? ToolStatus.Draft,
       publishedAt: tool?.publishedAt ?? null,
-      alternatives: tool?.alternatives.map(a => a.id) ?? [],
-      categories: tool?.categories.map(c => c.id) ?? [],
-      notifySubmitter: true,
+      // Platform-specific ratings
+      g2Rating: tool?.g2Rating ?? 0,
+      g2Reviews: tool?.g2Reviews ?? 0,
+      trustpilotRating: tool?.trustpilotRating ?? 0,
+      trustpilotReviews: tool?.trustpilotReviews ?? 0,
+      capterraRating: tool?.capterraRating ?? 0,
+      capterraReviews: tool?.capterraReviews ?? 0,
+      trustradiusRating: tool?.trustradiusRating ?? 0,
+      trustradiusReviews: tool?.trustradiusReviews ?? 0,
+      coldEmailKitRating: tool?.coldEmailKitRating ?? 0,
+      coldEmailKitReviews: tool?.coldEmailKitReviews ?? 0,
     },
   })
 
@@ -207,7 +301,7 @@ export function ToolForm({
         {tool && (
           <Note className="w-full">
             {isToolPublished(tool) ? "View:" : "Preview:"}{" "}
-            <ExternalLink href={`/${tool.slug}`} className="text-primary underline">
+            <ExternalLink href={`/tools/${tool.slug}`} className="text-primary underline">
               {siteConfig.url}/{tool.slug}
             </ExternalLink>
             {tool.status === ToolStatus.Scheduled && tool.publishedAt && (
@@ -283,19 +377,7 @@ export function ToolForm({
           )}
         />
 
-        <FormField
-          control={form.control}
-          name="repositoryUrl"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Repository URL</FormLabel>
-              <FormControl>
-                <Input type="url" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+
 
         <FormField
           control={form.control}
@@ -356,7 +438,7 @@ export function ToolForm({
                     className={cx(inputVariants(), "max-w-none border leading-normal")}
                   />
                 ) : (
-                  <TextArea {...field} />
+                  <TextArea {...field} className="min-h-[300px]" />
                 )}
               </FormControl>
               <FormMessage />
@@ -423,6 +505,264 @@ export function ToolForm({
             )}
           />
         </div>
+
+
+        <div className="grid gap-4 @2xl:grid-cols-2">
+          <FormField
+            control={form.control}
+            name="totalReviews"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Total Reviews</FormLabel>
+                <FormControl>
+                  <Input type="number" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="trustScore"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Trust Score</FormLabel>
+                <FormControl>
+                  <Input type="number" max={100} {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="overallRating"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Overall Rating (0-5)</FormLabel>
+                <FormControl>
+                  <Input
+                    type="number"
+                    min={0}
+                    max={5}
+                    step={0.1}
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
+            control={form.control}
+            name="pricingStarting"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Starting Price</FormLabel>
+                <FormControl>
+                  <Input placeholder="e.g. Free, $10/mo" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+
+        {/* Platform Ratings Section */}
+        <div className="col-span-full border rounded-lg p-4 bg-muted/30">
+          <H3 className="mb-4">Platform Ratings</H3>
+          <p className="text-sm text-muted-foreground mb-4">
+            Enter ratings and review counts from each platform. The proprietary rating will be calculated automatically.
+          </p>
+
+          <div className="grid gap-4 @lg:grid-cols-2 @2xl:grid-cols-4">
+            {/* G2 */}
+            <FormField
+              control={form.control}
+              name="g2Rating"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>G2 Rating (0-5)</FormLabel>
+                  <FormControl>
+                    <Input type="number" min={0} max={5} step={0.1} placeholder="e.g. 4.5" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="g2Reviews"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>G2 Reviews</FormLabel>
+                  <FormControl>
+                    <Input type="number" min={0} placeholder="e.g. 2000" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            {/* Trustpilot */}
+            <FormField
+              control={form.control}
+              name="trustpilotRating"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Trustpilot Rating (0-5)</FormLabel>
+                  <FormControl>
+                    <Input type="number" min={0} max={5} step={0.1} placeholder="e.g. 4.2" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="trustpilotReviews"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Trustpilot Reviews</FormLabel>
+                  <FormControl>
+                    <Input type="number" min={0} placeholder="e.g. 200" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            {/* Capterra */}
+            <FormField
+              control={form.control}
+              name="capterraRating"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Capterra Rating (0-5)</FormLabel>
+                  <FormControl>
+                    <Input type="number" min={0} max={5} step={0.1} placeholder="e.g. 4.0" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="capterraReviews"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Capterra Reviews</FormLabel>
+                  <FormControl>
+                    <Input type="number" min={0} placeholder="e.g. 100" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            {/* TrustRadius */}
+            <FormField
+              control={form.control}
+              name="trustradiusRating"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>TrustRadius Rating (0-10)</FormLabel>
+                  <FormControl>
+                    <Input type="number" min={0} max={10} step={0.1} placeholder="e.g. 8.6" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="trustradiusReviews"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>TrustRadius Reviews</FormLabel>
+                  <FormControl>
+                    <Input type="number" min={0} placeholder="e.g. 20" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
+            {/* ColdEmailKit (Internal) */}
+            <FormField
+              control={form.control}
+              name="coldEmailKitRating"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>ColdEmailKit Rating (0-5)</FormLabel>
+                  <FormControl>
+                    <Input type="number" min={0} max={5} step={0.1} placeholder="e.g. 4.8" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="coldEmailKitReviews"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>ColdEmailKit Reviews</FormLabel>
+                  <FormControl>
+                    <Input type="number" min={0} placeholder="e.g. 2" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+
+          {/* Calculated Values Display */}
+          <PlatformRatingsCalculator form={form} />
+        </div>
+
+        <FormField
+          control={form.control}
+          name="bestFor"
+          render={({ field }) => {
+            const options = ["Solopreneurs", "Agencies", "Freelancers", "Recruiters", "Enterprises", "Small business"]
+            const selected = field.value ? field.value.split(",") : []
+
+            return (
+              <FormItem>
+                <FormLabel>Best For</FormLabel>
+                <FormControl>
+                  <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
+                    {options.map((option) => (
+                      <div key={option} className="flex items-center space-x-2">
+                        <Checkbox
+                          id={`bestFor-${option}`}
+                          checked={selected.includes(option)}
+                          onCheckedChange={(checked) => {
+                            const newSelected = checked
+                              ? [...selected, option]
+                              : selected.filter((s) => s !== option)
+                            field.onChange(newSelected.join(","))
+                          }}
+                        />
+                        <label
+                          htmlFor={`bestFor-${option}`}
+                          className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                        >
+                          {option}
+                        </label>
+                      </div>
+                    ))}
+                  </div>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )
+          }}
+        />
 
         {tool?.submitterEmail && (
           <>
@@ -585,7 +925,7 @@ export function ToolForm({
                   name &&
                   description &&
                   content &&
-                  `From the list of available alternative, proprietary software below, suggest relevant alternatives for this open source tool link: 
+                  `From the list of available alternative, proprietary software below, suggest relevant alternatives for this free tool link: 
                   
                   - URL: ${websiteUrl}
                   - Meta title: ${name}
@@ -608,12 +948,12 @@ export function ToolForm({
                 relations={categories}
                 selectedIds={field.value ?? []}
                 setSelectedIds={field.onChange}
-                mapFunction={({ id, name, fullPath }) => {
+                mapFunction={({ id, name, fullPath }: any) => {
                   const depth = fullPath.split("/").length - 1
                   const prefix = "- ".repeat(depth)
                   return { id, name: `${prefix}${name}` }
                 }}
-                sortFunction={(a, b) => {
+                sortFunction={(a: any, b: any) => {
                   // Split paths into segments for comparison
                   const aSegments = a.fullPath.split("/")
                   const bSegments = b.fullPath.split("/")
@@ -644,6 +984,34 @@ export function ToolForm({
           )}
         />
 
+        <FormField
+          control={form.control}
+          name="integrations"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Integrations</FormLabel>
+              <RelationSelector
+                relations={integrations}
+                selectedIds={field.value ?? []}
+                setSelectedIds={field.onChange}
+                maxSuggestions={10}
+                prompt={
+                  name &&
+                  description &&
+                  content &&
+                  `From the list of available integrations below, suggest relevant integrations for this tool: 
+                  
+                  - URL: ${websiteUrl}
+                  - Meta title: ${name}
+                  - Meta description: ${description}
+                  - Content: ${content}. 
+                  `
+                }
+              />
+            </FormItem>
+          )}
+        />
+
         <div className="flex justify-between gap-4 col-span-full">
           <Button size="md" variant="secondary" asChild>
             <Link href="/admin/tools">Cancel</Link>
@@ -657,6 +1025,6 @@ export function ToolForm({
           />
         </div>
       </form>
-    </Form>
+    </Form >
   )
 }

@@ -4,6 +4,7 @@ import { withAdminPage } from "~/components/admin/auth-hoc"
 import { Wrapper } from "~/components/admin/wrapper"
 import { findAlternativeList } from "~/server/admin/alternatives/queries"
 import { findCategoryList } from "~/server/admin/categories/queries"
+import { findIntegrationList } from "~/server/admin/integrations/queries"
 import { findToolBySlug } from "~/server/admin/tools/queries"
 
 type PageProps = {
@@ -25,6 +26,7 @@ const UpdateToolPage = async ({ params }: PageProps) => {
         tool={tool}
         alternativesPromise={findAlternativeList()}
         categoriesPromise={findCategoryList()}
+        integrationsPromise={findIntegrationList()}
       />
     </Wrapper>
   )

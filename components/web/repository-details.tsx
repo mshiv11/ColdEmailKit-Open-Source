@@ -19,46 +19,65 @@ type RepositoryDetailsProps = ComponentProps<"div"> & {
 export const RepositoryDetails = ({ className, tool, ...props }: RepositoryDetailsProps) => {
   const insights = [
     {
-      label: "Stars",
-      value: formatNumber(tool.stars, "standard"),
+      label: "Overall rating",
+      value: tool.overallRating ?? 0,
       icon: <Icon name="lucide/star" />,
     },
     {
-      label: "Forks",
-      value: formatNumber(tool.forks, "standard"),
-      icon: <Icon name="lucide/git-fork" />,
+      label: "Total reviews",
+      value: formatNumber(tool.totalReviews ?? 0, "standard"),
+      icon: <Icon name="lucide/users" />,
     },
+    {
+      label: "Trust Score",
+      value: `${tool.trustScore ?? 0}%`,
+      icon: <Icon name="lucide/shield" />,
+    },
+    tool.pricingStarting
+      ? {
+        label: "Starting Price",
+        value: tool.pricingStarting,
+        icon: <Icon name="lucide/dollar-sign" />,
+      }
+      : undefined,
+    tool.bestFor
+      ? {
+        label: "Best for",
+        value: tool.bestFor.replaceAll(",", ", "),
+        icon: <Icon name="lucide/briefcase" />,
+      }
+      : undefined,
     tool.lastCommitDate
       ? {
-          label: "Last commit",
-          value: formatDistanceToNowStrict(tool.lastCommitDate, { addSuffix: true }),
-          title: formatDate(tool.lastCommitDate),
-          icon: <Icon name="lucide/timer" />,
-        }
+        label: "Last commit",
+        value: formatDistanceToNowStrict(tool.lastCommitDate, { addSuffix: true }),
+        title: formatDate(tool.lastCommitDate),
+        icon: <Icon name="lucide/timer" />,
+      }
       : undefined,
     tool.firstCommitDate
       ? {
-          label: "Repository age",
-          value: formatDistanceToNowStrict(tool.firstCommitDate),
-          title: formatDate(tool.firstCommitDate),
-          icon: <Icon name="lucide/history" />,
-        }
+        label: "Repository age",
+        value: formatDistanceToNowStrict(tool.firstCommitDate),
+        title: formatDate(tool.firstCommitDate),
+        icon: <Icon name="lucide/history" />,
+      }
       : undefined,
     tool.license
       ? {
-          label: "License",
-          value: tool.license.name,
-          link: `/licenses/${tool.license.slug}`,
-          icon: <Icon name="lucide/copyright" />,
-        }
+        label: "License",
+        value: tool.license.name,
+        link: `/licenses/${tool.license.slug}`,
+        icon: <Icon name="lucide/copyright" />,
+      }
       : undefined,
     tool.isSelfHosted
       ? {
-          label: "Self-hosted",
-          value: "Yes",
-          link: "/self-hosted",
-          icon: <Icon name="lucide/server" />,
-        }
+        label: "Self-hosted",
+        value: "Yes",
+        link: "/self-hosted",
+        icon: <Icon name="lucide/server" />,
+      }
       : undefined,
   ]
 
@@ -78,32 +97,6 @@ export const RepositoryDetails = ({ className, tool, ...props }: RepositoryDetai
 
         <Insights insights={insights.filter(isTruthy)} className="text-sm" />
       </Stack>
-
-      {tool.repositoryUrl && (
-        <Button
-          size="md"
-          variant="secondary"
-          prefix={<Icon name="tabler/brand-github" />}
-          className="mt-1 self-start"
-          asChild
-        >
-          <ExternalLink
-            href={tool.repositoryUrl}
-            eventName="click_repository"
-            eventProps={{ url: tool.repositoryUrl }}
-          >
-            View Repository
-          </ExternalLink>
-        </Button>
-      )}
-
-      <p className="text-muted-foreground/75 text-[11px]">
-        Auto-fetched from GitHub{" "}
-        <time dateTime={formatISO(tool.updatedAt)} className="font-medium text-muted-foreground">
-          {formatDistanceToNowStrict(tool.updatedAt, { addSuffix: true })}
-        </time>
-        .
-      </p>
     </Card>
   )
 }

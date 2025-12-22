@@ -48,8 +48,8 @@ const getMetadata = (category: CategoryOne): Metadata => {
   const name = category.label || `${category.name} Tools`
 
   return {
-    title: `Open Source ${name}`,
-    description: `A curated collection of the best free and open source ${lcFirst(category.description ?? "")}`,
+    title: `${name}`,
+    description: `A curated collection of the best cold email tools for ${lcFirst(category.description ?? "")}`,
   }
 }
 

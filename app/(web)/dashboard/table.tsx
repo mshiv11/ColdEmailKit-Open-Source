@@ -42,7 +42,7 @@ export const DashboardTable = ({ toolsPromise }: DashboardTableProps) => {
             return <Note className="font-medium">{name}</Note>
           }
 
-          return <DataTableLink href={`/${slug}`} image={faviconUrl} title={name} />
+          return <DataTableLink href={`/tools/${slug}`} image={faviconUrl} title={name} />
         },
       },
       {

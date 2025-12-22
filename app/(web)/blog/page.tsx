@@ -7,9 +7,9 @@ import { Intro, IntroDescription, IntroTitle } from "~/components/web/ui/intro"
 import { metadataConfig } from "~/config/metadata"
 
 export const metadata: Metadata = {
-  title: "Open Source Blog",
+  title: "ColdEmailKit Blog",
   description:
-    "A collection of useful articles for developers and open source enthusiasts. Learn about the latest trends and technologies in the open source community.",
+    "A collection of articles reviewing cold email tools and software used by sales teams, SDRs, agencies, and enterprises for outreach campaigns.",
   openGraph: { ...metadataConfig.openGraph, url: "/blog" },
   alternates: { ...metadataConfig.alternates, canonical: "/blog" },
 }
@@ -23,7 +23,7 @@ export default function BlogPage() {
         items={[
           {
             href: "/blog",
-            name: "Open Source Blog",
+            name: "Blog",
           },
         ]}
       />
@@ -35,7 +35,7 @@ export default function BlogPage() {
 
       {posts.length ? (
         <Grid>
-          {allPosts.map(post => (
+          {posts.map(post => (
             <PostCard key={post._meta.path} post={post} />
           ))}
         </Grid>

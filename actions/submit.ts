@@ -67,7 +67,7 @@ export const submitTool = createServerAction()
 
     // Check if the tool already exists
     const existingTool = await db.tool.findFirst({
-      where: { OR: [{ repositoryUrl: data.repositoryUrl }, { websiteUrl: data.websiteUrl }] },
+      where: { websiteUrl: data.websiteUrl },
     })
 
     // If the tool exists, redirect to the tool or submit page

@@ -33,6 +33,11 @@ export const fetchData = inngest.createFunction(
       step.run("fetch-repository-data", async () => {
         return await Promise.allSettled(
           tools.map(async tool => {
+            // Skip tools without a repository URL
+            if (!tool.repositoryUrl) {
+              return null
+            }
+
             const result = await tryCatch(getToolRepositoryData(tool.repositoryUrl))
 
             if (result.error) {

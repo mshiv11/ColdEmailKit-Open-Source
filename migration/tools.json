@@ -1,0 +1,369 @@
+[
+    {
+        "id": "7003635f-f9e2-4d39-a436-1291f4fd5203",
+        "slug": "salesloft",
+        "name": "SalesLoft",
+        "description": "Revenue workflow platform that helps teams generate more revenue through better buyer engagement.",
+        "long_description": "SalesLoft is a comprehensive revenue workflow platform that combines sales engagement, conversation intelligence, and revenue analytics to help sales teams engage buyers, generate pipeline, and close more deals with predictable revenue growth.",
+        "logo": "https://img.logo.dev/salesloft.com?token=pk_Q7EiWOmsTIuV9Yy-00JRvQ",
+        "website": "https://salesloft.com/?utm_source=coldemailkit.com&utm_medium=directory&utm_campaign=outreach&utm_content=salesloft",
+        "rating": 4.4,
+        "review_count": 1834,
+        "pricing_starter": "$65",
+        "pricing_pro": "$125",
+        "pricing_enterprise": "$165",
+        "pricing_model": "per user/month",
+        "categories": [
+            "outreach"
+        ],
+        "features": [
+            "Cadence automation",
+            "Email tracking and templates",
+            "Call recording and analysis",
+            "Deal management",
+            "Conversation intelligence",
+            "Revenue analytics",
+            "CRM sync",
+            "Team coaching tools"
+        ],
+        "pros": [
+            "Comprehensive sales platform",
+            "Strong analytics capabilities",
+            "Good integration ecosystem",
+            "Effective coaching tools"
+        ],
+        "cons": [
+            "Expensive for small businesses",
+            "Steep learning curve",
+            "Can be overwhelming initially"
+        ],
+        "verified": true,
+        "featured": false,
+        "trust_score": 88,
+        "created_at": "2025-08-12T21:20:59.85535+00:00",
+        "updated_at": "2025-08-24T20:08:44.317535+00:00"
+    },
+    {
+        "id": "607d3531-1c02-4a45-965c-39b8ddeeb422",
+        "slug": "skysenders",
+        "name": "Skysenders",
+        "description": "SkySenders is a next-gen platform for cold email infrastructure with dedicated server per domain, instant SPF, DKIM, DMARC setup and real-time email analytics.",
+        "long_description": "SkySenders is a next-gen platform for cold email infrastructure with dedicated server per domain, instant SPF, DKIM, DMARC setup and real-time email analytics.",
+        "logo": "https://img.logo.dev/skysenders.com?token=pk_Q7EiWOmsTIuV9Yy-00JRvQ",
+        "website": "https://skysenders.com/?utm_source=coldemailkit.com&utm_medium=directory&utm_campaign=infrastructure&utm_content=skysenders",
+        "rating": 5,
+        "review_count": 1,
+        "pricing_starter": "$99",
+        "pricing_pro": "$249",
+        "pricing_enterprise": "Custom",
+        "pricing_model": "month",
+        "categories": [
+            "infrastructure"
+        ],
+        "features": [
+            "Dedicated server per domain",
+            "Instant SPF, DKIM, DMARC setup",
+            "Real-time email analytics",
+            "Automated warm-up",
+            "Unlimited sending volume",
+            "Dedicated IP addresses",
+            "White-label solution"
+        ],
+        "pros": [
+            "High deliverability rates",
+            "Easy setup process",
+            "Comprehensive analytics",
+            "Scalable infrastructure",
+            "Excellent support"
+        ],
+        "cons": [
+            "Higher price point",
+            "Limited integrations",
+            "Newer platform"
+        ],
+        "verified": true,
+        "featured": false,
+        "trust_score": 85,
+        "created_at": "2025-08-12T21:20:59.85535+00:00",
+        "updated_at": "2025-08-24T20:08:44.317535+00:00"
+    },
+    {
+        "id": "ad5bb611-d930-45f7-87a2-a6fe3a5b5ec5",
+        "slug": "findymail",
+        "name": "FindyMail",
+        "description": "B2B Email & Phone Data For Modern Sales Teams",
+        "long_description": null,
+        "logo": null,
+        "website": "https://www.findymail.com/?via=mshiv",
+        "rating": null,
+        "review_count": null,
+        "pricing_starter": null,
+        "pricing_pro": null,
+        "pricing_enterprise": null,
+        "pricing_model": "month",
+        "categories": [
+            "leads"
+        ],
+        "features": [],
+        "pros": null,
+        "cons": null,
+        "verified": false,
+        "featured": false,
+        "trust_score": null,
+        "created_at": "2025-08-14T17:53:30.969895+00:00",
+        "updated_at": "2025-08-14T17:53:49.539081+00:00"
+    },
+    {
+        "id": "dbfa2c0c-1bad-4dfb-aedf-41d0409fd61e",
+        "slug": "snov-io",
+        "name": "Snov.io",
+        "description": "All-in-one sales platform for finding leads, automating outreach, and closing more deals",
+        "long_description": "Snov.io is a comprehensive sales platform trusted by over 185,000 companies worldwide. It combines lead generation, email verification, cold email outreach, LinkedIn automation, email warm-up, and sales CRM capabilities in one unified tool. The platform helps businesses discover prospects, verify emails, reach primary inboxes, accelerate LinkedIn outreach, and manage leads with unlimited mailboxes and automated email warmups. Features include extensive database search, ICP targeting, LinkedIn integration, email deliverability optimization, and advanced analytics.",
+        "logo": "https://snov.io/wp-content/uploads/2020/12/snovio-logo.svg",
+        "website": "https://snov.io",
+        "rating": null,
+        "review_count": null,
+        "pricing_starter": "29",
+        "pricing_pro": "74",
+        "pricing_enterprise": "Custom",
+        "pricing_model": "month",
+        "categories": [
+            "leads",
+            "enrichment",
+            "warmup",
+            "outreach"
+        ],
+        "features": [],
+        "pros": null,
+        "cons": null,
+        "verified": false,
+        "featured": false,
+        "trust_score": null,
+        "created_at": "2025-08-14T17:53:30.969895+00:00",
+        "updated_at": "2025-08-14T17:53:49.539081+00:00"
+    },
+    {
+        "id": "b76ae5a7-3865-484a-afaa-763c02a02fbe",
+        "slug": "listkit",
+        "name": "ListKit",
+        "description": "B2B data enrichment and lead generation platform providing verified contact information.",
+        "long_description": "ListKit is a B2B data enrichment and lead generation platform that provides verified contact information to help sales teams build targeted prospect lists. It offers features like real-time verification, advanced filtering, and integration with popular CRMs to streamline the prospecting process.",
+        "logo": "https://img.logo.dev/listkit.io?token=pk_Q7EiWOmsTIuV9Yy-00JRvQ",
+        "website": "https://listkit.io/?utm_source=coldemailkit.com&utm_medium=directory&utm_campaign=leads&utm_content=listkit",
+        "rating": 4.8,
+        "review_count": 120,
+        "pricing_starter": "$49",
+        "pricing_pro": "$99",
+        "pricing_enterprise": "Custom",
+        "pricing_model": "month",
+        "categories": [
+            "leads",
+            "enrichment"
+        ],
+        "features": [
+            "Real-time email verification",
+            "Advanced search filters",
+            "CRM integration",
+            "Export to CSV",
+            "API access",
+            "Team collaboration",
+            "Data enrichment",
+            "Lead management"
+        ],
+        "pros": [
+            "High data accuracy",
+            "Easy to use interface",
+            "Fast verification process",
+            "Good customer support"
+        ],
+        "cons": [
+            "Limited database compared to competitors",
+            "Pricing can be high for small teams",
+            "Some features are still in beta"
+        ],
+        "verified": true,
+        "featured": false,
+        "trust_score": 92,
+        "created_at": "2025-08-12T21:20:59.85535+00:00",
+        "updated_at": "2025-08-24T20:08:44.317535+00:00"
+    },
+    {
+        "id": "d034f6bb-b846-4e60-90a0-e492d417cbcf",
+        "slug": "muraena",
+        "name": "Muraena",
+        "description": "AI-powered B2B lead generation platform that helps find high-intent prospects.",
+        "long_description": "Muraena is an AI-powered B2B lead generation platform that helps sales teams find high-intent prospects by analyzing buying signals and intent data. It offers features like lead scoring, automated outreach, and integration with CRMs to improve conversion rates.",
+        "logo": "https://img.logo.dev/muraena.ai?token=pk_Q7EiWOmsTIuV9Yy-00JRvQ",
+        "website": "https://muraena.ai/?utm_source=coldemailkit.com&utm_medium=directory&utm_campaign=leads&utm_content=muraena",
+        "rating": 4.5,
+        "review_count": 85,
+        "pricing_starter": "$99",
+        "pricing_pro": "$199",
+        "pricing_enterprise": "Custom",
+        "pricing_model": "month",
+        "categories": [
+            "leads",
+            "ai"
+        ],
+        "features": [
+            "AI-powered lead scoring",
+            "Intent data analysis",
+            "Automated outreach",
+            "CRM integration",
+            "Real-time alerts",
+            "Customizable workflows",
+            "Detailed analytics",
+            "Team collaboration"
+        ],
+        "pros": [
+            "Accurate lead scoring",
+            "Time-saving automation",
+            "Insightful analytics",
+            "Easy integration"
+        ],
+        "cons": [
+            "Higher price point",
+            "Learning curve for AI features",
+            "Limited customization options"
+        ],
+        "verified": true,
+        "featured": false,
+        "trust_score": 89,
+        "created_at": "2025-08-12T21:20:59.85535+00:00",
+        "updated_at": "2025-08-24T20:08:44.317535+00:00"
+    },
+    {
+        "id": "b065ed06-29b4-47fc-899e-7939882b0338",
+        "slug": "instantly",
+        "name": "Instantly",
+        "description": "Cold email outreach tool with unlimited email accounts and warm-up features.",
+        "long_description": "Instantly is a cold email outreach tool designed to help businesses scale their outreach efforts. It offers unlimited email accounts, automated warm-up, and advanced analytics to improve deliverability and response rates. The platform is user-friendly and suitable for agencies and sales teams.",
+        "logo": "https://img.logo.dev/instantly.ai?token=pk_Q7EiWOmsTIuV9Yy-00JRvQ",
+        "website": "https://instantly.ai/?utm_source=coldemailkit.com&utm_medium=directory&utm_campaign=outreach&utm_content=instantly",
+        "rating": 4.9,
+        "review_count": 2500,
+        "pricing_starter": "$37",
+        "pricing_pro": "$97",
+        "pricing_enterprise": "$297",
+        "pricing_model": "month",
+        "categories": [
+            "outreach",
+            "warmup"
+        ],
+        "features": [
+            "Unlimited email accounts",
+            "Automated warm-up",
+            "Campaign management",
+            "A/B testing",
+            "Advanced analytics",
+            "Inbox rotation",
+            "Spam check",
+            "CRM integration"
+        ],
+        "pros": [
+            "Unlimited accounts",
+            "Great value for money",
+            "Easy to use",
+            "Effective warm-up feature"
+        ],
+        "cons": [
+            "Limited design customization",
+            "Support can be slow",
+            "No built-in CRM"
+        ],
+        "verified": true,
+        "featured": true,
+        "trust_score": 95,
+        "created_at": "2025-08-12T21:20:59.85535+00:00",
+        "updated_at": "2025-08-24T20:08:44.317535+00:00"
+    },
+    {
+        "id": "e9d3a892-cada-45ec-9018-c45011cab946",
+        "slug": "smartlead",
+        "name": "Smartlead",
+        "description": "Cold email automation platform with unlimited mailboxes and AI personalization.",
+        "long_description": "Smartlead is a cold email automation platform that enables businesses to scale their outreach with unlimited mailboxes and AI-driven personalization. It offers features like automated warm-up, unified inbox, and detailed analytics to maximize deliverability and engagement.",
+        "logo": "https://img.logo.dev/smartlead.ai?token=pk_Q7EiWOmsTIuV9Yy-00JRvQ",
+        "website": "https://smartlead.ai/?utm_source=coldemailkit.com&utm_medium=directory&utm_campaign=outreach&utm_content=smartlead",
+        "rating": 4.8,
+        "review_count": 1500,
+        "pricing_starter": "$39",
+        "pricing_pro": "$94",
+        "pricing_enterprise": "$174",
+        "pricing_model": "month",
+        "categories": [
+            "outreach",
+            "warmup",
+            "ai"
+        ],
+        "features": [
+            "Unlimited mailboxes",
+            "AI personalization",
+            "Automated warm-up",
+            "Unified inbox",
+            "Campaign analytics",
+            "API access",
+            "White-labeling",
+            "Team management"
+        ],
+        "pros": [
+            "Scalable solution",
+            "AI features",
+            "Unified inbox",
+            "White-label options"
+        ],
+        "cons": [
+            "UI can be complex",
+            "Occasional bugs",
+            "Learning curve"
+        ],
+        "verified": true,
+        "featured": true,
+        "trust_score": 94,
+        "created_at": "2025-08-12T21:20:59.85535+00:00",
+        "updated_at": "2025-08-24T20:08:44.317535+00:00"
+    },
+    {
+        "id": "straight-mail",
+        "slug": "straight-mail",
+        "name": "Straight Mail",
+        "description": "Straight Mail is a simple, effective cold email tool designed to land in the primary inbox.",
+        "long_description": "Straight Mail is a robust cold email tool engineered to ensure your messages land directly in the primary inbox. By focusing on plain-text emails, it bypasses spam filters often triggered by HTML-heavy content. The platform offers features like automated follow-ups, simple analytics, and unlimited sending emails, making it an ideal choice for businesses aiming to maximize their outreach efficiency. Straight Mail also emphasizes compliance with GDPR and other email regulations, ensuring your campaigns are both effective and legal. With a user-friendly interface and a free Bronze plan, it caters to startups and small businesses looking to scale their email marketing efforts without breaking the bank.",
+        "logo": "https://img.logo.dev/straightmail.co.uk?token=pk_Q7EiWOmsTIuV9Yy-00JRvQ",
+        "website": "https://straightmail.co.uk/",
+        "rating": 5,
+        "review_count": 1,
+        "pricing_starter": "£0",
+        "pricing_pro": "N/A",
+        "pricing_enterprise": "N/A",
+        "pricing_model": "month",
+        "categories": [
+            "outreach"
+        ],
+        "features": [
+            "Plain-text outreach",
+            "Automated follow-ups",
+            "Simple analytics",
+            "Unlimited sending emails",
+            "Customizable templates",
+            "Real-time analytics",
+            "GDPR-friendly"
+        ],
+        "pros": [
+            "High deliverability rates",
+            "User-friendly interface",
+            "Comprehensive resources",
+            "Free Bronze plan",
+            "GDPR compliance"
+        ],
+        "cons": [
+            "Limited information on support staff",
+            "UI could be improved"
+        ],
+        "verified": false,
+        "featured": false,
+        "trust_score": 65,
+        "created_at": "2025-09-27T23:41:03.448835+00:00",
+        "updated_at": "2025-09-27T23:43:08.814391+00:00"
+    }
+]

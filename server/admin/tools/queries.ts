@@ -71,6 +71,7 @@ export const findToolBySlug = async (slug: string) => {
     include: {
       alternatives: true,
       categories: true,
+      integrations: true,
     },
   })
 }

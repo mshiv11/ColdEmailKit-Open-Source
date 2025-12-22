@@ -7,8 +7,8 @@ import { Intro, IntroDescription, IntroTitle } from "~/components/web/ui/intro"
 import { metadataConfig } from "~/config/metadata"
 
 export const metadata: Metadata = {
-  title: "Open Source Software Categories",
-  description: "Browse top categories to find your best Open Source software options.",
+  title: "Cold Email Tool Categories",
+  description: "Browse top categories to find your best Cold Email Tool options.",
   openGraph: { ...metadataConfig.openGraph, url: "/categories" },
   alternates: { ...metadataConfig.alternates, canonical: "/categories" },
 }

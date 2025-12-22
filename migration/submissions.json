@@ -1,0 +1,69 @@
+[
+    {
+        "id": "ad5bb611-d930-45f7-87a2-a6fe3a5b5ec5",
+        "name": "FindyMail",
+        "description": "B2B Email & Phone Data For Modern Sales Teams",
+        "long_description": null,
+        "website": "https://www.findymail.com/?via=mshiv",
+        "logo_url": null,
+        "categories": [
+            "leads"
+        ],
+        "features": [],
+        "pricing_starter": null,
+        "pricing_pro": null,
+        "pricing_enterprise": null,
+        "pricing_model": "month",
+        "submitter_name": null,
+        "submitter_email": null,
+        "status": "approved",
+        "admin_notes": "",
+        "created_at": "2025-08-14T17:53:30.969895+00:00",
+        "updated_at": "2025-08-14T17:53:49.539081+00:00"
+    },
+    {
+        "id": "dbfa2c0c-1bad-4dfb-aedf-41d0409fd61e",
+        "name": "Snov.io",
+        "description": "All-in-one sales platform for finding leads, automating outreach, and closing more deals",
+        "long_description": "Snov.io is a comprehensive sales platform trusted by over 185,000 companies worldwide. It combines lead generation, email verification, cold email outreach, LinkedIn automation, email warm-up, and sales CRM capabilities in one unified tool. The platform helps businesses discover prospects, verify emails, reach primary inboxes, accelerate LinkedIn outreach, and manage leads with unlimited mailboxes and automated email warmups. Features include extensive database search, ICP targeting, LinkedIn integration, email deliverability optimization, and advanced analytics.",
+        "website": "https://snov.io",
+        "logo_url": "https://snov.io/wp-content/uploads/2020/12/snovio-logo.svg",
+        "categories": [
+            "leads",
+            "enrichment",
+            "warmup",
+            "outreach"
+        ],
+        "features": [],
+        "pricing_starter": "29",
+        "pricing_pro": "74",
+        "pricing_enterprise": "Custom",
+        "pricing_model": "month",
+        "submitter_name": "Admin",
+        "submitter_email": "admin@coldemailkit.com",
+        "status": "approved",
+        "admin_notes": "",
+        "created_at": "2025-08-14T17:53:30.969895+00:00",
+        "updated_at": "2025-08-14T17:53:49.539081+00:00"
+    },
+    {
+        "id": "8e69b2dd-6cdb-4dbc-961f-fd15e0f374a1",
+        "name": "ace.me",
+        "description": "Your new website, email address & cloud storage",
+        "long_description": "ace.me is your all-in-one digital identity platform, a single home for your website, email, and cloud storage. Build stunning personal or professional websites in minutes using an intuitive drag-and-drop editor that supports links, videos, and social embeds. Communicate through the worldʼs first email-compatible messenger, where conversations are organized by sender instead of messy threads, keeping your inbox zen. Store, share, and sync files securely with integrated private cloud storage designed for creators and professionals who want simplicity, speed, and security.",
+        "website": "https://ace.me/",
+        "logo_url": "https://ibb.co/5gs3wZd5",
+        "categories": [],
+        "features": [],
+        "pricing_starter": null,
+        "pricing_pro": null,
+        "pricing_enterprise": null,
+        "pricing_model": "month",
+        "submitter_name": null,
+        "submitter_email": "aceme.submissions@tinylaunch.com",
+        "status": "rejected",
+        "admin_notes": "",
+        "created_at": "2025-11-14T11:06:37.830966+00:00",
+        "updated_at": "2025-11-19T20:49:46.106734+00:00"
+    }
+]

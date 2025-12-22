@@ -18,7 +18,7 @@ ${siteConfig.description}\n
 ## Blog Highlights
 Links to our most popular blog posts.\n
 ${allPosts.map(post => `- [${post.title}](${siteConfig.url}/blog/${post._meta.path})`).join("\n")}\n
-## Open source tools\n`
+## Cold Email Tools\n`
 
   for (const tool of tools) {
     content += `- [${tool.name}](${siteConfig.url}/${tool.slug}): ${getToolSuffix(tool)}\n`

@@ -21,11 +21,11 @@ export const findUsers = async (search: UsersTableSchema) => {
     // Filter by name
     name
       ? {
-          OR: [
-            { name: { contains: name, mode: "insensitive" } },
-            { email: { contains: name, mode: "insensitive" } },
-          ],
-        }
+        OR: [
+          { name: { contains: name, mode: "insensitive" } },
+          { email: { contains: name, mode: "insensitive" } },
+        ],
+      }
       : undefined,
 
     // Filter by createdAt
@@ -59,3 +59,25 @@ export const findUserById = async (id: string) => {
     where: { id },
   })
 }
+
+/**
+ * Find users that can be authors (for blog dropdown)
+ * Returns users with name, image, and twitterHandle
+ */
+export const findAuthorList = async () => {
+  const users = await db.user.findMany({
+    where: {
+      banned: { not: true },
+    },
+    orderBy: { name: "asc" },
+  })
+
+  // Map to include twitterHandle which may not exist in DB yet
+  return users.map(user => ({
+    id: user.id,
+    name: user.name,
+    image: user.image,
+    twitterHandle: (user as { twitterHandle?: string }).twitterHandle ?? null,
+  }))
+}
+

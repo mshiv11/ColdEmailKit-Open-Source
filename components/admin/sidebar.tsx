@@ -63,6 +63,16 @@ export const Sidebar = () => {
           prefix: <Icon name="lucide/tags" />,
         },
         {
+          title: "Integrations",
+          href: "/admin/integrations",
+          prefix: <Icon name="lucide/blocks" />,
+        },
+        {
+          title: "Blog",
+          href: "/admin/blog",
+          prefix: <Icon name="lucide/file-text" />,
+        },
+        {
           title: "Users",
           href: "/admin/users",
           prefix: <Icon name="lucide/users" />,

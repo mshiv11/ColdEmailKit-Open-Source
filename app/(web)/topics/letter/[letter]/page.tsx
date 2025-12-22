@@ -13,8 +13,9 @@ type PageProps = {
 }
 
 const metadata: Metadata = {
-  title: "Open Source Software Topics",
-  description: "Discover top topics to find your best Open Source software options.",
+  title: "Cold Email Tool Topics",
+  description: "Discover top topics to find your best cold email tool options.",
+  robots: { index: false, follow: false }, // Temporarily hidden from search engines
 }
 
 export const generateStaticParams = async () => {

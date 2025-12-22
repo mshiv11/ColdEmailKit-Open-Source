@@ -1,17 +1,17 @@
 "use client"
 
-import Link from "next/link"
-import type { ComponentProps } from "react"
-import { useState } from "react"
+import { useState, type ComponentProps } from "react"
+import { useSession } from "~/lib/auth-client"
 import { Button } from "~/components/common/button"
 import { Icon } from "~/components/common/icon"
+import { Link } from "~/components/common/link"
 import { Stack } from "~/components/common/stack"
 import { Tooltip } from "~/components/common/tooltip"
 import { ToolClaimDialog } from "~/components/web/dialogs/tool-claim-dialog"
 import { ToolReportDialog } from "~/components/web/dialogs/tool-report-dialog"
-import { useSession } from "~/lib/auth-client"
-import type { ToolOne } from "~/server/web/tools/payloads"
+import { ToolReviewDialog } from "~/components/web/dialogs/tool-review-dialog"
 import { cx } from "~/utils/cva"
+import type { ToolOne } from "~/server/web/tools/payloads"
 
 type ToolActionsProps = ComponentProps<typeof Stack> & {
   tool: ToolOne
@@ -21,6 +21,7 @@ export const ToolActions = ({ tool, children, className, ...props }: ToolActions
   const { data: session } = useSession()
   const [isReportOpen, setIsReportOpen] = useState(false)
   const [isClaimOpen, setIsClaimOpen] = useState(false)
+  const [isReviewOpen, setIsReviewOpen] = useState(false)
 
   return (
     <Stack size="sm" wrap={false} className={cx("justify-end", className)} {...props}>
@@ -52,6 +53,18 @@ export const ToolActions = ({ tool, children, className, ...props }: ToolActions
         </Tooltip>
       )}
 
+      <Tooltip tooltip="Write a review">
+        <Button
+          size="md"
+          variant="secondary"
+          prefix={<Icon name="lucide/star" />}
+          onClick={() => setIsReviewOpen(true)}
+          aria-label="Review"
+        >
+          Review
+        </Button>
+      </Tooltip>
+
       <Tooltip tooltip="Send a report/suggestion">
         <Button
           size="md"
@@ -65,6 +78,7 @@ export const ToolActions = ({ tool, children, className, ...props }: ToolActions
       {children}
 
       <ToolReportDialog tool={tool} isOpen={isReportOpen} setIsOpen={setIsReportOpen} />
+      <ToolReviewDialog tool={tool} isOpen={isReviewOpen} setIsOpen={setIsReviewOpen} />
 
       {!tool.ownerId && (
         <ToolClaimDialog tool={tool} isOpen={isClaimOpen} setIsOpen={setIsClaimOpen} />
