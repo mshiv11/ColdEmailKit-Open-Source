@@ -37,3 +37,18 @@ export const createStripeAdsCheckout = userProcedure
   .handler(async () => {
     throw new Error("Stripe integration not configured. Please contact support.")
   })
+
+export const createAdFromCheckout = userProcedure
+  .createServerAction()
+  .input(
+    z.object({
+      sessionId: z.string(),
+      name: z.string(),
+      websiteUrl: z.string(),
+      description: z.string(),
+      buttonLabel: z.string().optional(),
+    }),
+  )
+  .handler(async () => {
+    throw new Error("Stripe integration not configured. Please contact support.")
+  })
