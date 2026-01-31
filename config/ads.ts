@@ -36,19 +36,19 @@ export const adsConfig = {
   testimonials: [
     {
       quote:
-        "I like your platform, it's clean, and informative. As a small company, it's a great opportunity for us to position ourselves against the bigger players.",
+        "Cold Email Kit is a total game-changer for any outreach strategy. As someone deeply embedded in email outreach and partnerships at ContactOut, having the right contact info is only half the battle - it's the execution of the message that converts. Having a high-performing outreach stack is key to writing effective emails and ensuring timely delivery. The platform perfectly categorizes the best-in-class software from email warm-up to AI personalization, saving hours of vetting. It's an essential resource for any email outreach specialist who wants to stop guessing and start hitting the inbox.",
       author: {
-        name: "Tom Martin",
-        title: "Sequence-R",
-        image: null,
+        name: "Christian Roy Somcio",
+        title: "Head of Partnerships at ContactOut",
+        image: "/authors/christian-roy-somcio.jpg",
       },
     },
     {
       quote:
-        "Nice touch with the reviews and trust score rating. It's intuitive, quite like it.",
+        "I like your platform, it's clean, and informative. As a small company, it's a great opportunity for us to position ourselves against the bigger players.",
       author: {
-        name: "Reddit User",
-        title: "Reddit Community",
+        name: "Tom Martin",
+        title: "Sequence-R",
         image: null,
       },
     },

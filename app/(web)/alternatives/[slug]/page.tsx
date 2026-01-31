@@ -23,6 +23,12 @@ import { Intro, IntroDescription, IntroTitle } from "~/components/web/ui/intro"
 import { Section } from "~/components/web/ui/section"
 import { config } from "~/config"
 import { metadataConfig } from "~/config/metadata"
+import {
+  generateItemListSchema,
+  generateBreadcrumbSchema,
+  jsonLdScriptProps,
+  wrapInGraph,
+} from "~/lib/schemas"
 import type { AlternativeOne } from "~/server/web/alternatives/payloads"
 import { findAlternative, findAlternativeSlugs } from "~/server/web/alternatives/queries"
 import type { CategoryMany } from "~/server/web/categories/payloads"
@@ -69,18 +75,42 @@ export const generateStaticParams = async () => {
 }
 
 export const generateMetadata = async (props: PageProps): Promise<Metadata> => {
-  const alternative = await getAlternative(props)
+  const [alternative, tools] = await Promise.all([
+    getAlternative(props),
+    findToolsWithCategories({
+      where: { alternatives: { some: { slug: (await props.params).slug } } },
+      take: 1,
+    }),
+  ])
   const url = `/alternatives/${alternative.slug}`
+  const firstToolScreenshot = tools[0]?.screenshotUrl
+
+  // Generate keywords for alternatives page
+  const keywords = [
+    `${alternative.name} alternatives`,
+    `best ${alternative.name} alternatives`,
+    `${alternative.name} competitors`,
+    `tools like ${alternative.name}`,
+    "cold email tools",
+    "email outreach software",
+  ]
 
   return {
     ...getMetadata(alternative),
+    keywords,
     alternates: { ...metadataConfig.alternates, canonical: url },
-    openGraph: { url, type: "website" },
+    openGraph: {
+      ...metadataConfig.openGraph,
+      url,
+      type: "website",
+      images: firstToolScreenshot
+        ? [{ url: firstToolScreenshot, width: 1280, height: 720, alt: `${alternative.name} alternatives` }]
+        : undefined,
+    },
   }
 }
 
 export default async function AlternativePage(props: PageProps) {
-
   const [alternative, mainTool, tools] = await Promise.all([
     getAlternative(props),
     findTool({ where: { slug: (await props.params).slug } }),
@@ -91,33 +121,33 @@ export default async function AlternativePage(props: PageProps) {
     }),
   ])
 
-  // Build ItemList JSON-LD schema for SEO
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "ItemList",
-    name: `Best ${alternative.name} Alternatives`,
-    description: `A curated collection of the best alternatives to ${alternative.name}`,
-    url: `https://coldemailkit.com/alternatives/${alternative.slug}`,
-    numberOfItems: tools.length,
-    itemListElement: tools.slice(0, 10).map((tool, index) => ({
-      "@type": "ListItem",
-      position: index + 1,
-      item: {
-        "@type": "SoftwareApplication",
-        name: tool.name,
-        description: tool.description,
-        url: `https://coldemailkit.com/tools/${tool.slug}`,
-        ...(tool.screenshotUrl && { image: tool.screenshotUrl }),
-        ...(tool.overallRating && {
-          aggregateRating: {
-            "@type": "AggregateRating",
-            ratingValue: tool.overallRating,
-            ratingCount: tool.totalReviews || 1,
-          },
-        }),
-      },
+  // Build breadcrumb items for schema
+  const breadcrumbItems = [
+    { name: "Alternatives", href: "/alternatives" },
+    { name: alternative.name, href: `/alternatives/${alternative.slug}` },
+  ]
+
+  // Build ItemList JSON-LD schema for SEO using centralized utilities
+  const itemListSchema = generateItemListSchema(
+    tools.map(tool => ({
+      name: tool.name,
+      slug: tool.slug,
+      description: tool.description,
+      screenshotUrl: tool.screenshotUrl,
+      overallRating: tool.overallRating,
+      totalReviews: tool.totalReviews,
     })),
-  }
+    {
+      name: `Best ${alternative.name} Alternatives`,
+      description: `A curated collection of the best alternatives to ${alternative.name}`,
+      url: `/alternatives/${alternative.slug}`,
+      itemType: "SoftwareApplication",
+      maxItems: 10,
+    }
+  )
+
+  const breadcrumbSchema = generateBreadcrumbSchema(breadcrumbItems)
+  const jsonLd = wrapInGraph(itemListSchema, breadcrumbSchema)
 
   const medalColors = ["text-amber-500", "text-slate-400", "text-orange-700"]
   const { title } = getMetadata(alternative)
@@ -179,8 +209,8 @@ export default async function AlternativePage(props: PageProps) {
           {!!tools.length && (
             <Prose>
               <p>
-                The best alternative to {alternative.name} is {bestTools.shift()}. If
-                that doesn't suit you, we've compiled a{" "}
+                The best alternative to {alternative.name} is {bestTools.shift()}. If that doesn't
+                suit you, we've compiled a{" "}
                 <Link href="/about#how-are-rankings-calculated">ranked list</Link> of other
                 {alternative.name} alternatives to help you find a suitable replacement.
                 {!!bestTools.length && (
@@ -242,10 +272,10 @@ export default async function AlternativePage(props: PageProps) {
                   <Card hover={false} className="bg-yellow-500/10" asChild>
                     <Prose>
                       <p>
-                        Looking for alternatives to other popular services? Check out
-                        other posts in the <Link href="/alternatives">alternatives series</Link> and{" "}
-                        <Link href="/">{getUrlHostname(config.site.url)}</Link>, a directory of cold email tools
-                        with filters for tags and alternatives for easy browsing and
+                        Looking for alternatives to other popular services? Check out other posts in
+                        the <Link href="/alternatives">alternatives series</Link> and{" "}
+                        <Link href="/">{getUrlHostname(config.site.url)}</Link>, a directory of cold
+                        email tools with filters for tags and alternatives for easy browsing and
                         discovery.
                       </p>
                     </Prose>
@@ -303,11 +333,7 @@ export default async function AlternativePage(props: PageProps) {
       </Suspense>
 
       {/* JSON-LD for SEO */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
+      <script {...jsonLdScriptProps(jsonLd)} />
     </>
   )
 }
-

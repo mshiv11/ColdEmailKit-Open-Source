@@ -21,11 +21,11 @@ export const findUsers = async (search: UsersTableSchema) => {
     // Filter by name
     name
       ? {
-        OR: [
-          { name: { contains: name, mode: "insensitive" } },
-          { email: { contains: name, mode: "insensitive" } },
-        ],
-      }
+          OR: [
+            { name: { contains: name, mode: "insensitive" } },
+            { email: { contains: name, mode: "insensitive" } },
+          ],
+        }
       : undefined,
 
     // Filter by createdAt
@@ -80,4 +80,3 @@ export const findAuthorList = async () => {
     twitterHandle: (user as { twitterHandle?: string }).twitterHandle ?? null,
   }))
 }
-

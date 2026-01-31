@@ -13,6 +13,7 @@ import { Icon } from "~/components/common/icon"
 import { Link } from "~/components/common/link"
 import { Note } from "~/components/common/note"
 import { Stack } from "~/components/common/stack"
+import { Tooltip } from "~/components/common/tooltip"
 import { AdButton } from "~/components/web/ads/ad-button"
 import { AdCard, AdCardSkeleton } from "~/components/web/ads/ad-card"
 import { Discount } from "~/components/web/discount"
@@ -22,12 +23,12 @@ import { Markdown } from "~/components/web/markdown"
 import { OverlayImage } from "~/components/web/overlay-image"
 import { RepositoryDetails } from "~/components/web/repository-details"
 import { ShareButtons } from "~/components/web/share-buttons"
+import { StarRating } from "~/components/web/tools/star-rating"
+import { ToolFeaturesDisplay } from "~/components/web/tools/tool-features-display"
 import { ToolActions } from "~/components/web/tools/tool-actions"
 import { ToolAlternatives } from "~/components/web/tools/tool-alternatives"
-import { ToolListSkeleton } from "~/components/web/tools/tool-list"
 import { ToolIntegrations } from "~/components/web/tools/tool-integrations"
-import { Tooltip } from "~/components/common/tooltip"
-import { StarRating } from "~/components/web/tools/star-rating"
+import { ToolListSkeleton } from "~/components/web/tools/tool-list"
 import { Breadcrumbs } from "~/components/web/ui/breadcrumbs"
 import { FaviconImage } from "~/components/web/ui/favicon"
 import { IntroDescription } from "~/components/web/ui/intro"
@@ -36,6 +37,13 @@ import { Tag } from "~/components/web/ui/tag"
 import { VerifiedBadge } from "~/components/web/verified-badge"
 import { metadataConfig } from "~/config/metadata"
 import { getToolSuffix, isToolPublished } from "~/lib/tools"
+import {
+  generateSoftwareApplicationSchema,
+  generateBreadcrumbSchema,
+  jsonLdScriptProps,
+  wrapInGraph,
+} from "~/lib/schemas"
+import { FAQSchema, generateToolFAQs } from "~/components/web/seo/faq-schema"
 import type { ToolOne } from "~/server/web/tools/payloads"
 import { findTool, findToolSlugs } from "~/server/web/tools/queries"
 
@@ -70,10 +78,30 @@ export const generateMetadata = async (props: PageProps): Promise<Metadata> => {
   const tool = await getTool(props)
   const url = `/tools/${tool.slug}`
 
+  // Generate keywords from categories and topics
+  const keywords = [
+    tool.name,
+    `${tool.name} review`,
+    `${tool.name} pricing`,
+    `${tool.name} alternatives`,
+    ...tool.categories.map(c => c.name),
+    ...tool.topics.map(t => t.slug),
+    "cold email tools",
+    "email outreach",
+  ].filter(Boolean)
+
   return {
     ...getMetadata(tool),
+    keywords,
     alternates: { ...metadataConfig.alternates, canonical: url },
-    openGraph: { url, type: "website" },
+    openGraph: {
+      ...metadataConfig.openGraph,
+      url,
+      type: "website",
+      images: tool.screenshotUrl
+        ? [{ url: tool.screenshotUrl, width: 1280, height: 720, alt: `${tool.name} screenshot` }]
+        : undefined,
+    },
   }
 }
 
@@ -81,47 +109,39 @@ export default async function ToolPage(props: PageProps) {
   const tool = await getTool(props)
   const { title } = getMetadata(tool)
 
-  // Build comprehensive JSON-LD for SEO
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
+  // Build breadcrumb items for schema
+  const breadcrumbItems = [
+    { name: "Tools", href: "/tools" },
+    ...(tool.categories?.[0]
+      ? [{ name: tool.categories[0].name, href: `/categories/${tool.categories[0].fullPath}` }]
+      : []),
+    { name: tool.name, href: `/tools/${tool.slug}` },
+  ]
+
+  // Build comprehensive JSON-LD for SEO using centralized utilities
+  const softwareAppSchema = generateSoftwareApplicationSchema({
     name: tool.name,
+    slug: tool.slug,
     description: tool.description,
-    url: `https://coldemailkit.com/tools/${tool.slug}`,
-    applicationCategory: tool.categories?.[0]?.name || "Web Application",
-    operatingSystem: "Web",
-    ...(tool.screenshotUrl && {
-      image: {
-        "@type": "ImageObject",
-        url: tool.screenshotUrl,
-        width: "1280",
-        height: "720",
-      },
-    }),
-    ...(tool.faviconUrl && {
-      logo: tool.faviconUrl,
-    }),
-    ...(tool.overallRating && tool.totalReviews && {
-      aggregateRating: {
-        "@type": "AggregateRating",
-        ratingValue: tool.overallRating,
-        ratingCount: tool.totalReviews,
-        bestRating: 5,
-        worstRating: 1,
-      },
-    }),
-    ...(tool.pricingStarting && {
-      offers: {
-        "@type": "Offer",
-        price: tool.pricingStarting.replace(/[^0-9.]/g, "") || "0",
-        priceCurrency: "USD",
-        priceValidUntil: new Date(Date.now() + 365 * 24 * 60 * 60 * 1000).toISOString().split("T")[0],
-      },
-    }),
-    ...(tool.isSelfHosted && {
-      downloadUrl: tool.repositoryUrl,
-    }),
-  }
+    screenshotUrl: tool.screenshotUrl,
+    faviconUrl: tool.faviconUrl,
+    overallRating: tool.overallRating,
+    totalReviews: tool.totalReviews,
+    pricingStarting: tool.pricingStarting,
+    categories: tool.categories,
+    isSelfHosted: tool.isSelfHosted,
+    repositoryUrl: tool.repositoryUrl,
+  })
+
+  const breadcrumbSchema = generateBreadcrumbSchema(breadcrumbItems)
+  const jsonLd = wrapInGraph(softwareAppSchema, breadcrumbSchema)
+
+  // Generate FAQ content for this tool
+  const toolFAQs = generateToolFAQs(tool.name, {
+    pricing: tool.pricingStarting,
+    category: tool.categories?.[0]?.name,
+    hasFreeTrial: true, // Most tools have free trials
+  })
 
   return (
     <div className="flex flex-col gap-6 md:gap-12">
@@ -129,7 +149,12 @@ export default async function ToolPage(props: PageProps) {
         items={[
           { name: "Tools", href: "/tools" },
           ...(tool.categories?.[0]
-            ? [{ name: tool.categories[0].name, href: `/categories/${tool.categories[0].fullPath}` }]
+            ? [
+              {
+                name: tool.categories[0].name,
+                href: `/categories/${tool.categories[0].fullPath}`,
+              },
+            ]
             : []),
           { name: tool.name, href: `/tools/${tool.slug}` },
         ]}
@@ -232,6 +257,21 @@ export default async function ToolPage(props: PageProps) {
 
           {tool.content && <Markdown code={tool.content} className="max-md:order-4" />}
 
+          {/* Features & Specifications */}
+          <ToolFeaturesDisplay
+            specifications={tool.specifications as Parameters<typeof ToolFeaturesDisplay>[0]["specifications"]}
+            pricingSpecs={tool.pricingSpecs as Parameters<typeof ToolFeaturesDisplay>[0]["pricingSpecs"]}
+            inboxFeatures={tool.inboxFeatures as Parameters<typeof ToolFeaturesDisplay>[0]["inboxFeatures"]}
+            warmupFeatures={tool.warmupFeatures as Parameters<typeof ToolFeaturesDisplay>[0]["warmupFeatures"]}
+            leadsFeatures={tool.leadsFeatures as Parameters<typeof ToolFeaturesDisplay>[0]["leadsFeatures"]}
+            enrichmentFeatures={tool.enrichmentFeatures as Parameters<typeof ToolFeaturesDisplay>[0]["enrichmentFeatures"]}
+            copywritingFeatures={tool.copywritingFeatures as Parameters<typeof ToolFeaturesDisplay>[0]["copywritingFeatures"]}
+            outreachFeatures={tool.outreachFeatures as Parameters<typeof ToolFeaturesDisplay>[0]["outreachFeatures"]}
+            deliverabilityFeatures={tool.deliverabilityFeatures as Parameters<typeof ToolFeaturesDisplay>[0]["deliverabilityFeatures"]}
+            linkedinFeatures={tool.linkedinFeatures as Parameters<typeof ToolFeaturesDisplay>[0]["linkedinFeatures"]}
+            className="max-md:order-5"
+          />
+
           {/* Categories */}
           {!!tool.categories.length && (
             <Stack size="lg" direction="column" className="w-full max-md:order-6">
@@ -320,10 +360,10 @@ export default async function ToolPage(props: PageProps) {
       </Suspense>
 
       {/* JSON-LD */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
+      <script {...jsonLdScriptProps(jsonLd)} />
+
+      {/* FAQ Schema for SEO */}
+      <FAQSchema faqs={toolFAQs} />
     </div>
   )
 }

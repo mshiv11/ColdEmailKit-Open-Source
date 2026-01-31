@@ -2,9 +2,9 @@ import { ToolStatus } from "@prisma/client"
 import { Listing } from "~/components/web/listing"
 import { ToolList } from "~/components/web/tools/tool-list"
 import type { ToolOne } from "~/server/web/tools/payloads"
+import { toolManyPayload } from "~/server/web/tools/payloads"
 import { findRelatedTools } from "~/server/web/tools/queries"
 import { db } from "~/services/db"
-import { toolManyPayload } from "~/server/web/tools/payloads"
 
 export const RelatedTools = async ({ tool }: { tool: ToolOne }) => {
   try {
@@ -41,4 +41,3 @@ export const RelatedTools = async ({ tool }: { tool: ToolOne }) => {
     return null
   }
 }
-

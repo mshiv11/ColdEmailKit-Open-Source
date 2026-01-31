@@ -8,13 +8,13 @@ import { Icon } from "~/components/common/icon"
 import { Link } from "~/components/common/link"
 import { Skeleton } from "~/components/common/skeleton"
 import { Stack } from "~/components/common/stack"
+import { Tooltip } from "~/components/common/tooltip"
+import { StarRating } from "~/components/web/tools/star-rating"
 import { ToolBadges } from "~/components/web/tools/tool-badges"
 import { BrandLink } from "~/components/web/ui/brand-link"
 import { Favicon } from "~/components/web/ui/favicon"
 import { Insights } from "~/components/web/ui/insights"
-import { Tooltip } from "~/components/common/tooltip"
 import { VerifiedBadge } from "~/components/web/verified-badge"
-import { StarRating } from "~/components/web/tools/star-rating"
 import type { ToolMany } from "~/server/web/tools/payloads"
 
 type ToolCardProps = ComponentProps<typeof Card> & {
@@ -44,10 +44,10 @@ const ToolCard = ({ className, tool, isRelated, ...props }: ToolCardProps) => {
     },
     tool.pricingStarting
       ? {
-        label: "Starting Price",
-        value: tool.pricingStarting,
-        icon: <Icon name="lucide/dollar-sign" />,
-      }
+          label: "Starting Price",
+          value: tool.pricingStarting,
+          icon: <Icon name="lucide/dollar-sign" />,
+        }
       : undefined,
     { label: "Last commit", value: lastCommitDate, icon: <Icon name="lucide/timer" /> },
   ]
@@ -75,10 +75,7 @@ const ToolCard = ({ className, tool, isRelated, ...props }: ToolCardProps) => {
               {tool.ownerId && <VerifiedBadge size="md" />}
             </div>
 
-            <StarRating
-              rating={tool.overallRating || 0}
-              className="gap-1.5"
-            />
+            <StarRating rating={tool.overallRating || 0} className="gap-1.5" />
           </div>
 
           <ToolBadges tool={tool} className="ml-auto self-start" />
@@ -132,7 +129,11 @@ const ToolCard = ({ className, tool, isRelated, ...props }: ToolCardProps) => {
 
 const ToolCardSkeleton = () => {
   const insights = [
-    { label: "Reviews", value: <Skeleton className="h-4 w-16" />, icon: <Icon name="lucide/star" /> },
+    {
+      label: "Reviews",
+      value: <Skeleton className="h-4 w-16" />,
+      icon: <Icon name="lucide/star" />,
+    },
     {
       label: "Trust Score",
       value: <Skeleton className="h-4 w-14" />,

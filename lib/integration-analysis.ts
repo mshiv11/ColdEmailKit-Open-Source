@@ -7,8 +7,8 @@ import { getRepositoryString } from "~/lib/github/utils"
  * @returns The analysis
  */
 export const analyzeRepositoryIntegration = async (url: string) => {
-    const repository = getRepositoryString(url)
+  const repository = getRepositoryString(url)
 
-    // Get analysis
-    return await analyzerApi.url("/analyze").post({ repository })
+  // Get analysis
+  return await analyzerApi.url("/analyze").post({ repository })
 }

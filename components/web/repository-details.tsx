@@ -35,49 +35,49 @@ export const RepositoryDetails = ({ className, tool, ...props }: RepositoryDetai
     },
     tool.pricingStarting
       ? {
-        label: "Starting Price",
-        value: tool.pricingStarting,
-        icon: <Icon name="lucide/dollar-sign" />,
-      }
+          label: "Starting Price",
+          value: tool.pricingStarting,
+          icon: <Icon name="lucide/dollar-sign" />,
+        }
       : undefined,
     tool.bestFor
       ? {
-        label: "Best for",
-        value: tool.bestFor.replaceAll(",", ", "),
-        icon: <Icon name="lucide/briefcase" />,
-      }
+          label: "Best for",
+          value: tool.bestFor.replaceAll(",", ", "),
+          icon: <Icon name="lucide/briefcase" />,
+        }
       : undefined,
     tool.lastCommitDate
       ? {
-        label: "Last commit",
-        value: formatDistanceToNowStrict(tool.lastCommitDate, { addSuffix: true }),
-        title: formatDate(tool.lastCommitDate),
-        icon: <Icon name="lucide/timer" />,
-      }
+          label: "Last commit",
+          value: formatDistanceToNowStrict(tool.lastCommitDate, { addSuffix: true }),
+          title: formatDate(tool.lastCommitDate),
+          icon: <Icon name="lucide/timer" />,
+        }
       : undefined,
     tool.firstCommitDate
       ? {
-        label: "Repository age",
-        value: formatDistanceToNowStrict(tool.firstCommitDate),
-        title: formatDate(tool.firstCommitDate),
-        icon: <Icon name="lucide/history" />,
-      }
+          label: "Repository age",
+          value: formatDistanceToNowStrict(tool.firstCommitDate),
+          title: formatDate(tool.firstCommitDate),
+          icon: <Icon name="lucide/history" />,
+        }
       : undefined,
     tool.license
       ? {
-        label: "License",
-        value: tool.license.name,
-        link: `/licenses/${tool.license.slug}`,
-        icon: <Icon name="lucide/copyright" />,
-      }
+          label: "License",
+          value: tool.license.name,
+          link: `/licenses/${tool.license.slug}`,
+          icon: <Icon name="lucide/copyright" />,
+        }
       : undefined,
     tool.isSelfHosted
       ? {
-        label: "Self-hosted",
-        value: "Yes",
-        link: "/self-hosted",
-        icon: <Icon name="lucide/server" />,
-      }
+          label: "Self-hosted",
+          value: "Yes",
+          link: "/self-hosted",
+          icon: <Icon name="lucide/server" />,
+        }
       : undefined,
   ]
 

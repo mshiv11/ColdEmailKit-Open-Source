@@ -22,6 +22,7 @@ import { FaviconImage } from "~/components/web/ui/favicon"
 import { Intro, IntroDescription, IntroTitle } from "~/components/web/ui/intro"
 import { Section } from "~/components/web/ui/section"
 import { metadataConfig } from "~/config/metadata"
+import { generateArticleSchema, jsonLdScriptProps, wrapInGraph } from "~/lib/schemas"
 import { findTool } from "~/server/web/tools/queries"
 
 type PageProps = {
@@ -54,16 +55,53 @@ export const generateMetadata = async (props: PageProps): Promise<Metadata> => {
   const post = await findPostBySlug(props)
   const url = `/blog/${post._meta.path}`
 
+  // Generate keywords for blog post
+  const keywords = [
+    post.title,
+    ...(post.tools || []),
+    "cold email",
+    "email outreach",
+    "cold email tools",
+    "email marketing",
+  ]
+
   return {
     ...getMetadata(post),
+    keywords,
     alternates: { ...metadataConfig.alternates, canonical: url },
-    openGraph: { ...metadataConfig.openGraph, url },
+    openGraph: {
+      ...metadataConfig.openGraph,
+      url,
+      type: "article",
+      images: post.image
+        ? [{ url: post.image, width: 1200, height: 630, alt: post.title }]
+        : undefined,
+      ...(post.publishedAt && { publishedTime: post.publishedAt }),
+    },
   }
 }
 
 export default async function BlogPostPage(props: PageProps) {
   const post = await findPostBySlug(props)
   const tools = await Promise.all(post.tools?.map(slug => findTool({ where: { slug } })) ?? [])
+
+  // Generate Article JSON-LD schema for SEO
+  const articleSchema = generateArticleSchema({
+    title: post.title,
+    description: post.description,
+    slug: post._meta.path,
+    image: post.image,
+    publishedAt: post.publishedAt,
+    author: {
+      name: post.author.name,
+      twitterHandle: post.author.twitterHandle,
+      image: post.author.image,
+    },
+    wordCount: post.content.split(/\s+/).length,
+    section: "Cold Email Tools",
+  })
+
+  const jsonLd = wrapInGraph(articleSchema)
 
   return (
     <>
@@ -155,6 +193,9 @@ export default async function BlogPostPage(props: PageProps) {
       <Suspense fallback={<AlternativePreviewSkeleton />}>
         <AlternativePreview />
       </Suspense>
+
+      {/* JSON-LD Article Schema for SEO */}
+      <script {...jsonLdScriptProps(jsonLd)} />
     </>
   )
 }

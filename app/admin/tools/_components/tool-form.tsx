@@ -1,15 +1,14 @@
 "use client"
 
-import { formatDateTime, getRandomString, isValidUrl, slugify } from "@primoui/utils"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { z } from "zod"
-import type { ToolOne } from "~/server/web/tools/payloads"
+import { formatDateTime, getRandomString, isValidUrl, slugify } from "@primoui/utils"
 import { ToolStatus } from "@prisma/client"
 import { useRouter } from "next/navigation"
 import type { ComponentProps } from "react"
-import { use, useState, useEffect } from "react"
+import { use, useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
+import type { z } from "zod"
 import { useServerAction } from "zsa-react"
 import { generateFavicon, generateScreenshot } from "~/actions/media"
 import { ToolActions } from "~/app/admin/tools/_components/tool-actions"
@@ -38,6 +37,7 @@ import { ExternalLink } from "~/components/web/external-link"
 import { Markdown } from "~/components/web/markdown"
 import { siteConfig } from "~/config/site"
 import { useComputedField } from "~/hooks/use-computed-field"
+import { calculateProprietaryRating, formDataToRatingInput } from "~/lib/rating-algorithm"
 import { isToolPublished } from "~/lib/tools"
 import type { findAlternativeList } from "~/server/admin/alternatives/queries"
 import type { findCategoryList } from "~/server/admin/categories/queries"
@@ -45,8 +45,43 @@ import type { findIntegrationList } from "~/server/admin/integrations/queries"
 import { upsertTool } from "~/server/admin/tools/actions"
 import type { findToolBySlug } from "~/server/admin/tools/queries"
 import { toolSchema } from "~/server/admin/tools/schema"
+import type { ToolOne } from "~/server/web/tools/payloads"
 import { cx } from "~/utils/cva"
-import { calculateProprietaryRating, formDataToRatingInput } from "~/lib/rating-algorithm"
+import {
+  SpecificationsSection,
+  PricingSection,
+  InboxSection,
+  WarmupSection,
+  LeadsSection,
+  EnrichmentSection,
+  CopywritingSection,
+  OutreachSection,
+  DeliverabilitySection,
+  LinkedInSection,
+} from "~/components/admin/features"
+import {
+  type ToolSpecifications,
+  type PricingSpecs,
+  type InboxFeatures,
+  type WarmupFeatures,
+  type LeadsFeatures,
+  type EnrichmentFeatures,
+  type CopywritingFeatures,
+  type OutreachFeatures,
+  type DeliverabilityFeatures,
+  type LinkedInFeatures,
+  parseFeatures,
+  defaultSpecifications,
+  defaultPricingSpecs,
+  defaultInboxFeatures,
+  defaultWarmupFeatures,
+  defaultLeadsFeatures,
+  defaultEnrichmentFeatures,
+  defaultCopywritingFeatures,
+  defaultOutreachFeatures,
+  defaultDeliverabilityFeatures,
+  defaultLinkedInFeatures,
+} from "~/types/specifications"
 
 const ToolStatusChange = ({ tool }: { tool: ToolOne }) => {
   return (
@@ -66,19 +101,31 @@ const ToolStatusChange = ({ tool }: { tool: ToolOne }) => {
 }
 
 // Component to calculate and display proprietary rating metrics
-function PlatformRatingsCalculator({ form }: { form: ReturnType<typeof useForm<z.infer<typeof toolSchema>>> }) {
+function PlatformRatingsCalculator({
+  form,
+}: { form: ReturnType<typeof useForm<z.infer<typeof toolSchema>>> }) {
   const [
-    g2Rating, g2Reviews,
-    trustpilotRating, trustpilotReviews,
-    capterraRating, capterraReviews,
-    trustradiusRating, trustradiusReviews,
-    coldEmailKitRating, coldEmailKitReviews
+    g2Rating,
+    g2Reviews,
+    trustpilotRating,
+    trustpilotReviews,
+    capterraRating,
+    capterraReviews,
+    trustradiusRating,
+    trustradiusReviews,
+    coldEmailKitRating,
+    coldEmailKitReviews,
   ] = form.watch([
-    'g2Rating', 'g2Reviews',
-    'trustpilotRating', 'trustpilotReviews',
-    'capterraRating', 'capterraReviews',
-    'trustradiusRating', 'trustradiusReviews',
-    'coldEmailKitRating', 'coldEmailKitReviews'
+    "g2Rating",
+    "g2Reviews",
+    "trustpilotRating",
+    "trustpilotReviews",
+    "capterraRating",
+    "capterraReviews",
+    "trustradiusRating",
+    "trustradiusReviews",
+    "coldEmailKitRating",
+    "coldEmailKitReviews",
   ])
 
   const result = calculateProprietaryRating(
@@ -93,17 +140,17 @@ function PlatformRatingsCalculator({ form }: { form: ReturnType<typeof useForm<z
       trustradiusReviews: Number(trustradiusReviews) || 0,
       coldEmailKitRating: Number(coldEmailKitRating) || 0,
       coldEmailKitReviews: Number(coldEmailKitReviews) || 0,
-    })
+    }),
   )
 
   // Auto-update the computed fields
   useEffect(() => {
     if (result.proprietaryRating !== null) {
-      form.setValue('overallRating', result.proprietaryRating)
+      form.setValue("overallRating", result.proprietaryRating)
     }
-    form.setValue('totalReviews', result.totalReviews)
+    form.setValue("totalReviews", result.totalReviews)
     if (result.trustScore !== null) {
-      form.setValue('trustScore', result.trustScore) // Trust Score is already 0-100 percentage
+      form.setValue("trustScore", result.trustScore) // Trust Score is already 0-100 percentage
     }
   }, [result.proprietaryRating, result.totalReviews, result.trustScore, form])
 
@@ -114,7 +161,7 @@ function PlatformRatingsCalculator({ form }: { form: ReturnType<typeof useForm<z
         <div className="p-3 bg-background rounded-md border">
           <p className="text-xs text-muted-foreground">Proprietary Rating</p>
           <p className="text-lg font-semibold">
-            {result.proprietaryRating !== null ? result.proprietaryRating.toFixed(2) : 'N/A'}
+            {result.proprietaryRating !== null ? result.proprietaryRating.toFixed(2) : "N/A"}
           </p>
         </div>
         <div className="p-3 bg-background rounded-md border">
@@ -128,7 +175,7 @@ function PlatformRatingsCalculator({ form }: { form: ReturnType<typeof useForm<z
         <div className="p-3 bg-background rounded-md border">
           <p className="text-xs text-muted-foreground">Trust Score</p>
           <p className="text-lg font-semibold">
-            {result.trustScore !== null ? `${result.trustScore}%` : 'N/A'}
+            {result.trustScore !== null ? `${result.trustScore}%` : "N/A"}
           </p>
         </div>
       </div>
@@ -202,6 +249,17 @@ export function ToolForm({
       trustradiusReviews: tool?.trustradiusReviews ?? 0,
       coldEmailKitRating: tool?.coldEmailKitRating ?? 0,
       coldEmailKitReviews: tool?.coldEmailKitReviews ?? 0,
+      // Specifications & Features
+      specifications: parseFeatures(tool?.specifications, defaultSpecifications),
+      pricingSpecs: parseFeatures(tool?.pricingSpecs, defaultPricingSpecs),
+      inboxFeatures: parseFeatures(tool?.inboxFeatures, defaultInboxFeatures),
+      warmupFeatures: parseFeatures(tool?.warmupFeatures, defaultWarmupFeatures),
+      leadsFeatures: parseFeatures(tool?.leadsFeatures, defaultLeadsFeatures),
+      enrichmentFeatures: parseFeatures(tool?.enrichmentFeatures, defaultEnrichmentFeatures),
+      copywritingFeatures: parseFeatures(tool?.copywritingFeatures, defaultCopywritingFeatures),
+      outreachFeatures: parseFeatures(tool?.outreachFeatures, defaultOutreachFeatures),
+      deliverabilityFeatures: parseFeatures(tool?.deliverabilityFeatures, defaultDeliverabilityFeatures),
+      linkedinFeatures: parseFeatures(tool?.linkedinFeatures, defaultLinkedInFeatures),
     },
   })
 
@@ -377,8 +435,6 @@ export function ToolForm({
           )}
         />
 
-
-
         <FormField
           control={form.control}
           name="tagline"
@@ -506,7 +562,6 @@ export function ToolForm({
           />
         </div>
 
-
         <div className="grid gap-4 @2xl:grid-cols-2">
           <FormField
             control={form.control}
@@ -543,13 +598,7 @@ export function ToolForm({
               <FormItem>
                 <FormLabel>Overall Rating (0-5)</FormLabel>
                 <FormControl>
-                  <Input
-                    type="number"
-                    min={0}
-                    max={5}
-                    step={0.1}
-                    {...field}
-                  />
+                  <Input type="number" min={0} max={5} step={0.1} {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -575,7 +624,8 @@ export function ToolForm({
         <div className="col-span-full border rounded-lg p-4 bg-muted/30">
           <H3 className="mb-4">Platform Ratings</H3>
           <p className="text-sm text-muted-foreground mb-4">
-            Enter ratings and review counts from each platform. The proprietary rating will be calculated automatically.
+            Enter ratings and review counts from each platform. The proprietary rating will be
+            calculated automatically.
           </p>
 
           <div className="grid gap-4 @lg:grid-cols-2 @2xl:grid-cols-4">
@@ -587,7 +637,14 @@ export function ToolForm({
                 <FormItem>
                   <FormLabel>G2 Rating (0-5)</FormLabel>
                   <FormControl>
-                    <Input type="number" min={0} max={5} step={0.1} placeholder="e.g. 4.5" {...field} />
+                    <Input
+                      type="number"
+                      min={0}
+                      max={5}
+                      step={0.1}
+                      placeholder="e.g. 4.5"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -615,7 +672,14 @@ export function ToolForm({
                 <FormItem>
                   <FormLabel>Trustpilot Rating (0-5)</FormLabel>
                   <FormControl>
-                    <Input type="number" min={0} max={5} step={0.1} placeholder="e.g. 4.2" {...field} />
+                    <Input
+                      type="number"
+                      min={0}
+                      max={5}
+                      step={0.1}
+                      placeholder="e.g. 4.2"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -643,7 +707,14 @@ export function ToolForm({
                 <FormItem>
                   <FormLabel>Capterra Rating (0-5)</FormLabel>
                   <FormControl>
-                    <Input type="number" min={0} max={5} step={0.1} placeholder="e.g. 4.0" {...field} />
+                    <Input
+                      type="number"
+                      min={0}
+                      max={5}
+                      step={0.1}
+                      placeholder="e.g. 4.0"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -671,7 +742,14 @@ export function ToolForm({
                 <FormItem>
                   <FormLabel>TrustRadius Rating (0-10)</FormLabel>
                   <FormControl>
-                    <Input type="number" min={0} max={10} step={0.1} placeholder="e.g. 8.6" {...field} />
+                    <Input
+                      type="number"
+                      min={0}
+                      max={10}
+                      step={0.1}
+                      placeholder="e.g. 8.6"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -699,7 +777,14 @@ export function ToolForm({
                 <FormItem>
                   <FormLabel>ColdEmailKit Rating (0-5)</FormLabel>
                   <FormControl>
-                    <Input type="number" min={0} max={5} step={0.1} placeholder="e.g. 4.8" {...field} />
+                    <Input
+                      type="number"
+                      min={0}
+                      max={5}
+                      step={0.1}
+                      placeholder="e.g. 4.8"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -728,7 +813,14 @@ export function ToolForm({
           control={form.control}
           name="bestFor"
           render={({ field }) => {
-            const options = ["Solopreneurs", "Agencies", "Freelancers", "Recruiters", "Enterprises", "Small business"]
+            const options = [
+              "Solopreneurs",
+              "Agencies",
+              "Freelancers",
+              "Recruiters",
+              "Enterprises",
+              "Small business",
+            ]
             const selected = field.value ? field.value.split(",") : []
 
             return (
@@ -736,15 +828,15 @@ export function ToolForm({
                 <FormLabel>Best For</FormLabel>
                 <FormControl>
                   <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
-                    {options.map((option) => (
+                    {options.map(option => (
                       <div key={option} className="flex items-center space-x-2">
                         <Checkbox
                           id={`bestFor-${option}`}
                           checked={selected.includes(option)}
-                          onCheckedChange={(checked) => {
+                          onCheckedChange={checked => {
                             const newSelected = checked
                               ? [...selected, option]
-                              : selected.filter((s) => s !== option)
+                              : selected.filter(s => s !== option)
                             field.onChange(newSelected.join(","))
                           }}
                         />
@@ -763,6 +855,65 @@ export function ToolForm({
             )
           }}
         />
+
+        {/* Specifications & Features Sections */}
+        <div className="col-span-full space-y-2">
+          <H3 className="text-base">Specifications & Features</H3>
+          <p className="text-sm text-muted-foreground mb-4">
+            Detailed specifications and features for comparison. All sections are optional.
+          </p>
+
+          <SpecificationsSection
+            value={form.watch("specifications") as ToolSpecifications}
+            onChange={(val) => form.setValue("specifications", val)}
+            defaultOpen={true}
+          />
+
+          <PricingSection
+            value={form.watch("pricingSpecs") as PricingSpecs}
+            onChange={(val) => form.setValue("pricingSpecs", val)}
+          />
+
+          <InboxSection
+            value={form.watch("inboxFeatures") as InboxFeatures}
+            onChange={(val) => form.setValue("inboxFeatures", val)}
+          />
+
+          <WarmupSection
+            value={form.watch("warmupFeatures") as WarmupFeatures}
+            onChange={(val) => form.setValue("warmupFeatures", val)}
+          />
+
+          <LeadsSection
+            value={form.watch("leadsFeatures") as LeadsFeatures}
+            onChange={(val) => form.setValue("leadsFeatures", val)}
+          />
+
+          <EnrichmentSection
+            value={form.watch("enrichmentFeatures") as EnrichmentFeatures}
+            onChange={(val) => form.setValue("enrichmentFeatures", val)}
+          />
+
+          <CopywritingSection
+            value={form.watch("copywritingFeatures") as CopywritingFeatures}
+            onChange={(val) => form.setValue("copywritingFeatures", val)}
+          />
+
+          <OutreachSection
+            value={form.watch("outreachFeatures") as OutreachFeatures}
+            onChange={(val) => form.setValue("outreachFeatures", val)}
+          />
+
+          <DeliverabilitySection
+            value={form.watch("deliverabilityFeatures") as DeliverabilityFeatures}
+            onChange={(val) => form.setValue("deliverabilityFeatures", val)}
+          />
+
+          <LinkedInSection
+            value={form.watch("linkedinFeatures") as LinkedInFeatures}
+            onChange={(val) => form.setValue("linkedinFeatures", val)}
+          />
+        </div>
 
         {tool?.submitterEmail && (
           <>
@@ -1025,6 +1176,6 @@ export function ToolForm({
           />
         </div>
       </form>
-    </Form >
+    </Form>
   )
 }

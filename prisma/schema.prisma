@@ -28,22 +28,18 @@ enum ToolStatus {
 }
 
 enum IntegrationType {
-  Tool
-  SaaS
-  Cloud
-  ETL
-  Analytics
-  Language
-  DB
-  CI
-  Framework
-  Hosting
-  API
-  Storage
-  Monitoring
-  Messaging
-  App
-  Network
+  CRM           // Salesforce, HubSpot, Pipedrive
+  Automation    // Zapier, Make, n8n
+  Leads         // Apollo, ZoomInfo, LinkedIn
+  DataSource    // Clearbit, Hunter, Snov.io
+  Inbox         // Gmail, Outlook, IMAP
+  Warmup        // Warmbox, Lemwarm
+  Verification  // NeverBounce, ZeroBounce
+  Analytics     // Tracking and analytics
+  Enrichment    // Data enrichment tools
+  Calendar      // Calendly, Cal.com
+  Messaging     // Slack, Teams notifications
+  Webhook       // Custom webhooks/APIs
 }
 
 enum ReportType {
@@ -181,6 +177,18 @@ model Tool {
   bestFor         String?
   hasFreeTrial    Boolean    @default(false)
   
+  // Specifications & Features (JSON fields for flexibility and comparison)
+  specifications          Json?    @default("{}")  // Core capabilities (0-5 ratings)
+  pricingSpecs            Json?    @default("{}")  // Pricing details
+  inboxFeatures           Json?    @default("{}")  // Inbox provision features
+  warmupFeatures          Json?    @default("{}")  // Email warm-up features
+  leadsFeatures           Json?    @default("{}")  // Lead database features
+  enrichmentFeatures      Json?    @default("{}")  // Data enrichment features
+  copywritingFeatures     Json?    @default("{}")  // AI copywriting features
+  outreachFeatures        Json?    @default("{}")  // Sending & sequences
+  deliverabilityFeatures  Json?    @default("{}")  // Deliverability monitoring
+  linkedinFeatures        Json?    @default("{}")  // LinkedIn automation
+  
   // Platform-specific ratings (0-5 scale) and review counts
   g2Rating           Float?    @default(0)
   g2Reviews          Int?      @default(0)
@@ -294,7 +302,7 @@ model Integration {
   id          String    @id @default(cuid())
   name        String    @db.Citext
   slug        String    @unique
-  type        IntegrationType @default(Language)
+  type        IntegrationType @default(Automation)
   description String?
   website     String?
   faviconUrl  String?

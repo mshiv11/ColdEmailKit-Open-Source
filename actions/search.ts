@@ -32,24 +32,21 @@ export const searchItems = createServerAction()
     const { data, error } = await tryCatch(
       Promise.all([
         getMeiliIndex("tools").search<ToolSearchResult>(query, {
-          rankingScoreThreshold: 0.5,
-          hybrid: { embedder: "openAi", semanticRatio: 0.5 },
           attributesToRetrieve: ["slug", "name", "websiteUrl", "faviconUrl"],
           filter: ["status = 'Published'"],
           sort: ["isFeatured:desc", "score:desc"],
+          limit: 10,
         }),
 
         getMeiliIndex("alternatives").search<AlternativeSearchResult>(query, {
-          rankingScoreThreshold: 0.5,
-          hybrid: { embedder: "openAi", semanticRatio: 0.5 },
           attributesToRetrieve: ["slug", "name", "faviconUrl"],
           sort: ["pageviews:desc"],
+          limit: 10,
         }),
 
         getMeiliIndex("categories").search<CategorySearchResult>(query, {
-          rankingScoreThreshold: 0.6,
-          hybrid: { embedder: "openAi", semanticRatio: 0.5 },
           attributesToRetrieve: ["slug", "name", "fullPath"],
+          limit: 10,
         }),
       ]),
     )

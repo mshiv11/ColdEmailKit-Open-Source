@@ -1,7 +1,7 @@
 "use client"
 
-import { slugify } from "@primoui/utils"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { slugify } from "@primoui/utils"
 import { useRouter } from "next/navigation"
 import { type ComponentProps, use, useMemo } from "react"
 import { useForm } from "react-hook-form"

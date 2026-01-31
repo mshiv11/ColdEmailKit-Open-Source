@@ -12,10 +12,7 @@ type MarkdownProps = ComponentProps<typeof Prose> & {
 export const Markdown = ({ code, ...props }: MarkdownProps) => {
   return (
     <Prose {...props}>
-      <ReactMarkdown
-        components={MDXComponents}
-        rehypePlugins={[rehypeRaw]}
-      >
+      <ReactMarkdown components={MDXComponents} rehypePlugins={[rehypeRaw]}>
         {code}
       </ReactMarkdown>
     </Prose>

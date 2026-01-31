@@ -72,7 +72,26 @@ const nextConfig: NextConfig = {
   },
 
   redirects: async () => {
+    // Load dynamic blog redirects
+    let blogRedirects: { source: string; destination: string; permanent: boolean }[] = []
+    try {
+      const redirectsData = await import("./content/blog-redirects.json")
+      blogRedirects = (redirectsData.default as { from: string; to: string }[]).map(r => ({
+        source: `/blog/${r.from}`,
+        destination: `/blog/${r.to}`,
+        permanent: true,
+      }))
+    } catch {
+      // File doesn't exist or is invalid, use empty array
+    }
+
     return [
+      ...blogRedirects,
+      {
+        source: "/topics",
+        destination: "/categories",
+        permanent: true,
+      },
       {
         source: "/latest",
         destination: "/?sort=publishedAt.desc",
@@ -96,6 +115,12 @@ const nextConfig: NextConfig = {
       {
         source: "/advertise/alternatives",
         destination: "/advertise?alternative=",
+        permanent: true,
+      },
+      // Redirect old /using/ URLs to new /integrations/ URLs
+      {
+        source: "/categories/:slug/using/:integration",
+        destination: "/categories/:slug/integrations/:integration",
         permanent: true,
       },
     ]

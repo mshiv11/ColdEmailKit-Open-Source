@@ -17,20 +17,20 @@ export const upsertAlternative = adminProcedure
 
     const alternative = id
       ? await db.alternative.update({
-        where: { id },
-        data: {
-          ...input,
-          slug: input.slug || slugify(input.name),
-          tools: { set: toolIds },
-        },
-      })
+          where: { id },
+          data: {
+            ...input,
+            slug: input.slug || slugify(input.name),
+            tools: { set: toolIds },
+          },
+        })
       : await db.alternative.create({
-        data: {
-          ...input,
-          slug: input.slug || slugify(input.name),
-          tools: { connect: toolIds },
-        },
-      })
+          data: {
+            ...input,
+            slug: input.slug || slugify(input.name),
+            tools: { connect: toolIds },
+          },
+        })
 
     revalidateTag("alternatives")
     revalidateTag(`alternative-${alternative.slug}`)

@@ -38,4 +38,3 @@ export const scrapeWebsiteData = async (url: string) => {
 
   return data.data
 }
-

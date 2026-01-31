@@ -1,418 +1,418 @@
 [
-    {
-        "slug": "apollo",
-        "rating": 4.6,
-        "review_count": 3421,
-        "trust_score": 87,
-        "pricing_starter": "$0",
-        "pricing_model": "per user/month"
-    },
-    {
-        "slug": "artisan",
-        "rating": 4.5,
-        "review_count": 2,
-        "trust_score": 85,
-        "pricing_starter": "Custom",
-        "pricing_model": "month"
-    },
-    {
-        "slug": "bullseye",
-        "rating": 4.3,
-        "review_count": 5,
-        "trust_score": 75,
-        "pricing_starter": "$179",
-        "pricing_model": "month"
-    },
-    {
-        "slug": "clay",
-        "rating": 4.5,
-        "review_count": 365,
-        "trust_score": 94,
-        "pricing_starter": "$134",
-        "pricing_model": "month"
-    },
-    {
-        "slug": "cold-snipe",
-        "rating": 3.9,
-        "review_count": 3,
-        "trust_score": 67,
-        "pricing_starter": "$7",
-        "pricing_model": "month"
-    },
-    {
-        "slug": "coldflow",
-        "rating": 5,
-        "review_count": 1,
-        "trust_score": 75,
-        "pricing_starter": "Free",
-        "pricing_model": "month"
-    },
-    {
-        "slug": "contactout",
-        "rating": 4.8,
-        "review_count": 139,
-        "trust_score": 96,
-        "pricing_starter": "$0/month",
-        "pricing_model": "month"
-    },
-    {
-        "slug": "deliveryman-ai",
-        "rating": 4.5,
-        "review_count": 3,
-        "trust_score": 89,
-        "pricing_starter": "$29",
-        "pricing_model": "month"
-    },
-    {
-        "slug": "emailchaser",
-        "rating": 4.7,
-        "review_count": 97,
-        "trust_score": 91,
-        "pricing_starter": "$37",
-        "pricing_model": "month"
-    },
-    {
-        "slug": "emelia",
-        "rating": 4.2,
-        "review_count": 58,
-        "trust_score": 88,
-        "pricing_starter": "€37",
-        "pricing_model": "month"
-    },
-    {
-        "slug": "findymail",
-        "rating": 4.8,
-        "review_count": 548,
-        "trust_score": 95,
-        "pricing_starter": "$49",
-        "pricing_model": "month"
-    },
-    {
-        "slug": "flight",
-        "rating": 5,
-        "review_count": 3,
-        "trust_score": 79,
-        "pricing_starter": "$500",
-        "pricing_model": "year"
-    },
-    {
-        "slug": "flood-of-leads",
-        "rating": 5,
-        "review_count": 1,
-        "trust_score": 69,
-        "pricing_starter": "$8",
-        "pricing_model": "one-time"
-    },
-    {
-        "slug": "givemeleads",
-        "rating": 5,
-        "review_count": 1,
-        "trust_score": 75,
-        "pricing_starter": "€49",
-        "pricing_model": "month"
-    },
-    {
-        "slug": "instantly",
-        "rating": 4.7,
-        "review_count": 634,
-        "trust_score": 96,
-        "pricing_starter": "$37",
-        "pricing_model": "month"
-    },
-    {
-        "slug": "leadengine",
-        "rating": 4.4,
-        "review_count": 3,
-        "trust_score": 90,
-        "pricing_starter": "$97",
-        "pricing_model": "month"
-    },
-    {
-        "slug": "lemlist",
-        "rating": 4.3,
-        "review_count": 154,
-        "trust_score": 91,
-        "pricing_starter": "$69",
-        "pricing_model": "month"
-    },
-    {
-        "slug": "lusha",
-        "rating": 4.3,
-        "review_count": 435,
-        "trust_score": 90,
-        "pricing_starter": "$0",
-        "pricing_model": "month"
-    },
-    {
-        "slug": "mailforge",
-        "rating": 4.7,
-        "review_count": 125,
-        "trust_score": 94,
-        "pricing_starter": "$13",
-        "pricing_model": "month"
-    },
-    {
-        "slug": "mailreach",
-        "rating": 4.6,
-        "review_count": 124,
-        "trust_score": 95,
-        "pricing_starter": "$25",
-        "pricing_model": "month"
-    },
-    {
-        "slug": "mails-ai",
-        "rating": 4.1,
-        "review_count": 5,
-        "trust_score": 78,
-        "pricing_starter": "$24",
-        "pricing_model": "month"
-    },
-    {
-        "slug": "mailshake",
-        "rating": 4.1,
-        "review_count": 756,
-        "trust_score": 80,
-        "pricing_starter": "$29",
-        "pricing_model": "month"
-    },
-    {
-        "slug": "mailwarm",
-        "rating": 4.2,
-        "review_count": 47,
-        "trust_score": 94,
-        "pricing_starter": "$69",
-        "pricing_model": "month"
-    },
-    {
-        "slug": "manyreach",
-        "rating": 4.3,
-        "review_count": 127,
-        "trust_score": 95,
-        "pricing_starter": "$0",
-        "pricing_model": "lifetime"
-    },
-    {
-        "slug": "muraena",
-        "rating": 4.6,
-        "review_count": 25,
-        "trust_score": 95,
-        "pricing_starter": "$0",
-        "pricing_model": "month"
-    },
-    {
-        "slug": "mystrika",
-        "rating": 4.4,
-        "review_count": 97,
-        "trust_score": 95,
-        "pricing_starter": "$16",
-        "pricing_model": "month"
-    },
-    {
-        "slug": "outreach",
-        "rating": 4.2,
-        "review_count": 270,
-        "trust_score": 91,
-        "pricing_starter": "$120",
-        "pricing_model": "per user/month"
-    },
-    {
-        "slug": "plusvibe-ai",
-        "rating": 4.1,
-        "review_count": 13,
-        "trust_score": 89,
-        "pricing_starter": "$37",
-        "pricing_model": "month"
-    },
-    {
-        "slug": "primeforge",
-        "rating": 4.7,
-        "review_count": 125,
-        "trust_score": 95,
-        "pricing_starter": "$19",
-        "pricing_model": "month"
-    },
-    {
-        "slug": "quickmail",
-        "rating": 4,
-        "review_count": 11,
-        "trust_score": 85,
-        "pricing_starter": "$9",
-        "pricing_model": "month"
-    },
-    {
-        "slug": "reachinbox",
-        "rating": 4.1,
-        "review_count": 57,
-        "trust_score": 89,
-        "pricing_starter": "$39",
-        "pricing_model": "month"
-    },
-    {
-        "slug": "reply",
-        "rating": 4.2,
-        "review_count": 1156,
-        "trust_score": 83,
-        "pricing_starter": "$69",
-        "pricing_model": "per user/month"
-    },
-    {
-        "slug": "rocketreach",
-        "rating": 4.1,
-        "review_count": 202,
-        "trust_score": 92,
-        "pricing_starter": "$33",
-        "pricing_model": "month"
-    },
-    {
-        "slug": "salesblink",
-        "rating": 4.7,
-        "review_count": 96,
-        "trust_score": 95,
-        "pricing_starter": "$29",
-        "pricing_model": "month"
-    },
-    {
-        "slug": "saleshandy",
-        "rating": 4.5,
-        "review_count": 157,
-        "trust_score": 95,
-        "pricing_starter": "$36",
-        "pricing_model": "month"
-    },
-    {
-        "slug": "salesloft",
-        "rating": 4.4,
-        "review_count": 1834,
-        "trust_score": 88,
-        "pricing_starter": "$65",
-        "pricing_model": "per user/month"
-    },
-    {
-        "slug": "seamless-ai",
-        "rating": 4.3,
-        "review_count": 69,
-        "trust_score": 92,
-        "pricing_starter": "Free",
-        "pricing_model": "month"
-    },
-    {
-        "slug": "sequence-r",
-        "rating": 4.9,
-        "review_count": 3,
-        "trust_score": 88,
-        "pricing_starter": "£0",
-        "pricing_model": "month"
-    },
-    {
-        "slug": "skylead",
-        "rating": 4.9,
-        "review_count": 48,
-        "trust_score": 93,
-        "pricing_starter": "$100",
-        "pricing_model": "month"
-    },
-    {
-        "slug": "skysenders",
-        "rating": 4.2,
-        "review_count": 12,
-        "trust_score": 89,
-        "pricing_starter": "$59",
-        "pricing_model": "month"
-    },
-    {
-        "slug": "smartlead",
-        "rating": 4.7,
-        "review_count": 454,
-        "trust_score": 95,
-        "pricing_starter": "$39",
-        "pricing_model": "month"
-    },
-    {
-        "slug": "smartreach",
-        "rating": 4.2,
-        "review_count": 54,
-        "trust_score": 91,
-        "pricing_starter": "$29",
-        "pricing_model": "month"
-    },
-    {
-        "slug": "snov-io",
-        "rating": 4.6,
-        "review_count": 980,
-        "trust_score": 92,
-        "pricing_starter": "$29",
-        "pricing_model": "month"
-    },
-    {
-        "slug": "straight-mail",
-        "rating": 5,
-        "review_count": 1,
-        "trust_score": 65,
-        "pricing_starter": "£0",
-        "pricing_model": "month"
-    },
-    {
-        "slug": "supersend",
-        "rating": 4.7,
-        "review_count": 455,
-        "trust_score": 94,
-        "pricing_starter": "$59",
-        "pricing_model": "month"
-    },
-    {
-        "slug": "twain-ai",
-        "rating": 4.3,
-        "review_count": 26,
-        "trust_score": 90,
-        "pricing_starter": "$35",
-        "pricing_model": "month"
-    },
-    {
-        "slug": "txto",
-        "rating": 5,
-        "review_count": 3,
-        "trust_score": 70,
-        "pricing_starter": "$19.99",
-        "pricing_model": "month"
-    },
-    {
-        "slug": "unlimitedleads",
-        "rating": 4.6,
-        "review_count": 9,
-        "trust_score": 91,
-        "pricing_starter": "$59",
-        "pricing_model": "month"
-    },
-    {
-        "slug": "wiza",
-        "rating": 4.8,
-        "review_count": 151,
-        "trust_score": 96,
-        "pricing_starter": "$0",
-        "pricing_model": "month"
-    },
-    {
-        "slug": "woodpecker",
-        "rating": 4.9,
-        "review_count": 94,
-        "trust_score": 96,
-        "pricing_starter": "$29",
-        "pricing_model": "month"
-    },
-    {
-        "slug": "zapmail",
-        "rating": 4.6,
-        "review_count": 111,
-        "trust_score": 95,
-        "pricing_starter": "$39",
-        "pricing_model": "month"
-    },
-    {
-        "slug": "zoominfo",
-        "rating": 4.5,
-        "review_count": 585,
-        "trust_score": 95,
-        "pricing_starter": "Custom",
-        "pricing_model": "year"
-    }
+  {
+    "slug": "apollo",
+    "rating": 4.6,
+    "review_count": 3421,
+    "trust_score": 87,
+    "pricing_starter": "$0",
+    "pricing_model": "per user/month"
+  },
+  {
+    "slug": "artisan",
+    "rating": 4.5,
+    "review_count": 2,
+    "trust_score": 85,
+    "pricing_starter": "Custom",
+    "pricing_model": "month"
+  },
+  {
+    "slug": "bullseye",
+    "rating": 4.3,
+    "review_count": 5,
+    "trust_score": 75,
+    "pricing_starter": "$179",
+    "pricing_model": "month"
+  },
+  {
+    "slug": "clay",
+    "rating": 4.5,
+    "review_count": 365,
+    "trust_score": 94,
+    "pricing_starter": "$134",
+    "pricing_model": "month"
+  },
+  {
+    "slug": "cold-snipe",
+    "rating": 3.9,
+    "review_count": 3,
+    "trust_score": 67,
+    "pricing_starter": "$7",
+    "pricing_model": "month"
+  },
+  {
+    "slug": "coldflow",
+    "rating": 5,
+    "review_count": 1,
+    "trust_score": 75,
+    "pricing_starter": "Free",
+    "pricing_model": "month"
+  },
+  {
+    "slug": "contactout",
+    "rating": 4.8,
+    "review_count": 139,
+    "trust_score": 96,
+    "pricing_starter": "$0/month",
+    "pricing_model": "month"
+  },
+  {
+    "slug": "deliveryman-ai",
+    "rating": 4.5,
+    "review_count": 3,
+    "trust_score": 89,
+    "pricing_starter": "$29",
+    "pricing_model": "month"
+  },
+  {
+    "slug": "emailchaser",
+    "rating": 4.7,
+    "review_count": 97,
+    "trust_score": 91,
+    "pricing_starter": "$37",
+    "pricing_model": "month"
+  },
+  {
+    "slug": "emelia",
+    "rating": 4.2,
+    "review_count": 58,
+    "trust_score": 88,
+    "pricing_starter": "€37",
+    "pricing_model": "month"
+  },
+  {
+    "slug": "findymail",
+    "rating": 4.8,
+    "review_count": 548,
+    "trust_score": 95,
+    "pricing_starter": "$49",
+    "pricing_model": "month"
+  },
+  {
+    "slug": "flight",
+    "rating": 5,
+    "review_count": 3,
+    "trust_score": 79,
+    "pricing_starter": "$500",
+    "pricing_model": "year"
+  },
+  {
+    "slug": "flood-of-leads",
+    "rating": 5,
+    "review_count": 1,
+    "trust_score": 69,
+    "pricing_starter": "$8",
+    "pricing_model": "one-time"
+  },
+  {
+    "slug": "givemeleads",
+    "rating": 5,
+    "review_count": 1,
+    "trust_score": 75,
+    "pricing_starter": "€49",
+    "pricing_model": "month"
+  },
+  {
+    "slug": "instantly",
+    "rating": 4.7,
+    "review_count": 634,
+    "trust_score": 96,
+    "pricing_starter": "$37",
+    "pricing_model": "month"
+  },
+  {
+    "slug": "leadengine",
+    "rating": 4.4,
+    "review_count": 3,
+    "trust_score": 90,
+    "pricing_starter": "$97",
+    "pricing_model": "month"
+  },
+  {
+    "slug": "lemlist",
+    "rating": 4.3,
+    "review_count": 154,
+    "trust_score": 91,
+    "pricing_starter": "$69",
+    "pricing_model": "month"
+  },
+  {
+    "slug": "lusha",
+    "rating": 4.3,
+    "review_count": 435,
+    "trust_score": 90,
+    "pricing_starter": "$0",
+    "pricing_model": "month"
+  },
+  {
+    "slug": "mailforge",
+    "rating": 4.7,
+    "review_count": 125,
+    "trust_score": 94,
+    "pricing_starter": "$13",
+    "pricing_model": "month"
+  },
+  {
+    "slug": "mailreach",
+    "rating": 4.6,
+    "review_count": 124,
+    "trust_score": 95,
+    "pricing_starter": "$25",
+    "pricing_model": "month"
+  },
+  {
+    "slug": "mails-ai",
+    "rating": 4.1,
+    "review_count": 5,
+    "trust_score": 78,
+    "pricing_starter": "$24",
+    "pricing_model": "month"
+  },
+  {
+    "slug": "mailshake",
+    "rating": 4.1,
+    "review_count": 756,
+    "trust_score": 80,
+    "pricing_starter": "$29",
+    "pricing_model": "month"
+  },
+  {
+    "slug": "mailwarm",
+    "rating": 4.2,
+    "review_count": 47,
+    "trust_score": 94,
+    "pricing_starter": "$69",
+    "pricing_model": "month"
+  },
+  {
+    "slug": "manyreach",
+    "rating": 4.3,
+    "review_count": 127,
+    "trust_score": 95,
+    "pricing_starter": "$0",
+    "pricing_model": "lifetime"
+  },
+  {
+    "slug": "muraena",
+    "rating": 4.6,
+    "review_count": 25,
+    "trust_score": 95,
+    "pricing_starter": "$0",
+    "pricing_model": "month"
+  },
+  {
+    "slug": "mystrika",
+    "rating": 4.4,
+    "review_count": 97,
+    "trust_score": 95,
+    "pricing_starter": "$16",
+    "pricing_model": "month"
+  },
+  {
+    "slug": "outreach",
+    "rating": 4.2,
+    "review_count": 270,
+    "trust_score": 91,
+    "pricing_starter": "$120",
+    "pricing_model": "per user/month"
+  },
+  {
+    "slug": "plusvibe-ai",
+    "rating": 4.1,
+    "review_count": 13,
+    "trust_score": 89,
+    "pricing_starter": "$37",
+    "pricing_model": "month"
+  },
+  {
+    "slug": "primeforge",
+    "rating": 4.7,
+    "review_count": 125,
+    "trust_score": 95,
+    "pricing_starter": "$19",
+    "pricing_model": "month"
+  },
+  {
+    "slug": "quickmail",
+    "rating": 4,
+    "review_count": 11,
+    "trust_score": 85,
+    "pricing_starter": "$9",
+    "pricing_model": "month"
+  },
+  {
+    "slug": "reachinbox",
+    "rating": 4.1,
+    "review_count": 57,
+    "trust_score": 89,
+    "pricing_starter": "$39",
+    "pricing_model": "month"
+  },
+  {
+    "slug": "reply",
+    "rating": 4.2,
+    "review_count": 1156,
+    "trust_score": 83,
+    "pricing_starter": "$69",
+    "pricing_model": "per user/month"
+  },
+  {
+    "slug": "rocketreach",
+    "rating": 4.1,
+    "review_count": 202,
+    "trust_score": 92,
+    "pricing_starter": "$33",
+    "pricing_model": "month"
+  },
+  {
+    "slug": "salesblink",
+    "rating": 4.7,
+    "review_count": 96,
+    "trust_score": 95,
+    "pricing_starter": "$29",
+    "pricing_model": "month"
+  },
+  {
+    "slug": "saleshandy",
+    "rating": 4.5,
+    "review_count": 157,
+    "trust_score": 95,
+    "pricing_starter": "$36",
+    "pricing_model": "month"
+  },
+  {
+    "slug": "salesloft",
+    "rating": 4.4,
+    "review_count": 1834,
+    "trust_score": 88,
+    "pricing_starter": "$65",
+    "pricing_model": "per user/month"
+  },
+  {
+    "slug": "seamless-ai",
+    "rating": 4.3,
+    "review_count": 69,
+    "trust_score": 92,
+    "pricing_starter": "Free",
+    "pricing_model": "month"
+  },
+  {
+    "slug": "sequence-r",
+    "rating": 4.9,
+    "review_count": 3,
+    "trust_score": 88,
+    "pricing_starter": "£0",
+    "pricing_model": "month"
+  },
+  {
+    "slug": "skylead",
+    "rating": 4.9,
+    "review_count": 48,
+    "trust_score": 93,
+    "pricing_starter": "$100",
+    "pricing_model": "month"
+  },
+  {
+    "slug": "skysenders",
+    "rating": 4.2,
+    "review_count": 12,
+    "trust_score": 89,
+    "pricing_starter": "$59",
+    "pricing_model": "month"
+  },
+  {
+    "slug": "smartlead",
+    "rating": 4.7,
+    "review_count": 454,
+    "trust_score": 95,
+    "pricing_starter": "$39",
+    "pricing_model": "month"
+  },
+  {
+    "slug": "smartreach",
+    "rating": 4.2,
+    "review_count": 54,
+    "trust_score": 91,
+    "pricing_starter": "$29",
+    "pricing_model": "month"
+  },
+  {
+    "slug": "snov-io",
+    "rating": 4.6,
+    "review_count": 980,
+    "trust_score": 92,
+    "pricing_starter": "$29",
+    "pricing_model": "month"
+  },
+  {
+    "slug": "straight-mail",
+    "rating": 5,
+    "review_count": 1,
+    "trust_score": 65,
+    "pricing_starter": "£0",
+    "pricing_model": "month"
+  },
+  {
+    "slug": "supersend",
+    "rating": 4.7,
+    "review_count": 455,
+    "trust_score": 94,
+    "pricing_starter": "$59",
+    "pricing_model": "month"
+  },
+  {
+    "slug": "twain-ai",
+    "rating": 4.3,
+    "review_count": 26,
+    "trust_score": 90,
+    "pricing_starter": "$35",
+    "pricing_model": "month"
+  },
+  {
+    "slug": "txto",
+    "rating": 5,
+    "review_count": 3,
+    "trust_score": 70,
+    "pricing_starter": "$19.99",
+    "pricing_model": "month"
+  },
+  {
+    "slug": "unlimitedleads",
+    "rating": 4.6,
+    "review_count": 9,
+    "trust_score": 91,
+    "pricing_starter": "$59",
+    "pricing_model": "month"
+  },
+  {
+    "slug": "wiza",
+    "rating": 4.8,
+    "review_count": 151,
+    "trust_score": 96,
+    "pricing_starter": "$0",
+    "pricing_model": "month"
+  },
+  {
+    "slug": "woodpecker",
+    "rating": 4.9,
+    "review_count": 94,
+    "trust_score": 96,
+    "pricing_starter": "$29",
+    "pricing_model": "month"
+  },
+  {
+    "slug": "zapmail",
+    "rating": 4.6,
+    "review_count": 111,
+    "trust_score": 95,
+    "pricing_starter": "$39",
+    "pricing_model": "month"
+  },
+  {
+    "slug": "zoominfo",
+    "rating": 4.5,
+    "review_count": 585,
+    "trust_score": 95,
+    "pricing_starter": "Custom",
+    "pricing_model": "year"
+  }
 ]

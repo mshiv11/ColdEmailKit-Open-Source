@@ -27,7 +27,6 @@ export default function Error({ error, reset }: ErrorProps) {
           Please try again. If the problem persists, contact support at{" "}
           <Link href={`mailto:${config.site.email}`}>{config.site.email}</Link>.
         </p>
-
       </Prose>
 
       <Button className="mt-4" onClick={() => reset()}>

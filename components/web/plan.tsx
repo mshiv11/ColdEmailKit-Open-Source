@@ -16,7 +16,7 @@ import { Stack } from "~/components/common/stack"
 import { Tooltip } from "~/components/common/tooltip"
 import { PlanIntervalSwitch } from "~/components/web/plan-interval-switch"
 import { Price } from "~/components/web/price"
-import type { Product, Price as PriceType } from "~/config/subscriptions"
+import type { Price as PriceType, Product } from "~/config/subscriptions"
 import { usePlanPrices } from "~/hooks/use-plan-prices"
 import { isToolPublished } from "~/lib/tools"
 import type { ToolOne } from "~/server/web/tools/payloads"
@@ -208,11 +208,7 @@ const Plan = ({
         suffix={!price ? <span /> : <Icon name="lucide/arrow-up-right" />}
         onClick={onSubmit}
       >
-        {!price
-          ? "Current Package"
-          : isToolPublished(tool)
-            ? "Upgrade Listing"
-            : (plan.name)}
+        {!price ? "Current Package" : isToolPublished(tool) ? "Upgrade Listing" : plan.name}
       </Button>
     </Card>
   )

@@ -3,7 +3,11 @@ import { unstable_cacheLife as cacheLife, unstable_cacheTag as cacheTag } from "
 import { integrationManyPayload, integrationOnePayload } from "~/server/web/integrations/payloads"
 import { db } from "~/services/db"
 
-export const findIntegrations = async ({ where, orderBy, ...args }: Prisma.IntegrationFindManyArgs) => {
+export const findIntegrations = async ({
+  where,
+  orderBy,
+  ...args
+}: Prisma.IntegrationFindManyArgs) => {
   "use cache"
 
   cacheTag("integrations")
@@ -17,7 +21,11 @@ export const findIntegrations = async ({ where, orderBy, ...args }: Prisma.Integ
   })
 }
 
-export const findIntegrationSlugs = async ({ where, orderBy, ...args }: Prisma.IntegrationFindManyArgs) => {
+export const findIntegrationSlugs = async ({
+  where,
+  orderBy,
+  ...args
+}: Prisma.IntegrationFindManyArgs) => {
   "use cache"
 
   cacheTag("integrations")

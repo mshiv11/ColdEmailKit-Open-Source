@@ -3,8 +3,8 @@
 import { createServerAction } from "zsa"
 import { findAlternatives } from "~/server/web/alternatives/queries"
 import { findCategories } from "~/server/web/categories/queries"
-import { findLicenses } from "~/server/web/licenses/queries"
 import { findIntegrations } from "~/server/web/integrations/queries"
+import { findLicenses } from "~/server/web/licenses/queries"
 
 export const findFilterOptions = createServerAction().handler(async () => {
   const filters = await Promise.all([

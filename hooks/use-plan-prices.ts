@@ -58,4 +58,3 @@ export function usePlanPrices(prices: Price[], coupon?: any | null) {
     setInterval,
   }
 }
-

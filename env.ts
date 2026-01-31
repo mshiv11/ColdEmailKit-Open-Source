@@ -1,8 +1,6 @@
 import { createEnv } from "@t3-oss/env-nextjs"
 import { z } from "zod"
 
-
-
 export const env = createEnv({
   shared: {
     PORT: z.coerce.number().default(8000),
@@ -17,6 +15,7 @@ export const env = createEnv({
    * built with invalid env vars.
    */
   server: {
+    HOME: z.string().optional(),
     NODE_ENV: z.enum(["development", "test", "production"]).default("development"),
     VERCEL_ENV: z.enum(["development", "preview", "production"]).default("development"),
     BETTER_AUTH_SECRET: z.string().min(1),

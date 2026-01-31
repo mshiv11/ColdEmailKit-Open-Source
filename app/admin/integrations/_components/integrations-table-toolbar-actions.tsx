@@ -7,18 +7,18 @@ import { IntegrationsDeleteDialog } from "./integrations-delete-dialog"
 type IntegrationRow = Pick<Integration, "id" | "name" | "slug">
 
 interface IntegrationsTableToolbarActionsProps {
-    table: Table<IntegrationRow>
+  table: Table<IntegrationRow>
 }
 
 export function IntegrationsTableToolbarActions({ table }: IntegrationsTableToolbarActionsProps) {
-    return (
-        <>
-            {table.getFilteredSelectedRowModel().rows.length > 0 ? (
-                <IntegrationsDeleteDialog
-                    integrations={table.getFilteredSelectedRowModel().rows.map(row => row.original)}
-                    onSuccess={() => table.toggleAllRowsSelected(false)}
-                />
-            ) : null}
-        </>
-    )
+  return (
+    <>
+      {table.getFilteredSelectedRowModel().rows.length > 0 ? (
+        <IntegrationsDeleteDialog
+          integrations={table.getFilteredSelectedRowModel().rows.map(row => row.original)}
+          onSuccess={() => table.toggleAllRowsSelected(false)}
+        />
+      ) : null}
+    </>
+  )
 }

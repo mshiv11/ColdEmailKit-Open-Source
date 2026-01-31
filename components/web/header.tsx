@@ -85,12 +85,14 @@ const Header = ({ children, className, session, ...props }: HeaderProps) => {
                   </NavLink>
                 </DropdownMenuItem>
 
+                {/* Coming Soon - Hidden until tools are scheduled
                 <DropdownMenuItem asChild>
                   <NavLink href="/coming-soon">
                     <Icon name="lucide/clock" className="shrink-0 size-4 opacity-75" /> Coming Soon
                   </NavLink>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
+                */}
                 <DropdownMenuItem asChild>
                   <NavLink href="/categories">
                     <Icon name="lucide/tags" className="shrink-0 size-4 opacity-75" /> Categories
@@ -98,7 +100,8 @@ const Header = ({ children, className, session, ...props }: HeaderProps) => {
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
                   <NavLink href="/integrations">
-                    <Icon name="lucide/blocks" className="shrink-0 size-4 opacity-75" /> Integrations
+                    <Icon name="lucide/blocks" className="shrink-0 size-4 opacity-75" />{" "}
+                    Integrations
                   </NavLink>
                 </DropdownMenuItem>
                 {/* Temporarily hidden - Topics and Licenses sections
@@ -150,9 +153,11 @@ const Header = ({ children, className, session, ...props }: HeaderProps) => {
             Latest
           </NavLink>
 
+          {/* Coming Soon - Hidden until tools are scheduled
           <NavLink href="/coming-soon" className="text-base">
             Coming Soon
           </NavLink>
+          */}
           <NavLink href="/alternatives" className="text-base">
             Alternatives
           </NavLink>

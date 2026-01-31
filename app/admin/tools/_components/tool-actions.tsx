@@ -88,8 +88,6 @@ export const ToolActions = ({ className, tool, ...props }: ToolActionsProps) => 
           </DropdownMenuItem>
         )}
 
-
-
         <DropdownMenuSeparator />
 
         <DropdownMenuItem onSelect={() => setIsDeleteOpen(true)} className="text-red-500">

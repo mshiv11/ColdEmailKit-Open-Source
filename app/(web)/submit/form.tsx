@@ -133,8 +133,6 @@ export const SubmitForm = ({ className, ...props }: ComponentProps<"form">) => {
           )}
         />
 
-
-
         <FormField
           control={form.control}
           name="submitterNote"

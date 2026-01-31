@@ -15,10 +15,8 @@ export const contentSchema = z.object({
     .describe(
       "A concise meta description (max 160 chars) highlighting key features and benefits. Use active voice, avoid tool name.",
     ),
-  content: z
-    .string()
-    .describe(
-      `A detailed Markdown-formatted content with the following structure:
+  content: z.string().describe(
+    `A detailed Markdown-formatted content with the following structure:
 
 ## Key Features
 - **Feature Name**: Brief description of the feature and its benefit to users
@@ -43,11 +41,10 @@ export const contentSchema = z.object({
 **Starting from**: Entry price point
 
 Write like a cold email expert who has hands-on experience. Be specific with numbers and facts. Avoid marketing buzzwords like "Empower", "Streamline", "Revolutionary". Focus on practical value.`,
-    ),
+  ),
 })
 
 /**
  * The schema for the description generator.
  */
 export const descriptionSchema = contentSchema.pick({ description: true })
-

@@ -6,17 +6,34 @@ import { AlternativePreview } from "~/components/web/alternatives/alternative-pr
 import { BuiltWith } from "~/components/web/built-with"
 import { ContributionGraph } from "~/components/web/contribution-graph"
 import { NewsletterForm } from "~/components/web/newsletter-form"
+import { FAQSchema, generateHomepageFAQs } from "~/components/web/seo/faq-schema"
 
 import { ToolListingSkeleton } from "~/components/web/tools/tool-listing"
 import { ToolQuery } from "~/components/web/tools/tool-query"
 import { Intro, IntroDescription, IntroTitle } from "~/components/web/ui/intro"
 import { config } from "~/config"
+import {
+  generateOrganizationSchema,
+  generateWebsiteSchema,
+  generateFAQPageSchema,
+  jsonLdScriptProps,
+  wrapInGraph,
+} from "~/lib/schemas"
 
 type PageProps = {
   searchParams: Promise<SearchParams>
 }
 
 export default function Home(props: PageProps) {
+  const homepageFAQs = generateHomepageFAQs()
+
+  // Build comprehensive JSON-LD for homepage SEO
+  const jsonLd = wrapInGraph(
+    generateOrganizationSchema(),
+    generateWebsiteSchema(),
+    generateFAQPageSchema(homepageFAQs)
+  )
+
   return (
     <>
       <section className="relative flex flex-col justify-center gap-y-6 pb-18">
@@ -30,7 +47,9 @@ export default function Home(props: PageProps) {
           </IntroTitle>
 
           <IntroDescription className="lg:mt-2">
-            Compare 50+ cold email tools with verified reviews, detailed features, and transparent pricing from inbox rotation to deliverability audits and stop paying for tools that don't scale.
+            Compare 50+ cold email tools with verified reviews, detailed features, and transparent
+            pricing from inbox rotation to deliverability audits and stop paying for tools that
+            don't scale.
           </IntroDescription>
 
           <Suspense fallback={<CountBadgeSkeleton />}>
@@ -54,6 +73,9 @@ export default function Home(props: PageProps) {
       <Suspense fallback={<AlternativePreviewSkeleton />}>
         <AlternativePreview />
       </Suspense>
+
+      {/* JSON-LD for SEO: Organization, WebSite with SearchAction, FAQPage */}
+      <script {...jsonLdScriptProps(jsonLd)} />
     </>
   )
 }

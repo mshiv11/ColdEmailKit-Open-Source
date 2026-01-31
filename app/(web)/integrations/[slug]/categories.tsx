@@ -27,13 +27,13 @@ const IntegrationCategories = async ({ integration }: IntegrationCategoriesProps
   }
 
   return (
-    <Listing title={`Browse categories of tools using ${integration.name}:`} separated>
+    <Listing title={`Browse categories with ${integration.name} Integration:`} separated>
       <Grid className="gap-y-3 mt-4">
         {categories.map(category => (
           <Tile key={category.slug} asChild>
-            <Link href={`/categories/${category.slug}/using/${integration.slug}`}>
+            <Link href={`/categories/${category.slug}/integrations/${integration.slug}`}>
               <h6 className="text-muted-foreground text-sm truncate group-hover:text-foreground">
-                Best {category.label} using {integration.name}
+                Best {category.label || category.name} with {integration.name} Integration
               </h6>
             </Link>
           </Tile>

@@ -6,7 +6,6 @@ import { isToolPublished } from "~/lib/tools"
 import type { ToolOne } from "~/server/web/tools/payloads"
 import { countSubmittedTools } from "~/server/web/tools/queries"
 
-
 type SubmitProductsProps = {
   tool: ToolOne
   searchParams: Promise<SearchParams>

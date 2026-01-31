@@ -5,18 +5,18 @@ import { withAdminPage } from "~/components/admin/auth-hoc"
 import { Wrapper } from "~/components/admin/wrapper"
 
 export const metadata: Metadata = {
-    title: "Blog Posts | Admin",
+  title: "Blog Posts | Admin",
 }
 
 const BlogAdminPage = async () => {
-    // Get posts from content-collections (static MDX files)
-    const posts = allPosts.sort((a, b) => b.publishedAt.localeCompare(a.publishedAt))
+  // Get posts from content-collections (static MDX files)
+  const posts = allPosts.sort((a, b) => b.publishedAt.localeCompare(a.publishedAt))
 
-    return (
-        <Wrapper size="lg">
-            <BlogTable posts={posts} />
-        </Wrapper>
-    )
+  return (
+    <Wrapper size="lg">
+      <BlogTable posts={posts} />
+    </Wrapper>
+  )
 }
 
 export default withAdminPage(BlogAdminPage)

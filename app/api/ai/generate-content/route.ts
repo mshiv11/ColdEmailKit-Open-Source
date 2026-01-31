@@ -23,7 +23,7 @@ export const POST = withAdminAuth(async req => {
       console.error("Jina scraping error:", scrapeError)
       return new Response(
         JSON.stringify({ error: "Failed to scrape website. Please try again." }),
-        { status: 500, headers: { "Content-Type": "application/json" } }
+        { status: 500, headers: { "Content-Type": "application/json" } },
       )
     }
 
@@ -92,10 +92,9 @@ Write as if you've personally used this tool for cold email campaigns. Be specif
     return result.toTextStreamResponse()
   } catch (error) {
     console.error("Generate content API error:", error)
-    return new Response(
-      JSON.stringify({ error: "Content generation failed. Please try again." }),
-      { status: 500, headers: { "Content-Type": "application/json" } }
-    )
+    return new Response(JSON.stringify({ error: "Content generation failed. Please try again." }), {
+      status: 500,
+      headers: { "Content-Type": "application/json" },
+    })
   }
 })
-

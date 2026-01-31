@@ -8,6 +8,11 @@ import { ToolQuery } from "~/components/web/tools/tool-query"
 import { Breadcrumbs } from "~/components/web/ui/breadcrumbs"
 import { Intro, IntroDescription, IntroTitle } from "~/components/web/ui/intro"
 import { metadataConfig } from "~/config/metadata"
+import {
+  generateCollectionPageSchema,
+  jsonLdScriptProps,
+  wrapInGraph,
+} from "~/lib/schemas"
 import type { IntegrationOne } from "~/server/web/integrations/payloads"
 import { findIntegrationBySlug, findIntegrationSlugs } from "~/server/web/integrations/queries"
 
@@ -29,8 +34,8 @@ const getIntegration = cache(async ({ params }: PageProps) => {
 
 const getMetadata = (integration: IntegrationOne): Metadata => {
   return {
-    title: `Top Cold Email Tools using ${integration.name}`,
-    description: `A curated collection of the ${integration._count.tools} best cold email tools using ${integration.name}. Find the most popular and trending tools to learn from, contribute to, or use in your own projects.`,
+    title: `Top Cold Email Tools with ${integration.name} Integration`,
+    description: `A curated collection of the ${integration._count.tools} best cold email tools with ${integration.name} Integration. Find the most popular and trending tools to learn from, contribute to, or use in your own projects.`,
   }
 }
 
@@ -43,8 +48,18 @@ export const generateMetadata = async (props: PageProps): Promise<Metadata> => {
   const integration = await getIntegration(props)
   const url = `/integrations/${integration.slug}`
 
+  // Generate keywords for integration page
+  const keywords = [
+    `${integration.name} integration`,
+    `cold email tools ${integration.name}`,
+    `${integration.name} email automation`,
+    "cold email integrations",
+    "email outreach tools",
+  ]
+
   return {
     ...getMetadata(integration),
+    keywords,
     alternates: { ...metadataConfig.alternates, canonical: url },
     openGraph: { ...metadataConfig.openGraph, url },
   }
@@ -53,6 +68,16 @@ export const generateMetadata = async (props: PageProps): Promise<Metadata> => {
 export default async function IntegrationPage(props: PageProps) {
   const integration = await getIntegration(props)
   const { title, description } = getMetadata(integration)
+
+  // Generate CollectionPage JSON-LD schema for SEO
+  const collectionPageSchema = generateCollectionPageSchema({
+    name: `${title}`,
+    description: `${description}`,
+    url: `/integrations/${integration.slug}`,
+    numberOfItems: integration._count.tools,
+  })
+
+  const jsonLd = wrapInGraph(collectionPageSchema)
 
   return (
     <>
@@ -78,13 +103,16 @@ export default async function IntegrationPage(props: PageProps) {
         <ToolQuery
           searchParams={props.searchParams}
           where={{ integrations: { some: { slug: integration.slug } } }}
-          search={{ placeholder: `Search tools using ${integration.name}...` }}
+          search={{ placeholder: `Search tools with ${integration.name} Integration...` }}
         />
       </Suspense>
 
       <Suspense>
         <IntegrationCategories integration={integration} />
       </Suspense>
+
+      {/* JSON-LD CollectionPage Schema for SEO */}
+      <script {...jsonLdScriptProps(jsonLd)} />
     </>
   )
 }

@@ -1,7 +1,7 @@
 import { siteConfig } from "~/config/site"
 
 export const linksConfig = {
-  builtWith: "https://dirstarter.com",
+  builtWith: "https://dirstarter.com?atp=mshiv",
   selfHost: "https://easypanel.io",
   author: "https://x.com/RiseWins_",
 
@@ -34,7 +34,7 @@ export const linksConfig = {
   toolsUsed: [
     {
       title: "Dirstarter",
-      href: "https://dirstarter.com",
+      href: "https://dirstarter.com?atp=mshiv",
       description: "Next.js directory website boilerplate",
     },
   ],

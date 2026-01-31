@@ -6,65 +6,69 @@ import { type ComponentProps, useState } from "react"
 import { IntegrationsDeleteDialog } from "~/app/admin/integrations/_components/integrations-delete-dialog"
 import { Button } from "~/components/common/button"
 import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
 } from "~/components/common/dropdown-menu"
 import { Icon } from "~/components/common/icon"
 import { Link } from "~/components/common/link"
 import { cx } from "~/utils/cva"
 
 type IntegrationActionsProps = ComponentProps<typeof Button> & {
-    integration: Pick<Integration, "id" | "slug" | "name">
+  integration: Pick<Integration, "id" | "slug" | "name">
 }
 
-export const IntegrationActions = ({ integration, className, ...props }: IntegrationActionsProps) => {
-    const pathname = usePathname()
-    const router = useRouter()
-    const [isDeleteOpen, setIsDeleteOpen] = useState(false)
+export const IntegrationActions = ({
+  integration,
+  className,
+  ...props
+}: IntegrationActionsProps) => {
+  const pathname = usePathname()
+  const router = useRouter()
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false)
 
-    return (
-        <DropdownMenu modal={false}>
-            <DropdownMenuTrigger asChild>
-                <Button
-                    aria-label="Open menu"
-                    variant="secondary"
-                    size="sm"
-                    prefix={<Icon name="lucide/ellipsis" />}
-                    className={cx("data-[state=open]:bg-accent", className)}
-                    {...props}
-                />
-            </DropdownMenuTrigger>
+  return (
+    <DropdownMenu modal={false}>
+      <DropdownMenuTrigger asChild>
+        <Button
+          aria-label="Open menu"
+          variant="secondary"
+          size="sm"
+          prefix={<Icon name="lucide/ellipsis" />}
+          className={cx("data-[state=open]:bg-accent", className)}
+          {...props}
+        />
+      </DropdownMenuTrigger>
 
-            <DropdownMenuContent align="end">
-                {pathname !== `/admin/integrations/${integration.slug}` && (
-                    <DropdownMenuItem asChild>
-                        <Link href={`/admin/integrations/${integration.slug}`}>Edit</Link>
-                    </DropdownMenuItem>
-                )}
+      <DropdownMenuContent align="end">
+        {pathname !== `/admin/integrations/${integration.slug}` && (
+          <DropdownMenuItem asChild>
+            <Link href={`/admin/integrations/${integration.slug}`}>Edit</Link>
+          </DropdownMenuItem>
+        )}
 
-                <DropdownMenuItem asChild>
-                    <Link href={`/integrations/${integration.slug}`} target="_blank">
-                        View
-                    </Link>
-                </DropdownMenuItem>
+        <DropdownMenuItem asChild>
+          <Link href={`/integrations/${integration.slug}`} target="_blank">
+            View
+          </Link>
+        </DropdownMenuItem>
 
-                <DropdownMenuSeparator />
+        <DropdownMenuSeparator />
 
-                <DropdownMenuItem onSelect={() => setIsDeleteOpen(true)} className="text-red-500">
-                    Delete
-                </DropdownMenuItem>
-            </DropdownMenuContent>
+        <DropdownMenuItem onSelect={() => setIsDeleteOpen(true)} className="text-red-500">
+          Delete
+        </DropdownMenuItem>
+      </DropdownMenuContent>
 
-            <IntegrationsDeleteDialog
-                open={isDeleteOpen}
-                onOpenChange={() => setIsDeleteOpen(false)}
-                integrations={[integration]}
-                showTrigger={false}
-                onSuccess={() => router.push("/admin/integrations")}
-            />
-        </DropdownMenu>
-    )
+      <IntegrationsDeleteDialog
+        open={isDeleteOpen}
+        onOpenChange={() => setIsDeleteOpen(false)}
+        integrations={[integration]}
+        showTrigger={false}
+        onSuccess={() => router.push("/admin/integrations")}
+      />
+    </DropdownMenu>
+  )
 }

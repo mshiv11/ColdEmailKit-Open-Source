@@ -6,7 +6,7 @@ import type { PropsWithChildren } from "react"
 import { PosthogPageview } from "~/components/web/posthog-pageview"
 import { env } from "~/env"
 
-if (typeof window !== "undefined") {
+if (typeof window !== "undefined" && process.env.NODE_ENV === "production") {
   posthog.init(env.NEXT_PUBLIC_POSTHOG_API_KEY, {
     ui_host: env.NEXT_PUBLIC_POSTHOG_HOST,
     api_host: "/_proxy/posthog/ingest",

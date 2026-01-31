@@ -1,4 +1,4 @@
-import { IntegrationType } from "@prisma/client"
+import type { IntegrationType } from "@prisma/client"
 import { useMemo } from "react"
 import { type ComponentProps, Fragment } from "react"
 import { H6 } from "~/components/common/heading"
@@ -35,7 +35,12 @@ const integrationTypeOrder = [
   // Add other types if needed
 ] as const
 
-const IntegrationList = ({ integrations, className, showCount = false, ...props }: IntegrationListProps) => {
+const IntegrationList = ({
+  integrations,
+  className,
+  showCount = false,
+  ...props
+}: IntegrationListProps) => {
   const groupedIntegrations = useMemo(() => {
     return (
       Object.entries(

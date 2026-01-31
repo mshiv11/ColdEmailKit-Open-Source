@@ -23,7 +23,13 @@ type ToolEntryProps = ComponentProps<"div"> & {
   linkToAffiliate?: boolean
 }
 
-const ToolEntry = ({ children, className, tool, linkToAffiliate = false, ...props }: ToolEntryProps) => {
+const ToolEntry = ({
+  children,
+  className,
+  tool,
+  linkToAffiliate = false,
+  ...props
+}: ToolEntryProps) => {
   const internalHref = `/tools/${tool.slug}`
 
   // Get affiliate URL if available (cast to access optional field)
@@ -40,9 +46,7 @@ const ToolEntry = ({ children, className, tool, linkToAffiliate = false, ...prop
       {...props}
     >
       <Stack size="lg" className="not-prose relative justify-between">
-        <Stack
-          className="self-start before:content-['#'_counter(entries)] before:font-semibold before:text-3xl before:opacity-25 xl:before:absolute xl:before:right-full xl:before:mr-4"
-        >
+        <Stack className="self-start before:content-['#'_counter(entries)] before:font-semibold before:text-3xl before:opacity-25 xl:before:absolute xl:before:right-full xl:before:mr-4">
           {linkToAffiliate ? (
             // External link to affiliate/website URL
             <ExternalLink
@@ -63,7 +67,11 @@ const ToolEntry = ({ children, className, tool, linkToAffiliate = false, ...prop
                   {tool.ownerId && <VerifiedBadge size="lg" />}
                 </div>
 
-                <StarRating rating={tool.overallRating || 0} totalReviews={tool.totalReviews || 0} className="gap-1 text-xs" />
+                <StarRating
+                  rating={tool.overallRating || 0}
+                  totalReviews={tool.totalReviews || 0}
+                  className="gap-1 text-xs"
+                />
               </div>
             </ExternalLink>
           ) : (
@@ -80,7 +88,11 @@ const ToolEntry = ({ children, className, tool, linkToAffiliate = false, ...prop
                   {tool.ownerId && <VerifiedBadge size="lg" />}
                 </div>
 
-                <StarRating rating={tool.overallRating || 0} totalReviews={tool.totalReviews || 0} className="gap-1 text-xs" />
+                <StarRating
+                  rating={tool.overallRating || 0}
+                  totalReviews={tool.totalReviews || 0}
+                  className="gap-1 text-xs"
+                />
               </div>
             </Link>
           )}
@@ -127,4 +139,3 @@ const ToolEntry = ({ children, className, tool, linkToAffiliate = false, ...prop
 }
 
 export { ToolEntry }
-

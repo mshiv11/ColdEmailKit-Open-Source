@@ -18,4 +18,6 @@ export const integrationManyPayload = Prisma.validator<Prisma.IntegrationSelect>
 })
 
 export type IntegrationOne = Prisma.IntegrationGetPayload<{ select: typeof integrationOnePayload }>
-export type IntegrationMany = Prisma.IntegrationGetPayload<{ select: typeof integrationManyPayload }>
+export type IntegrationMany = Prisma.IntegrationGetPayload<{
+  select: typeof integrationManyPayload
+}>

@@ -1,9 +1,9 @@
 [
-    {
-        "id": "7110be75-f809-4e95-9514-7a5e3c2ca03b",
-        "tool_id": "b065ed06-29b4-47fc-899e-7939882b0338",
-        "alternative_tool_id": "e9d3a892-cada-45ec-9018-c45011cab946",
-        "note": null,
-        "created_at": "2025-08-25T13:07:18.003619+00:00"
-    }
+  {
+    "id": "7110be75-f809-4e95-9514-7a5e3c2ca03b",
+    "tool_id": "b065ed06-29b4-47fc-899e-7939882b0338",
+    "alternative_tool_id": "e9d3a892-cada-45ec-9018-c45011cab946",
+    "note": null,
+    "created_at": "2025-08-25T13:07:18.003619+00:00"
+  }
 ]

@@ -1,7 +1,7 @@
 import { addDays, differenceInMonths } from "date-fns"
 import plur from "plur"
 import { config } from "~/config"
-import { products as staticProducts, type Product, type Price } from "~/config/subscriptions"
+import { type Price, type Product, products as staticProducts } from "~/config/subscriptions"
 
 const SYMBOLS = {
   positive: "✓ ",
@@ -34,9 +34,7 @@ const removeSymbol = (featureName?: string, type?: SymbolType) => {
  * @param isPublished - Whether the tool is published.
  * @returns The products for pricing.
  */
-export const getProducts = (
-  isPublished: boolean,
-) => {
+export const getProducts = (isPublished: boolean) => {
   const getPriceAmount = (price?: Price | null) => {
     return price ? (price.unit_amount ?? 0) : 0
   }
@@ -66,11 +64,7 @@ export const getProducts = (
  * @param queueLength - The length of the queue.
  * @returns The features of the product.
  */
-export const getProductFeatures = (
-  product: Product,
-  isPublished: boolean,
-  queueLength: number,
-) => {
+export const getProductFeatures = (product: Product, isPublished: boolean, queueLength: number) => {
   const features = product.marketing_features.filter(
     feature => !isPublished || !feature.name?.includes("processing time"),
   )
@@ -97,9 +91,7 @@ export const getProductFeatures = (
  * @param products - The list of products to prepare.
  * @returns A promise that resolves to an array of products with their prices and discount status.
  */
-export const prepareProductsWithPrices = async (
-  products: Product[],
-) => {
+export const prepareProductsWithPrices = async (products: Product[]) => {
   return Promise.all(
     products.map(async (product, index) => {
       const prices = product.prices
@@ -114,4 +106,3 @@ export const prepareProductsWithPrices = async (
     }),
   )
 }
-

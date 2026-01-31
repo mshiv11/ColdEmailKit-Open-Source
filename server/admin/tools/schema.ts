@@ -60,6 +60,18 @@ export const toolSchema = z.object({
   coldEmailKitRating: z.coerce.number().min(0).max(5).optional(),
   coldEmailKitReviews: z.coerce.number().min(0).optional(),
 
+  // Specifications & Features (JSON objects)
+  specifications: z.object({}).passthrough().optional().default({}),
+  pricingSpecs: z.object({}).passthrough().optional().default({}),
+  inboxFeatures: z.object({}).passthrough().optional().default({}),
+  warmupFeatures: z.object({}).passthrough().optional().default({}),
+  leadsFeatures: z.object({}).passthrough().optional().default({}),
+  enrichmentFeatures: z.object({}).passthrough().optional().default({}),
+  copywritingFeatures: z.object({}).passthrough().optional().default({}),
+  outreachFeatures: z.object({}).passthrough().optional().default({}),
+  deliverabilityFeatures: z.object({}).passthrough().optional().default({}),
+  linkedinFeatures: z.object({}).passthrough().optional().default({}),
+
   publishedAt: z.coerce.date().nullish(),
   status: z.nativeEnum(ToolStatus).default("Draft"),
   alternatives: z.array(z.string()).optional(),

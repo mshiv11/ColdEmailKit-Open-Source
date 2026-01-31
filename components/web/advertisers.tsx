@@ -7,6 +7,15 @@ import { config } from "~/config"
 import { db } from "~/services/db"
 import { cx } from "~/utils/cva"
 
+// Featured sponsors that always appear in the marquee
+const featuredSponsors = [
+  {
+    name: "ContactOut",
+    faviconUrl: "/logos/contactout.png",
+    isColor: true, // Show in full color
+  },
+]
+
 export const Advertisers = async ({ className, ...props }: ComponentProps<"div">) => {
   const ads = await db.ad.findMany({ orderBy: { createdAt: "asc" } })
 
@@ -18,7 +27,13 @@ export const Advertisers = async ({ className, ...props }: ComponentProps<"div">
   })
 
   // Remove duplicates by name
-  const advertisers = Array.from(new Map(longTermAds.map((ad: Ad) => [ad.name, ad])).values())
+  const advertisersFromDb = Array.from(new Map(longTermAds.map((ad: Ad) => [ad.name, ad])).values())
+
+  // Combine featured sponsors with database advertisers
+  const allAdvertisers = [
+    ...featuredSponsors,
+    ...advertisersFromDb.filter(ad => !featuredSponsors.some(fs => fs.name === ad.name)),
+  ]
 
   return (
     <div className={cx("flex flex-col items-center text-center gap-6", className)} {...props}>
@@ -26,23 +41,32 @@ export const Advertisers = async ({ className, ...props }: ComponentProps<"div">
 
       <div className="w-full overflow-clip mask-l-from-90% mask-r-from-90%">
         <div className="flex items-center gap-10 w-max animate-marquee pointer-events-none select-none">
-          {[...advertisers, ...advertisers].map((ad, index) => (
-            <Stack key={`${ad.name}-${index}`} size="sm" className="opacity-75" asChild>
-              {ad.faviconUrl && (
-                <Image
-                  src={ad.faviconUrl}
-                  width="24"
-                  height="24"
-                  alt={ad.name}
-                  className="h-5.5 w-auto brightness-25 grayscale dark:brightness-200"
-                />
-              )}
+          {[...allAdvertisers, ...allAdvertisers].map((ad, index) => {
+            const isColorLogo = "isColor" in ad && ad.isColor
+            return (
+              <Stack key={`${ad.name}-${index}`} size="sm" className="opacity-85" asChild>
+                {ad.faviconUrl && (
+                  <Image
+                    src={ad.faviconUrl}
+                    width={isColorLogo ? 120 : 24}
+                    height={isColorLogo ? 32 : 24}
+                    alt={ad.name}
+                    className={cx(
+                      "w-auto",
+                      isColorLogo
+                        ? "h-6"
+                        : "h-5.5 brightness-25 grayscale dark:brightness-200"
+                    )}
+                  />
+                )}
 
-              <strong>{ad.name}</strong>
-            </Stack>
-          ))}
+                {!isColorLogo && <strong>{ad.name}</strong>}
+              </Stack>
+            )
+          })}
         </div>
       </div>
     </div>
   )
 }
+

@@ -8,8 +8,7 @@ import { metadataConfig } from "~/config/metadata"
 
 export const metadata: Metadata = {
   title: "Software Licenses",
-  description:
-    "Discover top software licenses and learn about their terms and conditions.",
+  description: "Discover top software licenses and learn about their terms and conditions.",
   openGraph: { ...metadataConfig.openGraph, url: "/licenses" },
   alternates: { ...metadataConfig.alternates, canonical: "/licenses" },
   robots: { index: false, follow: false }, // Temporarily hidden from search engines

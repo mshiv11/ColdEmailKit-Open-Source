@@ -44,7 +44,7 @@ const img = ({ className, ...props }: ComponentProps<"img">) => {
 
 type ToolEntryProps = ComponentProps<typeof ToolEntryPrimitive> & {
   tool: string
-  screenshotUrl: string | null
+  screenshotUrl?: string | null
 }
 
 const ToolEntryRSC = async ({ tool: toolSlug, screenshotUrl, ...props }: ToolEntryProps) => {
@@ -57,7 +57,8 @@ const ToolEntryRSC = async ({ tool: toolSlug, screenshotUrl, ...props }: ToolEnt
     return null
   }
 
-  return <ToolEntryPrimitive id={tool.slug} tool={{ ...tool, screenshotUrl }} {...props} />
+  // Use prop screenshotUrl if provided, otherwise use database value
+  return <ToolEntryPrimitive id={tool.slug} tool={{ ...tool, screenshotUrl: screenshotUrl ?? tool.screenshotUrl }} {...props} />
 }
 
 const ToolEntry = ({ ...props }: ToolEntryProps) => {
