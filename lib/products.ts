@@ -51,8 +51,11 @@ export const getProducts = (isPublished: boolean) => {
       // Filter out expedited products if the tool is published
       .filter(({ name }) => !isPublished || !name.includes("Expedited"))
 
-      // Clean up the name
-      .map(({ name, ...product }) => ({ ...product, name: name.replace("Listing", "").trim() }))
+      // Clean up the name - use "Standard" for base listing
+      .map(({ name, ...product }) => {
+        const cleanName = name.replace("Listing", "").trim()
+        return { ...product, name: cleanName || "Standard" }
+      })
   )
 }
 

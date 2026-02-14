@@ -18,6 +18,16 @@ export const auth = betterAuth({
     provider: "postgresql",
   }),
 
+  trustedOrigins: [
+    "http://localhost:5173",
+    "https://coldemailkit.com",
+    "https://www.coldemailkit.com",
+    ...(process.env.VERCEL_URL ? [`https://${process.env.VERCEL_URL}`] : []),
+    ...(process.env.VERCEL_BRANCH_URL ? [`https://${process.env.VERCEL_BRANCH_URL}`] : []),
+    ...(process.env.VERCEL_PROJECT_PRODUCTION_URL ? [`https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`] : []),
+  ],
+
+
   socialProviders: {
     google: {
       clientId: env.AUTH_GOOGLE_ID,

@@ -6,7 +6,7 @@
     "email": "cp .env ../../node_modules/react-email/dist/preview && email dev",
     "dev": "next dev -p 5173 --turbopack",
     "start": "next start -p 5173",
-    "build": "next build --turbopack",
+    "build": "next build",
     "lint": "bun biome check --write .",
     "format": "bun biome format --write .",
     "typecheck": "tsc --noEmit",
@@ -17,7 +17,6 @@
     "db:push": "prisma db push --skip-generate",
     "db:reset": "prisma migrate reset",
     "prebuild": "bun run icons",
-    "postbuild": "next-sitemap",
     "postinstall": "bun run db:generate"
   },
   "dependencies": {
@@ -87,7 +86,6 @@
     "@types/rss": "^0.0.32",
     "fs-extra": "^11.3.0",
     "glob": "^11.0.3",
-    "next-sitemap": "^4.2.3",
     "node-html-parser": "^7.0.1",
     "postcss": "^8.5.6",
     "prisma": "^6.5.0",

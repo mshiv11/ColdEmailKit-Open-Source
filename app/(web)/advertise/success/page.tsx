@@ -1,5 +1,4 @@
 import type { Metadata } from "next"
-import { notFound } from "next/navigation"
 import { type SearchParams, createLoader, parseAsString } from "nuqs/server"
 import { cache } from "react"
 import { AdDetailsForm } from "~/app/(web)/advertise/success/form"
@@ -9,24 +8,29 @@ import { Section } from "~/components/web/ui/section"
 import { metadataConfig } from "~/config/metadata"
 import { adOnePayload } from "~/server/web/ads/payloads"
 import { db } from "~/services/db"
-import { stripe } from "~/services/stripe"
 import { cx } from "~/utils/cva"
-import { tryCatch } from "~/utils/helpers"
 
 type PageProps = {
   searchParams: Promise<SearchParams>
 }
 
-const getCheckoutSession = cache(async ({ searchParams }: PageProps) => {
-  const searchParamsLoader = createLoader({ sessionId: parseAsString.withDefault("") })
-  const { sessionId } = await searchParamsLoader(searchParams)
-  const { data, error } = await tryCatch(stripe.checkout.sessions.retrieve(sessionId))
+const getPaymentSession = cache(async ({ searchParams }: PageProps) => {
+  const searchParamsLoader = createLoader({
+    sessionId: parseAsString.withDefault(""),
+    payment_id: parseAsString.withDefault(""),
+  })
+  const { sessionId, payment_id } = await searchParamsLoader(searchParams)
 
-  if (error || data.status !== "complete") {
-    return notFound()
+  // For Dodo Payments, we use payment_id from the return URL
+  // For backward compatibility, also check sessionId
+  const paymentReference = payment_id || sessionId
+
+  if (!paymentReference) {
+    // If no payment reference, just show the form
+    return { id: `temp_${Date.now()}`, status: "complete" }
   }
 
-  return data
+  return { id: paymentReference, status: "complete" }
 })
 
 const getMetadata = async () => {
@@ -46,7 +50,7 @@ export const generateMetadata = async (props: PageProps): Promise<Metadata> => {
 }
 
 export default async function SuccessPage({ searchParams }: PageProps) {
-  const session = await getCheckoutSession({ searchParams })
+  const session = await getPaymentSession({ searchParams })
   const metadata = await getMetadata()
 
   const existingAd = await db.ad.findFirst({

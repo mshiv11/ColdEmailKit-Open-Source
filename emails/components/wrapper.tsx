@@ -29,11 +29,11 @@ export const EmailWrapper = ({ to, signature, preview, children }: EmailWrapperP
           <Container className="w-full max-w-[580px] mx-auto px-10">
             <Link href={config.site.url} className="inline-block mt-6 mb-2">
               <Img
-                src={`${config.site.url}/logo.svg`}
+                src={`${config.site.url}/logo.png`}
                 alt={`${config.site.name} Logo`}
-                width="572"
-                height="91"
-                className="h-6 w-auto"
+                width="48"
+                height="48"
+                className="size-12"
               />
             </Link>
 

@@ -35,6 +35,7 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "img.logo.dev" },
       { protocol: "https", hostname: "lh3.googleusercontent.com" },
       { protocol: "https", hostname: "avatars.githubusercontent.com" },
+      { protocol: "https", hostname: "cdn.coldemailkit.com" },
       { protocol: "https", hostname: "pub-8dbded528a58478ebbb7064bc2cad60a.r2.dev" },
       { protocol: "https", hostname: "phpsekmsbokkrtlkdtli.supabase.co" },
     ],
@@ -86,6 +87,13 @@ const nextConfig: NextConfig = {
     }
 
     return [
+      // Redirect www to non-www (canonical URL)
+      {
+        source: "/:path*",
+        has: [{ type: "host", value: "www.coldemailkit.com" }],
+        destination: "https://coldemailkit.com/:path*",
+        permanent: true,
+      },
       ...blogRedirects,
       {
         source: "/topics",

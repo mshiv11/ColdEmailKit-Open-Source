@@ -1,9 +1,14 @@
 import NumberFlow, { continuous, type Format } from "@number-flow/react"
 import { formatNumber } from "@primoui/utils"
 import type { ComponentProps } from "react"
-import type Stripe from "stripe"
 import { Badge } from "~/components/common/badge"
 import { cx } from "~/utils/cva"
+
+// Local coupon type (replacing Stripe.Coupon dependency)
+type Coupon = {
+  max_redemptions?: number | null
+  times_redeemed: number
+}
 
 const defaultFormat: Format = {
   style: "currency",
@@ -18,7 +23,7 @@ type PriceProps = ComponentProps<"div"> & {
   fullPrice?: number | null
   interval?: string
   discount?: number | null
-  coupon?: Stripe.Coupon
+  coupon?: Coupon
   format?: Format
   priceClassName?: string
 }

@@ -57,3 +57,4 @@ public/robots.txt
 public/icons/sprite.svg
 types/icons.d.ts
 
+.env*.local

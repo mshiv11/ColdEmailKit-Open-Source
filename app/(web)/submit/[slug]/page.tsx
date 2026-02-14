@@ -6,7 +6,6 @@ import { Suspense, cache } from "react"
 import { SubmitProducts } from "~/app/(web)/submit/[slug]/products"
 import { Advertisers } from "~/components/web/advertisers"
 import { PlanSkeleton } from "~/components/web/plan"
-import { Stats } from "~/components/web/stats"
 import { Testimonial } from "~/components/web/testimonial"
 import { Intro, IntroDescription, IntroTitle } from "~/components/web/ui/intro"
 import { config } from "~/config"
@@ -81,8 +80,6 @@ export default async function SubmitPackages(props: PageProps) {
           <SubmitProducts tool={tool} searchParams={props.searchParams} />
         </Suspense>
       </div>
-
-      <Stats className="my-4" />
 
       {config.ads.testimonials.map(testimonial => (
         <Testimonial key={testimonial.quote} {...testimonial} className="my-4" />

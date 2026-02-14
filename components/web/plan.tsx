@@ -117,6 +117,7 @@ const Plan = ({
         body: JSON.stringify({
           productId: currentPrice.id,
           returnUrl: `${window.location.origin}/submit/${tool.slug}/success`,
+          isSubscription: isSubscription,
         }),
       })
 

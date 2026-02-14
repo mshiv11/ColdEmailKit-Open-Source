@@ -1,10 +1,35 @@
 import { NextResponse } from "next/server"
+import { headers } from "next/headers"
 import { calculateRating, fetchToolData, generateContent } from "~/lib/intelligence"
-import { db } from "~/server/db"
+import { db } from "~/services/db"
 
 export const maxDuration = 300 // 5 minutes
 
+// Verify Vercel cron secret to prevent unauthorized access
+async function verifyCronSecret(req: Request): Promise<boolean> {
+  const headersList = await headers()
+  const cronSecret = headersList.get("authorization")
+  const expectedSecret = process.env.CRON_SECRET
+
+  // If CRON_SECRET is not set, reject all requests in production
+  if (!expectedSecret) {
+    console.warn("CRON_SECRET not configured")
+    return process.env.NODE_ENV !== "production"
+  }
+
+  return cronSecret === `Bearer ${expectedSecret}`
+}
+
 export async function GET(req: Request) {
+  // Verify the request is from Vercel Cron
+  if (!(await verifyCronSecret(req))) {
+    console.error("Unauthorized cron request attempted")
+    return NextResponse.json(
+      { error: "Unauthorized" },
+      { status: 401 }
+    )
+  }
+
   try {
     // Find tools that haven't been updated in 7 days or have no description
     const toolsToUpdate = await db.tool.findMany({
