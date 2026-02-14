@@ -56,19 +56,23 @@ const nextConfig: NextConfig = {
         destination: `${siteUrl}/rss/alternatives.xml`,
       },
 
-      // for posthog proxy
-      {
-        source: "/_proxy/posthog/ingest/static/:path*",
-        destination: `${posthogUrl?.replace("us", "us-assets")}/static/:path*`,
-      },
-      {
-        source: "/_proxy/posthog/ingest/:path*",
-        destination: `${posthogUrl}/:path*`,
-      },
-      {
-        source: "/_proxy/posthog/ingest/decide",
-        destination: `${posthogUrl}/decide`,
-      },
+      // PostHog proxy rewrites (only when NEXT_PUBLIC_POSTHOG_HOST is set)
+      ...(posthogUrl
+        ? [
+          {
+            source: "/_proxy/posthog/ingest/static/:path*",
+            destination: `${posthogUrl.replace("us", "us-assets")}/static/:path*`,
+          },
+          {
+            source: "/_proxy/posthog/ingest/:path*",
+            destination: `${posthogUrl}/:path*`,
+          },
+          {
+            source: "/_proxy/posthog/ingest/decide",
+            destination: `${posthogUrl}/decide`,
+          },
+        ]
+        : []),
     ]
   },
 
